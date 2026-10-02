@@ -56,3 +56,24 @@
 .release-card p{margin:0 0 12px}
 .release-card .text-link{align-self:end}
 @media(max-width:560px){.release-card{grid-template-columns:88px minmax(0,1fr);column-gap:13px}.release-card .release-art{width:88px;height:132px}.release-card h2{font-size:17px}}
+
+/* Expanded anime facts, FAQ and reading experience */
+.anime-facts-detail{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin:24px 0 34px}
+.anime-facts-detail>div{min-width:0;border:1px solid var(--line,rgba(255,255,255,.12));border-radius:13px;padding:17px;background:rgba(255,255,255,.025)}
+.anime-facts-detail span{display:block;font-size:.78rem;color:var(--muted,#aaa);margin-bottom:8px}
+.anime-facts-detail strong{display:block;font-size:.95rem;line-height:1.5;overflow-wrap:anywhere}
+.detail-subheading{font-size:1.35rem;margin:30px 0 14px}
+.detail-disclaimer{font-size:.84rem;color:var(--muted,#aaa);line-height:1.8;max-width:850px}
+.faq-section h2{font-size:clamp(1.7rem,3vw,2.4rem);margin:10px 0 24px}
+.anime-faq-list{max-width:850px;display:grid;gap:10px}
+.anime-faq{border:1px solid var(--line,rgba(255,255,255,.12));border-radius:14px;padding:0 18px;background:rgba(255,255,255,.025)}
+.anime-faq summary{cursor:pointer;list-style:none;padding:18px 28px 18px 0;font-weight:600;position:relative}
+.anime-faq summary::-webkit-details-marker{display:none}
+.anime-faq summary:after{content:"+";position:absolute;right:0;top:15px;font-size:1.35rem;color:#bba0ff}
+.anime-faq[open] summary:after{content:"−"}
+.anime-faq p{margin:0;padding:0 0 18px;color:var(--muted,#aaa);line-height:1.8}
+.related-anime-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}
+.related-anime-link{display:block;padding:14px;border:1px solid var(--line,rgba(255,255,255,.12));border-radius:12px;color:var(--muted,#aaa);transition:color .2s,border-color .2s}
+.related-anime-link:hover{color:var(--text,#fff);border-color:#9c7be5}
+@media(max-width:700px){.anime-facts-detail{grid-template-columns:repeat(2,minmax(0,1fr))}.related-anime-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(prefers-reduced-motion:reduce){.anime-faq summary{scroll-behavior:auto}}

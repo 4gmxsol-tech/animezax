@@ -100,6 +100,12 @@
       image.addEventListener("error", () => image.remove(), { once: true });
       poster.prepend(image);
       poster.classList.add("has-real-anime-art");
+    } else if (card.classList.contains("library-card")) {
+      const image = card.querySelector("img");
+      if (image) {
+        image.src = imageUrl;
+        image.addEventListener("error", () => image.remove(), { once: true });
+      }
     } else if (card.classList.contains("release-card")) {
       const image = document.createElement("img");
       image.className = "release-art";
@@ -150,18 +156,18 @@
   function addToWatchlist(title) {
     const item = animeCatalog.find(entry => entry.title === title) || {title, genres:"Seasonal pick",url:"seasonal.html",description:"Check the seasonal tracker for current details."};
     const items = readWatchlist();
-    if (items.some(entry => entry.title === title)) return false;
+    if (items.some(entry => entry.title === title)) return "exists";
     items.unshift({...item, status:"plan", addedAt:Date.now()});
-    return writeWatchlist(items);
+    return writeWatchlist(items) ? "added" : "error";
   }
   document.querySelectorAll("[data-quick-add]").forEach(button => {
     button.addEventListener("click", () => {
       const title = button.dataset.quickAdd;
-      const added = addToWatchlist(title);
+      const result = addToWatchlist(title);
       const original = button.dataset.originalLabel || button.textContent.trim();
       button.dataset.originalLabel = original;
-      button.textContent = added ? "✓ Added to watchlist" : "✓ Already saved";
-      button.setAttribute("aria-label", (added ? "Added " : "Already saved ") + title);
+      button.textContent = result === "added" ? "✓ Added to watchlist" : result === "exists" ? "✓ Already saved" : "Could not save — check browser storage";
+      button.setAttribute("aria-label", (result === "added" ? "Added " : result === "exists" ? "Already saved " : "Could not save ") + title);
     });
   });
 
@@ -245,7 +251,7 @@
       const links=document.createElement("div");links.className="quiz-result-links";
       const guide=document.createElement("a");guide.href=item.url;guide.textContent="Explore title →";
       const save=document.createElement("button");save.type="button";save.className="text-link";save.textContent="Add to watchlist +";
-      save.addEventListener("click",()=>{const added=addToWatchlist(item.title);save.textContent=added?"Added ✓": "Already saved ✓";});
+      save.addEventListener("click",()=>{const result=addToWatchlist(item.title);save.textContent=result==="added"?"Added ✓":result==="exists"?"Already saved ✓":"Could not save";});
       links.append(guide,save);card.append(heading,description,links);quizResultList.append(card);
     });
     const heading=document.querySelector("#quiz-results h2");if(heading)heading.textContent="Your three suggested starting points";

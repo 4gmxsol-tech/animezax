@@ -162,3 +162,15 @@ button:disabled{opacity:.55;cursor:not-allowed}
   html{scroll-behavior:auto}
   *,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}
 }
+
+
+/* Shared page polish */
+.primary-nav a.active{color:var(--text);position:relative}
+.primary-nav a.active:not(.nav-cta)::after{content:"";position:absolute;left:0;right:0;bottom:-9px;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--purple),var(--pink))}
+.reading-progress{position:fixed;z-index:100;top:0;left:0;width:100%;height:3px;pointer-events:none}
+.reading-progress span{display:block;width:0;height:100%;background:linear-gradient(90deg,var(--purple),var(--pink))}
+.back-to-top{position:fixed;z-index:30;right:24px;bottom:24px;width:46px;height:46px;display:grid;place-items:center;border:1px solid rgba(178,154,255,.42);border-radius:15px;background:var(--panel-2);color:var(--text);font-size:23px;cursor:pointer;opacity:0;visibility:hidden;transform:translateY(8px);transition:opacity .2s,transform .2s,visibility .2s}
+.back-to-top.is-visible{opacity:1;visibility:visible;transform:translateY(0)}
+.back-to-top:hover{border-color:var(--purple)}
+@media(max-width:560px){.back-to-top{right:16px;bottom:16px;width:42px;height:42px}.primary-nav a.active:not(.nav-cta)::after{bottom:-3px}}
+@media(prefers-reduced-motion:reduce){.reading-progress span,.back-to-top{transition:none}}

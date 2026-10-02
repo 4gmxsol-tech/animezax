@@ -265,6 +265,59 @@
     });
   });
 
+  // Shared navigation state, reading progress, and accessible back-to-top control.
+  const currentPath = window.location.pathname.replace(/index\\.html$/, "").replace(/\\/$/, "") || "/";
+  document.querySelectorAll("#primary-nav a").forEach(link => {
+    try {
+      const target = new URL(link.href, window.location.origin).pathname.replace(/index\\.html$/, "").replace(/\\/$/, "") || "/";
+      if (target === currentPath && !link.hash) {
+        link.classList.add("active");
+        link.setAttribute("aria-current", "page");
+      } else {
+        link.classList.remove("active");
+        link.removeAttribute("aria-current");
+      }
+    } catch (_) {}
+  });
+
+  const progress = document.createElement("div");
+  progress.className = "reading-progress";
+  progress.setAttribute("role", "progressbar");
+  progress.setAttribute("aria-label", "Page reading progress");
+  progress.setAttribute("aria-valuemin", "0");
+  progress.setAttribute("aria-valuemax", "100");
+  progress.setAttribute("aria-valuenow", "0");
+  const progressFill = document.createElement("span");
+  progress.append(progressFill);
+  document.body.append(progress);
+
+  const backToTop = document.createElement("button");
+  backToTop.className = "back-to-top";
+  backToTop.type = "button";
+  backToTop.setAttribute("aria-label", "Back to top");
+  backToTop.title = "Back to top";
+  backToTop.textContent = "↑";
+  document.body.append(backToTop);
+  backToTop.addEventListener("click", () => window.scrollTo({top: 0, behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth"}));
+
+  let scrollTicking = false;
+  function updateScrollUI() {
+    const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+    const percent = maxScroll > 0 ? Math.min(100, Math.max(0, window.scrollY / maxScroll * 100)) : 0;
+    progressFill.style.width = percent + "%";
+    progress.setAttribute("aria-valuenow", String(Math.round(percent)));
+    backToTop.classList.toggle("is-visible", window.scrollY > 480);
+    scrollTicking = false;
+  }
+  window.addEventListener("scroll", () => {
+    if (!scrollTicking) {
+      scrollTicking = true;
+      window.requestAnimationFrame(updateScrollUI);
+    }
+  }, {passive: true});
+  window.addEventListener("resize", updateScrollUI, {passive: true});
+  updateScrollUI();
+
   const year = document.querySelector("#year");
   if (year) year.textContent = String(new Date().getFullYear());
 })();

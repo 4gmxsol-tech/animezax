@@ -266,11 +266,19 @@
   });
 
   // Shared navigation state, reading progress, and accessible back-to-top control.
+  const primaryNav = document.querySelector("#primary-nav");
+  if (primaryNav && !primaryNav.querySelector('a[href*="/anime/"]')) {
+    const libraryLink = document.createElement("a");
+    libraryLink.href = "/anime/";
+    libraryLink.textContent = "Anime library";
+    primaryNav.insertBefore(libraryLink, primaryNav.querySelector('a[href*="articles"]') || null);
+  }
   const currentPath = window.location.pathname.replace(/index\\.html$/, "").replace(/\\/$/, "") || "/";
   document.querySelectorAll("#primary-nav a").forEach(link => {
     try {
       const target = new URL(link.href, window.location.origin).pathname.replace(/index\\.html$/, "").replace(/\\/$/, "") || "/";
-      if (target === currentPath && !link.hash) {
+      const isCurrent = target === currentPath || (target !== "/" && currentPath.startsWith(target + "/"));
+      if (isCurrent && !link.hash) {
         link.classList.add("active");
         link.setAttribute("aria-current", "page");
       } else {

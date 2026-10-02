@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10101a">
+  <meta name="description" content="Discover your next anime obsession. Explore anime guides, seasonal watchlists, reviews, and news on AnimeZax.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="AnimeZax — Find Your Next Anime">
+  <meta property="og:description" content="Anime discovery, watch guides, reviews, and news for fans.">
+  <title>AnimeZax — Find Your Next Anime</title>
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/styles.css">
+  <script src="assets/script.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <header class="site-header">
+    <div class="container nav-wrap">
+      <a class="brand" href="./" aria-label="AnimeZax home">
+        <span class="brand-mark">A<span>Z</span></span>
+        <span class="brand-name">anime<span>zax</span><small>YOUR NEXT OBSESSION</small></span>
+      </a>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Open navigation" aria-expanded="false" aria-controls="primary-nav"><span></span><span></span></button>
+      <nav class="primary-nav" id="primary-nav" aria-label="Main navigation">
+        <a class="active" href="#discover">Discover</a>
+        <a href="#guides">Watch guides</a>
+        <a href="#latest">Latest</a>
+        <a class="nav-cta" href="#newsletter">Stay in the loop <span>↗</span></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero">
+      <div class="hero-glow glow-one"></div><div class="hero-glow glow-two"></div>
+      <div class="container hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow"><span class="live-dot"></span> YOUR ANIME UNIVERSE</div>
+          <h1>One more episode.<br><span>One more world.</span></h1>
+          <p class="hero-intro">Find stories worth staying up for. Explore anime picks, spoiler-aware guides, season highlights, and fan-favorite worlds.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#discover">Explore anime <span>↗</span></a>
+            <a class="button button-quiet" href="#guides">Browse watch guides</a>
+          </div>
+          <div class="hero-proof"><span class="proof-stars">✦ ✦ ✦</span><span>Made for curious anime fans</span></div>
+        </div>
+        <div class="hero-art" aria-label="Abstract anime-inspired artwork">
+          <div class="orbit orbit-a"></div><div class="orbit orbit-b"></div>
+          <div class="art-sun"></div><div class="art-shard shard-a"></div><div class="art-shard shard-b"></div><div class="art-shard shard-c"></div>
+          <div class="art-label label-top">DISCOVER</div><div class="art-label label-bottom">NEW WORLDS / EVERY DAY</div>
+          <div class="art-card">
+            <span class="art-card-kicker">THE NEXT CHAPTER</span>
+            <strong>Your<br>story<br>starts here.</strong>
+            <span class="art-card-line"></span>
+          </div>
+          <span class="floating-symbol symbol-plus">✳</span><span class="floating-symbol symbol-star">✦</span><span class="floating-symbol symbol-spark">✧</span>
+        </div>
+      </div>
+      <div class="hero-bottom container"><span>ANIME · MANGA · CULTURE</span><span>SCROLL TO EXPLORE ↓</span></div>
+    </section>
+
+    <section class="ticker" aria-label="AnimeZax topics"><div class="ticker-track"><span>FIND YOUR NEXT FAVORITE</span><b>✳</b><span>SEASONAL PICKS</span><b>✳</b><span>WATCH GUIDES</span><b>✳</b><span>FAN CULTURE</span><b>✳</b><span>FIND YOUR NEXT FAVORITE</span><b>✳</b><span>SEASONAL PICKS</span><b>✳</b><span>WATCH GUIDES</span><b>✳</b></div></section>
+
+    <section class="section discover-section" id="discover">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow">THE STARTING POINT</p><h2>What are you <span>in the mood for?</span></h2></div>
+          <p class="section-note">A few paths into your next anime obsession. Search by title or filter by vibe.</p>
+        </div>
+        <div class="discover-tools">
+          <label class="search-box"><span aria-hidden="true">⌕</span><input id="anime-search" type="search" placeholder="Search anime or genre..." autocomplete="off" aria-label="Search anime or genre"></label>
+          <div class="filter-list" role="group" aria-label="Filter anime by genre">
+            <button class="filter-chip is-selected" data-filter="all" aria-pressed="true">All picks</button>
+            <button class="filter-chip" data-filter="action" aria-pressed="false">Action</button>
+            <button class="filter-chip" data-filter="fantasy" aria-pressed="false">Fantasy</button>
+            <button class="filter-chip" data-filter="adventure" aria-pressed="false">Adventure</button>
+            <button class="filter-chip" data-filter="drama" aria-pressed="false">Drama</button>
+          </div>
+        </div>
+
+        <div class="anime-grid" id="anime-grid">
+          <article class="anime-card" data-title="Black Clover" data-genres="action fantasy adventure" data-haystack="black clover magic squad underdog shonen watch guide">
+            <a class="poster poster-clover" href="#black-clover-guide" aria-label="Read the Black Clover watch guide">
+              <span class="poster-tag">FAN FAVORITE</span><span class="poster-glyph">♣</span><span class="poster-title">BLACK<br><b>CLOVER</b></span><span class="poster-foot">MAGIC • RIVALRY • GRIT</span>
+            </a>
+            <div class="card-meta"><span>Action · Fantasy</span><span class="meta-dot">✦</span></div>
+            <h3><a href="#black-clover-guide">Black Clover</a></h3>
+            <p>Asta’s determination, fierce rivalries, and a world where magic shapes everything.</p>
+            <a class="text-link" href="#black-clover-guide">Explore the watch guide <span>→</span></a>
+          </article>
+
+          <article class="anime-card" data-title="Frieren: Beyond Journey’s End" data-genres="fantasy adventure drama" data-haystack="frieren beyond journey end elf reflection fantasy adventure">
+            <a class="poster poster-frieren" href="#guides" aria-label="Explore fantasy watch guides">
+              <span class="poster-tag">SLOW-BURN MAGIC</span><span class="poster-glyph">✧</span><span class="poster-title">FRIEREN<br><b>BEYOND</b></span><span class="poster-foot">TIME • MEMORY • MAGIC</span>
+            </a>
+            <div class="card-meta"><span>Fantasy · Drama</span><span class="meta-dot">✦</span></div>
+            <h3>Frieren: Beyond Journey’s End</h3>
+            <p>A reflective fantasy about time, memory, and the people we meet along the way.</p>
+            <a class="text-link" href="#guides">Explore fantasy picks <span>→</span></a>
+          </article>
+
+          <article class="anime-card" data-title="One Piece" data-genres="action adventure drama" data-haystack="one piece pirates adventure crew friendship treasure">
+            <a class="poster poster-voyage" href="#guides" aria-label="Explore adventure watch guides">
+              <span class="poster-tag">THE BIG ADVENTURE</span><span class="poster-glyph">☠</span><span class="poster-title">ONE<br><b>PIECE</b></span><span class="poster-foot">CREW • DREAMS • THE SEA</span>
+            </a>
+            <div class="card-meta"><span>Adventure · Action</span><span class="meta-dot">✦</span></div>
+            <h3>One Piece</h3>
+            <p>Set sail for a sprawling adventure built around friendship, dreams, and discovery.</p>
+            <a class="text-link" href="#guides">Start an adventure <span>→</span></a>
+          </article>
+
+          <article class="anime-card" data-title="Solo Leveling" data-genres="action fantasy" data-haystack="solo leveling hunters dungeons power progression action">
+            <a class="poster poster-level" href="#guides" aria-label="Explore action watch guides">
+              <span class="poster-tag">POWER PROGRESSION</span><span class="poster-glyph">↗</span><span class="poster-title">SOLO<br><b>LEVELING</b></span><span class="poster-foot">DUNGEONS • HUNTERS • POWER</span>
+            </a>
+            <div class="card-meta"><span>Action · Fantasy</span><span class="meta-dot">✦</span></div>
+            <h3>Solo Leveling</h3>
+            <p>A high-stakes action story for fans of dungeon raids and hard-earned power-ups.</p>
+            <a class="text-link" href="#guides">Find action anime <span>→</span></a>
+          </article>
+        </div>
+        <p class="empty-state" id="empty-state" hidden>No matches yet. Try another title or genre.</p>
+        <p class="disclaimer">AnimeZax is an independent discovery and editorial project. It is not affiliated with the creators, studios, or rights holders of the anime featured here.</p>
+      </div>
+    </section>
+
+    <section class="feature-section" id="black-clover-guide">
+      <div class="container feature-panel">
+        <div class="feature-art"><span class="feature-orbit"></span><span class="feature-clover">♣</span><span class="feature-stamp">WATCH<br>SMARTER</span></div>
+        <div class="feature-copy">
+          <p class="eyebrow">FEATURED WATCH GUIDE</p>
+          <h2>Back to the Clover Kingdom?</h2>
+          <p>Catch up on the world, characters, and rivalries before diving into more Black Clover. Our guide is designed to help returning fans find their place without unnecessary spoilers.</p>
+          <ul class="feature-list"><li><span>01</span> A spoiler-aware story refresher</li><li><span>02</span> Key characters and magic squads</li><li><span>03</span> Where to check official viewing options</li></ul>
+          <a class="button button-primary" href="#latest">Explore fan guides <span>↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section guides-section" id="guides">
+      <div class="container">
+        <div class="section-heading">
+          <div><p class="eyebrow">LESS SCROLLING, MORE WATCHING</p><h2>Find your next <span>rabbit hole.</span></h2></div>
+          <p class="section-note">Not sure where to begin? Start with a mood, a genre, or a watch guide.</p>
+        </div>
+        <div class="guide-grid">
+          <a class="guide-card guide-purple" href="#discover"><span class="guide-number">01 / GENRE</span><span class="guide-icon">✦</span><h3>Fantasy worlds</h3><p>Magic systems, strange lands, and impossible quests.</p><span class="guide-arrow">↗</span></a>
+          <a class="guide-card guide-orange" href="#discover"><span class="guide-number">02 / ENERGY</span><span class="guide-icon">⚡</span><h3>Pure adrenaline</h3><p>Big battles, bold rivals, and high-stakes action.</p><span class="guide-arrow">↗</span></a>
+          <a class="guide-card guide-blue" href="#discover"><span class="guide-number">03 / JOURNEY</span><span class="guide-icon">⌁</span><h3>Epic adventures</h3><p>Long journeys, loyal crews, and unforgettable places.</p><span class="guide-arrow">↗</span></a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section latest-section" id="latest">
+      <div class="container latest-layout">
+        <div class="latest-intro"><p class="eyebrow">THE ANIMEZAX NOTEBOOK</p><h2>Fresh takes.<br><span>Zero filler.</span></h2><p>We’re building a growing library of watch guides, explainers, and anime recommendations. Check back as new stories land.</p><a class="text-link" href="#newsletter">Get updates <span>→</span></a></div>
+        <div class="latest-list">
+          <article class="latest-item"><span class="latest-index">01</span><div><span class="latest-category">WATCH GUIDE</span><h3>Black Clover: what to remember before you watch</h3><p>A quick, spoiler-aware refresher for returning fans.</p></div><a href="#black-clover-guide" aria-label="Read Black Clover guide">↗</a></article>
+          <article class="latest-item"><span class="latest-index">02</span><div><span class="latest-category">FANTASY PICKS</span><h3>Where to start if you love magic-based anime</h3><p>Four different ways to find your next fantasy world.</p></div><a href="#discover" aria-label="Explore fantasy anime">↗</a></article>
+          <article class="latest-item"><span class="latest-index">03</span><div><span class="latest-category">BEGINNER'S CORNER</span><h3>How to choose your next long-running anime</h3><p>Find a series that fits your time, mood, and watch style.</p></div><a href="#guides" aria-label="Browse watch guides">↗</a></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="newsletter-section" id="newsletter">
+      <div class="container newsletter-panel">
+        <div><p class="eyebrow">MORE WORLDS. LESS GUESSWORK.</p><h2>Your next favorite<br>is out there.</h2><p>AnimeZax is just getting started. Follow along as we add more guides, picks, and anime discoveries.</p></div>
+        <a class="button button-light" href="#discover">Explore the collection <span>↗</span></a>
+        <span class="newsletter-spark">✳</span>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container footer-main">
+      <a class="brand" href="./" aria-label="AnimeZax home"><span class="brand-mark">A<span>Z</span></span><span class="brand-name">anime<span>zax</span><small>YOUR NEXT OBSESSION</small></span></a>
+      <p>Discover stories. Find your people. Keep exploring.</p>
+      <div class="footer-links"><a href="#discover">Discover</a><a href="#guides">Watch guides</a><a href="#latest">Latest</a></div>
+    </div>
+    <div class="container footer-bottom"><span>© <span id="year">2026</span> AnimeZax. An independent fan discovery project.</span><span>Unofficial editorial content · No episode streaming</span></div>
+  </footer>
+</body>
+</html>

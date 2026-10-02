@@ -40,3 +40,19 @@
 @media(prefers-reduced-motion:reduce){.hero-image,.hero-feature-card{animation:none!important}.reveal{opacity:1;transform:none;transition:none}}
 
 .article-card{overflow:hidden;padding:0 0 22px}.article-card .article-category,.article-card h2,.article-card p,.article-card .text-link{margin-left:22px;margin-right:22px}.article-card .article-category{margin-top:19px}.article-thumb{display:block;width:100%;height:155px;object-fit:cover;filter:saturate(.82);transition:transform .5s ease,filter .5s ease}.article-card:hover .article-thumb{transform:scale(1.035);filter:saturate(1.05)}.article-card h2{margin-top:12px}.article-card p{flex:1}
+
+/* Real anime key art and editorial release cards */
+.poster{position:relative;isolation:isolate;overflow:hidden}
+.poster-art{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 20%;z-index:-1;transition:transform .65s cubic-bezier(.2,.7,.2,1),filter .4s ease;filter:saturate(.9) brightness(.82)}
+.poster:hover .poster-art{transform:scale(1.06);filter:saturate(1.08) brightness(.9)}
+.poster.has-real-anime-art{background-image:linear-gradient(180deg,rgba(9,9,18,.08) 0%,rgba(9,9,18,.1) 25%,rgba(9,9,18,.88) 100%)}
+.poster.has-real-anime-art:before{z-index:0;background:linear-gradient(180deg,rgba(10,10,20,.08),transparent 20%,rgba(10,10,20,.78))}
+.poster.has-real-anime-art .poster-tag,.poster.has-real-anime-art .poster-title,.poster.has-real-anime-art .poster-foot,.poster.has-real-anime-art .poster-glyph{z-index:1;text-shadow:0 2px 12px rgba(0,0,0,.7)}
+.release-card{position:relative;overflow:hidden;display:grid;grid-template-columns:112px minmax(0,1fr);column-gap:18px;align-content:start}
+.release-card .release-art{grid-column:1;grid-row:1/5;width:112px;height:158px;object-fit:cover;border-radius:10px;background:#1b1927}
+.release-card .release-date,.release-card h2,.release-card p,.release-card .text-link{grid-column:2}
+.release-card .release-date{align-self:end}
+.release-card h2{margin-top:8px}
+.release-card p{margin:0 0 12px}
+.release-card .text-link{align-self:end}
+@media(max-width:560px){.release-card{grid-template-columns:88px minmax(0,1fr);column-gap:13px}.release-card .release-art{width:88px;height:132px}.release-card h2{font-size:17px}}

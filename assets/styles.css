@@ -174,3 +174,12 @@ button:disabled{opacity:.55;cursor:not-allowed}
 .back-to-top:hover{border-color:var(--purple)}
 @media(max-width:560px){.back-to-top{right:16px;bottom:16px;width:42px;height:42px}.primary-nav a.active:not(.nav-cta)::after{bottom:-3px}}
 @media(prefers-reduced-motion:reduce){.reading-progress span,.back-to-top{transition:none}}
+
+
+/* Critical content-visibility safeguard: never let reveal effects hide page content. */
+main .reveal,
+main .reveal.is-visible {
+  opacity: 1 !important;
+  visibility: visible !important;
+  transform: none;
+}

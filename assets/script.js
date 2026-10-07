@@ -239,6 +239,43 @@
     });
   });
 
+  // Homepage discovery dashboard, powered by the same local watchlist.
+  const homeWatchlistCount = document.querySelector("#home-watchlist-count");
+  const homeWatchlistPreview = document.querySelector("#home-watchlist-preview");
+  const continueExploring = document.querySelector("#continue-exploring");
+  function renderHomeDashboard() {
+    if (!homeWatchlistCount && !homeWatchlistPreview && !continueExploring) return;
+    const items = readWatchlist();
+    if (homeWatchlistCount) homeWatchlistCount.textContent = String(items.length);
+    if (homeWatchlistPreview) {
+      homeWatchlistPreview.replaceChildren();
+      if (!items.length) {
+        const p=document.createElement("p"); p.className="dashboard-empty"; p.textContent="Nothing saved yet. Add a title from the collection above."; homeWatchlistPreview.append(p);
+      } else {
+        items.slice(0,3).forEach(item => {
+          const a=document.createElement("a"); a.className="dashboard-title"; a.href=item.url || "watchlist.html";
+          const strong=document.createElement("strong"); strong.textContent=item.title;
+          const small=document.createElement("small"); small.textContent=item.status==="watching" ? "Watching" : item.status==="completed" ? "Completed" : "Plan to watch";
+          a.append(strong,small); homeWatchlistPreview.append(a);
+        });
+      }
+    }
+    if (continueExploring) {
+      continueExploring.replaceChildren();
+      if (!items.length) {
+        const p=document.createElement("p"); p.className="dashboard-empty"; p.textContent="Start with One Piece, Frieren, Solo Leveling, or explore the full library."; continueExploring.append(p);
+        const a=document.createElement("a"); a.className="dashboard-link"; a.href="anime/"; a.textContent="Browse anime library ↗"; continueExploring.append(a);
+      } else {
+        const item=items[0], a=document.createElement("a"); a.className="continue-card"; a.href=item.url || "watchlist.html";
+        const kicker=document.createElement("span"); kicker.textContent="LAST SAVED";
+        const title=document.createElement("strong"); title.textContent=item.title;
+        const meta=document.createElement("span"); meta.textContent=item.genres || "Anime";
+        a.append(kicker,title,meta); continueExploring.append(a);
+      }
+    }
+  }
+  renderHomeDashboard();
+
   const watchlistGrid = document.querySelector("#watchlist-grid");
   const watchlistEmpty = document.querySelector("#watchlist-empty");
   const watchlistCount = document.querySelector("#watchlist-count");

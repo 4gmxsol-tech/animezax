@@ -104,7 +104,17 @@
       ["Guide","Anime Watch Orders","watch-order/","Where to start, watch order"],
       ["Guide","Anime Like","anime-like/","What to watch next, similar anime"],
       ["Guide","Anime Movies","anime-movies.html","Anime films, movies"],
-      ["Guide","Anime Characters","anime-characters.html","Characters, profiles"]
+      ["Guide","Anime Characters","anime-characters.html","Characters, profiles"],
+      ["Guide","Anime Genres","anime-genres.html","Genres, moods, discovery"],
+      ["Guide","Anime Rankings","anime-rankings.html","Rankings, lists, comparisons"],
+      ["Guide","New Anime","new-anime.html","New releases, seasonal anime"],
+      ["Guide","Anime Series","anime-series.html","Series, franchises, discovery"],
+      ["Guide","Anime Websites","anime-websites.html","Anime resources, official sources"],
+      ["Guide","Anime Online","anime-online.html","Where to watch anime, legal options"],
+      ["Guide","Recommendations","recommendations.html","Personalized anime recommendations"],
+      ["Guide","Release Calendar","release-calendar.html","Release dates, schedule"],
+      ["Guide","Seasonal Anime","seasonal.html","Current season, Fall 2026"],
+      ["Guide","Upcoming Anime","upcoming.html","Upcoming releases, future anime"]
     ];
     const searchBox = globalSearch.closest(".search-box");
     let results = document.querySelector("#global-search-results");
@@ -279,6 +289,20 @@
       const arrow=document.createElement("span"); arrow.className="smart-pick-arrow"; arrow.textContent="→";
       a.append(copy,arrow); smartRecommendations.append(a);
     });
+    const guideMap={
+      "One Piece":"anime-like/one-piece.html","Naruto":"anime-like/naruto.html",
+      "Attack on Titan":"anime-like/attack-on-titan.html","Dragon Ball":"watch-order/dragon-ball-watch-order.html",
+      "Demon Slayer: Kimetsu no Yaiba":"anime-like/demon-slayer.html","Jujutsu Kaisen":"anime-like/jujutsu-kaisen.html",
+      "Chainsaw Man":"anime-like/chainsaw-man.html","Solo Leveling":"anime-like/solo-leveling.html",
+      "Black Clover":"anime-like/black-clover.html","Frieren: Beyond Journey’s End":"anime-like/frieren-beyond-journeys-end.html",
+      "The Apothecary Diaries":"anime/the-apothecary-diaries.html","Spy x Family":"anime-like/spy-x-family.html"
+    };
+    const anchorTitle=saved[0]?.title;
+    if (anchorTitle && guideMap[anchorTitle]) {
+      const guide=document.createElement("a"); guide.className="smart-guide"; guide.href=guideMap[anchorTitle];
+      guide.textContent="Explore anime like " + anchorTitle + " ↗";
+      smartRecommendations.append(guide);
+    }
     if (!picks.length) {
       const p=document.createElement("p"); p.className="dashboard-empty"; p.textContent="You’ve explored the current matching picks. Browse the full library for more."; smartRecommendations.append(p);
     }

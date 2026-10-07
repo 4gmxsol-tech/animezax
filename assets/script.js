@@ -246,6 +246,9 @@
       button.dataset.originalLabel = original;
       button.textContent = result === "added" ? "✓ Added to watchlist" : result === "exists" ? "✓ Already saved" : "Could not save — check browser storage";
       button.setAttribute("aria-label", (result === "added" ? "Added " : result === "exists" ? "Already saved " : "Could not save ") + title);
+      updateWatchlistNavCount();
+      renderHomeDashboard();
+      renderSmartRecommendations();
     });
   });
 
@@ -441,6 +444,15 @@
   });
 
   // Shared navigation state, reading progress, and accessible back-to-top control.
+  function updateWatchlistNavCount() {
+    const link = document.querySelector('#primary-nav a[href*="watchlist.html"]');
+    if (!link) return;
+    let badge = link.querySelector(".watchlist-nav-count");
+    if (!badge) { badge=document.createElement("span"); badge.className="watchlist-nav-count"; badge.setAttribute("aria-label","saved titles"); link.appendChild(badge); }
+    badge.textContent=String(readWatchlist().length);
+  }
+  updateWatchlistNavCount();
+
   const primaryNav = document.querySelector("#primary-nav");
   if (primaryNav && !primaryNav.querySelector('a[href*="/anime/"]')) {
     const libraryLink = document.createElement("a");

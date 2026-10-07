@@ -239,6 +239,51 @@
     });
   });
 
+  // Smart Discovery: recommend unsaved titles from the user's saved genres and moods.
+  const smartRecommendations = document.querySelector("#smart-recommendations");
+  function renderSmartRecommendations() {
+    if (!smartRecommendations) return;
+    const saved = readWatchlist();
+    smartRecommendations.replaceChildren();
+    if (!saved.length) {
+      const p=document.createElement("p"); p.className="dashboard-empty"; p.textContent="Save an anime above and AnimeZax will match its genres, mood, and viewing style."; smartRecommendations.append(p);
+      return;
+    }
+    const savedTitles=new Set(saved.map(item=>item.title));
+    const signals=new Set();
+    saved.forEach(item => {
+      (item.mood || []).forEach(signal => signals.add(signal));
+      (item.genres || "").toLowerCase().split(/[·,]/).map(v=>v.trim()).filter(Boolean).forEach(signal => signals.add(signal));
+    });
+    const scored=animeCatalog
+      .filter(item=>!savedTitles.has(item.title))
+      .map(item=>{
+        const itemSignals=new Set([...(item.mood||[]),...(item.genres||"").toLowerCase().split(/[·,]/).map(v=>v.trim()).filter(Boolean)]);
+        let score=0;
+        itemSignals.forEach(signal=>{ if(signals.has(signal)) score+=1; });
+        if(saved.some(s=>s.length===item.length)) score+=0.35;
+        if(saved.some(s=>s.tone===item.tone)) score+=0.25;
+        return {...item,score};
+      })
+      .sort((a,b)=>b.score-a.score);
+    const picks=scored.slice(0,2);
+    const intro=document.createElement("p"); intro.className="smart-intro";
+    intro.textContent=saved.length===1 ? "Because you saved " + saved[0].title + "…" : "Based on what you saved…";
+    smartRecommendations.append(intro);
+    picks.forEach(item=>{
+      const a=document.createElement("a"); a.className="smart-pick"; a.href=item.url;
+      const copy=document.createElement("span"); copy.className="smart-pick-copy";
+      const strong=document.createElement("strong"); strong.textContent=item.title;
+      const small=document.createElement("small"); small.textContent=item.genres || "Anime";
+      copy.append(strong,small);
+      const arrow=document.createElement("span"); arrow.className="smart-pick-arrow"; arrow.textContent="→";
+      a.append(copy,arrow); smartRecommendations.append(a);
+    });
+    if (!picks.length) {
+      const p=document.createElement("p"); p.className="dashboard-empty"; p.textContent="You’ve explored the current matching picks. Browse the full library for more."; smartRecommendations.append(p);
+    }
+  }
+
   // Homepage discovery dashboard, powered by the same local watchlist.
   const homeWatchlistCount = document.querySelector("#home-watchlist-count");
   const homeWatchlistPreview = document.querySelector("#home-watchlist-preview");

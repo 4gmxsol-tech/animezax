@@ -70,6 +70,74 @@
   }
 
 
+  // Global discovery search: anime, characters, movies, and guides.
+  const globalSearch = document.querySelector("#anime-search");
+  if (globalSearch) {
+    const discoveryIndex = [
+      ["Anime","One Piece","anime/one-piece.html","Adventure, action, pirate adventure"],
+      ["Anime","Naruto","anime/naruto.html","Ninja, action, adventure"],
+      ["Anime","Attack on Titan","anime/attack-on-titan.html","Dark fantasy, action, mystery"],
+      ["Anime","Dragon Ball","anime/dragon-ball.html","Action, martial arts, adventure"],
+      ["Anime","Demon Slayer","anime/demon-slayer.html","Action, fantasy, demons"],
+      ["Anime","Jujutsu Kaisen","anime/jujutsu-kaisen.html","Action, supernatural, fantasy"],
+      ["Anime","Chainsaw Man","anime/chainsaw-man.html","Action, supernatural, dark fantasy"],
+      ["Anime","Solo Leveling","anime/solo-leveling.html","Action, fantasy, power progression"],
+      ["Anime","Black Clover","anime/black-clover.html","Action, fantasy, magic"],
+      ["Anime","Frieren: Beyond Journey’s End","anime/frieren-beyond-journeys-end.html","Fantasy, adventure, drama"],
+      ["Anime","The Apothecary Diaries","anime/the-apothecary-diaries.html","Mystery, historical, drama"],
+      ["Anime","Spy x Family","anime/spy-x-family.html","Comedy, action, family"],
+      ["Character","Monkey D. Luffy","characters/luffy.html","One Piece, pirate captain, adventure"],
+      ["Character","Naruto Uzumaki","characters/naruto-uzumaki.html","Naruto, ninja, hero"],
+      ["Character","Goku","characters/goku.html","Dragon Ball, Saiyan, martial arts"],
+      ["Character","Gojo Satoru","characters/gojo-satoru.html","Jujutsu Kaisen, sorcerer"],
+      ["Character","Tanjiro Kamado","characters/tanjiro-kamado.html","Demon Slayer, swordsman"],
+      ["Character","Sung Jin-Woo","characters/sung-jin-woo.html","Solo Leveling, hunter"],
+      ["Character","Eren Yeager","characters/eren-yeager.html","Attack on Titan, titan"],
+      ["Character","Denji","characters/denji.html","Chainsaw Man, devil hunter"],
+      ["Movie","Your Name","movies/your-name.html","Anime movie, romance, fantasy"],
+      ["Movie","Spirited Away","movies/spirited-away.html","Anime movie, fantasy"],
+      ["Movie","A Silent Voice","movies/a-silent-voice.html","Anime movie, drama"],
+      ["Movie","Weathering With You","movies/weathering-with-you.html","Anime movie, romance, fantasy"],
+      ["Movie","Akira","movies/akira.html","Anime movie, sci-fi"],
+      ["Guide","What Anime Should I Watch?","what-to-watch.html","Recommendations, discovery"],
+      ["Guide","Best Anime","best-anime.html","Top anime, recommendations"],
+      ["Guide","Anime Watch Orders","watch-order/","Where to start, watch order"],
+      ["Guide","Anime Like","anime-like/","What to watch next, similar anime"],
+      ["Guide","Anime Movies","anime-movies.html","Anime films, movies"],
+      ["Guide","Anime Characters","anime-characters.html","Characters, profiles"]
+    ];
+    const searchBox = globalSearch.closest(".search-box");
+    let results = document.querySelector("#global-search-results");
+    if (!results) {
+      results = document.createElement("div");
+      results.id = "global-search-results";
+      results.className = "global-search-results";
+      results.setAttribute("role","listbox");
+      results.hidden = true;
+      searchBox?.appendChild(results);
+    }
+    function renderGlobalResults() {
+      const q = globalSearch.value.trim().toLowerCase();
+      results.replaceChildren();
+      if (!q) { results.hidden = true; return; }
+      const matches = discoveryIndex.filter(item => (item[0]+" "+item[1]+" "+item[3]).toLowerCase().includes(q)).slice(0,7);
+      if (!matches.length) {
+        const empty=document.createElement("div"); empty.className="global-search-empty"; empty.textContent="No AnimeZax result yet. Try an anime, character, movie, or guide."; results.appendChild(empty);
+      } else matches.forEach(item => {
+        const link=document.createElement("a"); link.className="global-search-result"; link.href=item[2]; link.setAttribute("role","option");
+        const type=document.createElement("span"); type.className="global-search-type"; type.textContent=item[0];
+        const copy=document.createElement("span"); copy.className="global-search-copy";
+        const name=document.createElement("strong"); name.textContent=item[1];
+        const meta=document.createElement("small"); meta.textContent=item[3]; copy.append(name,meta); link.append(type,copy); results.appendChild(link);
+      });
+      results.hidden = false;
+    }
+    globalSearch.addEventListener("input", renderGlobalResults);
+    globalSearch.addEventListener("focus", renderGlobalResults);
+    document.addEventListener("click", event => { if (!searchBox?.contains(event.target)) results.hidden = true; });
+    globalSearch.addEventListener("keydown", event => { if (event.key === "Escape") { results.hidden = true; globalSearch.blur(); } });
+  }
+
   // Load real anime cover art from Jikan's public, unofficial MyAnimeList API.
   // Text labels remain usable if the API is unavailable.
   const animeCards = [...document.querySelectorAll("[data-mal-id]")];

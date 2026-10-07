@@ -252,6 +252,7 @@
       button.textContent = result === "added" ? "✓ Added to watchlist" : result === "exists" ? "✓ Already saved" : "Could not save — check browser storage";
       button.setAttribute("aria-label", (result === "added" ? "Added " : result === "exists" ? "Already saved " : "Could not save ") + title);
       updateWatchlistNavCount();
+      renderWatchlist();
       renderHomeDashboard();
       renderSmartRecommendations();
     });

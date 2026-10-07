@@ -146,6 +146,11 @@
     globalSearch.addEventListener("focus", renderGlobalResults);
     document.addEventListener("click", event => { if (!searchBox?.contains(event.target)) results.hidden = true; });
     globalSearch.addEventListener("keydown", event => { if (event.key === "Escape") { results.hidden = true; globalSearch.blur(); } });
+    document.addEventListener("keydown", event => {
+      if (event.key === "/" && !["INPUT","TEXTAREA","SELECT"].includes(document.activeElement?.tagName)) {
+        event.preventDefault(); globalSearch.focus(); globalSearch.select();
+      }
+    });
   }
 
   // Load real anime cover art from Jikan's public, unofficial MyAnimeList API.

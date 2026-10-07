@@ -320,6 +320,7 @@
     }
   }
   renderHomeDashboard();
+  renderSmartRecommendations();
 
   const watchlistGrid = document.querySelector("#watchlist-grid");
   const watchlistEmpty = document.querySelector("#watchlist-empty");

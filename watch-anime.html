@@ -35,4 +35,4 @@
 /* Licensed media only. Keep mediaUrl empty until AnimeZax has permission to stream the file.
    Set allowDownload=true only when the license explicitly permits visitor downloads. */
 (()=>{const licensedMedia={title:'',mediaUrl:'',allowDownload:false};if(!licensedMedia.mediaUrl)return;const screen=document.getElementById('player-screen');const status=document.getElementById('player-status');if(!screen||!/^https:\/\//i.test(licensedMedia.mediaUrl))return;const video=document.createElement('video');video.controls=true;video.playsInline=true;video.preload='metadata';video.src=licensedMedia.mediaUrl;video.setAttribute('aria-label',licensedMedia.title||'Licensed AnimeZax video');screen.replaceChildren(video);if(status)status.textContent=licensedMedia.title||'Licensed video ready';if(licensedMedia.allowDownload){const link=document.createElement('a');link.className='watch-action';link.href=licensedMedia.mediaUrl;link.textContent='Download authorized video';link.setAttribute('download','');link.rel='noopener';document.querySelector('.player-actions')?.appendChild(link);}})();
-</script></script></body></html>
+</script></body></html>

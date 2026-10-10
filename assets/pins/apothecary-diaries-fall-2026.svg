@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="1500" viewBox="0 0 1000 1500" role="img" aria-labelledby="title desc">
+<title id="title">The Apothecary Diaries Season 3 — AnimeZax Pinterest cover</title>
+<desc id="desc">Original editorial cover showing a mysterious palace garden at blue hour with an original apothecary silhouette, lanterns, and Fall 2026 anime-watchlist title.</desc>
+<defs>
+ <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#081a27"/><stop offset=".48" stop-color="#163b45"/><stop offset="1" stop-color="#190f22"/></linearGradient>
+ <radialGradient id="glow"><stop stop-color="#e9a35a" stop-opacity=".65"/><stop offset="1" stop-color="#e9a35a" stop-opacity="0"/></radialGradient>
+ <linearGradient id="robe" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#80a88e"/><stop offset=".55" stop-color="#2b655c"/><stop offset="1" stop-color="#102e35"/></linearGradient>
+ <linearGradient id="panel" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#07131b" stop-opacity=".06"/><stop offset="1" stop-color="#07131b" stop-opacity=".96"/></linearGradient>
+ <filter id="blur"><feGaussianBlur stdDeviation="28"/></filter>
+ <pattern id="grain" width="70" height="70" patternUnits="userSpaceOnUse"><circle cx="10" cy="8" r="1.2" fill="#fff" opacity=".18"/><circle cx="48" cy="38" r=".8" fill="#e8b87a" opacity=".22"/><path d="M4 59l4 -2" stroke="#fff" stroke-opacity=".12"/></pattern>
+</defs>
+<rect width="1000" height="1500" fill="url(#bg)"/>
+<circle cx="790" cy="480" r="300" fill="url(#glow)" filter="url(#blur)"/>
+<circle cx="174" cy="665" r="230" fill="#1b796f" opacity=".22" filter="url(#blur)"/>
+<!-- moon and stars -->
+<circle cx="795" cy="190" r="67" fill="#f3d9a0" opacity=".9"/><circle cx="821" cy="169" r="65" fill="#0c2632"/>
+<g fill="#f6e8c4" opacity=".85"><circle cx="109" cy="186" r="3"/><circle cx="230" cy="126" r="2"/><circle cx="375" cy="202" r="2.5"/><circle cx="630" cy="127" r="2"/><circle cx="890" cy="320" r="2.6"/><circle cx="94" cy="365" r="2"/><circle cx="522" cy="310" r="1.8"/><circle cx="706" cy="370" r="2"/></g>
+<g stroke="#f5dca5" stroke-opacity=".65" stroke-width="2"><path d="M155 256v17m-8.5-8.5h17"/><path d="M580 173v13m-6.5-6.5h13"/><path d="M868 422v16m-8-8h16"/></g>
+<!-- distant palace roof line -->
+<g fill="#091a20" stroke="#bd8f62" stroke-width="3" stroke-opacity=".75">
+ <path d="M0 560L120 510L245 557L245 582L0 582Z"/><path d="M60 510L103 468L145 510Z"/><path d="M195 555L312 501L434 556L434 579L195 579Z"/><path d="M252 502L311 450L371 502Z"/>
+ <path d="M490 566L625 499L763 566L763 590L490 590Z"/><path d="M553 500L625 440L696 500Z"/><path d="M730 568L860 512L1000 566L1000 590L730 590Z"/><path d="M800 511L861 460L924 511Z"/>
+</g>
+<g stroke="#d8a56a" stroke-width="2" opacity=".55"><path d="M105 516v66M311 510v68M625 509v78M860 518v66"/><path d="M52 581h398M486 589h514"/></g>
+<!-- garden and atmospheric mists -->
+<path d="M0 725Q180 675 370 724T730 714T1000 700V1500H0Z" fill="#071b22"/>
+<path d="M0 815Q210 760 410 815T800 795T1000 805" fill="none" stroke="#8ab8a6" stroke-opacity=".16" stroke-width="30" filter="url(#blur)"/>
+<g fill="#ba8557" opacity=".85"><ellipse cx="125" cy="754" rx="25" ry="9" transform="rotate(-28 125 754)"/><ellipse cx="210" cy="694" rx="18" ry="7" transform="rotate(35 210 694)"/><ellipse cx="836" cy="728" rx="24" ry="8" transform="rotate(21 836 728)"/><ellipse cx="902" cy="650" rx="18" ry="7" transform="rotate(-36 902 650)"/><ellipse cx="705" cy="774" rx="17" ry="6" transform="rotate(-15 705 774)"/></g>
+<!-- original investigator silhouette -->
+<ellipse cx="510" cy="1085" rx="245" ry="90" fill="#020a10" opacity=".55"/>
+<path d="M355 940Q350 810 415 760Q449 731 493 760Q557 795 575 915L610 1100L338 1100Z" fill="url(#robe)" stroke="#8bb6a0" stroke-width="3"/>
+<path d="M410 782Q352 828 355 941L404 965L453 806Z" fill="#102b36"/>
+<path d="M500 782Q571 833 576 934L532 972L472 821Z" fill="#0b2832"/>
+<path d="M398 805Q375 733 426 697Q478 657 520 709Q551 751 517 813L485 845L422 831Z" fill="#1a131d"/>
+<path d="M406 752Q365 706 399 668Q438 623 489 654Q527 677 519 725L493 762L462 730L441 763Z" fill="#16131d"/>
+<path d="M423 772Q445 753 479 771L491 832L450 856L414 818Z" fill="#d59c7c"/>
+<path d="M416 792Q435 808 460 801" fill="none" stroke="#733b3b" stroke-width="4" stroke-linecap="round"/>
+<path d="M402 779Q427 762 449 777" fill="none" stroke="#17151b" stroke-width="8" stroke-linecap="round"/>
+<path d="M492 773Q516 762 529 789" fill="none" stroke="#17151b" stroke-width="8" stroke-linecap="round"/>
+<path d="M426 852L476 858L527 1063L448 1084L394 943Z" fill="#d4bb82" opacity=".85"/>
+<path d="M432 862L477 860L446 1070L403 1008Z" fill="#e6d5a7" opacity=".7"/>
+<path d="M371 950Q449 997 563 944" fill="none" stroke="#a2c4a5" stroke-width="6" opacity=".75"/>
+<!-- herb vial and lantern -->
+<g transform="translate(622 875)"><path d="M0 50h66l-5 85q-28 21-56 0Z" fill="#a8cbb0" fill-opacity=".32" stroke="#c6dfb8" stroke-width="3"/><rect x="18" y="28" width="30" height="27" rx="4" fill="#d7c08b"/><path d="M5 97h56" stroke="#b8dfc1" stroke-width="2"/><path d="M21 115q12-20 24 0" stroke="#99d69c" stroke-width="3" fill="none"/></g>
+<g transform="translate(780 590)"><path d="M0 0q42-35 84 0L74 18H10Z" fill="#b87b48"/><path d="M8 18h68l-8 99H16Z" fill="#db8953" opacity=".72" stroke="#f0c07e" stroke-width="3"/><path d="M26 27v79M42 24v82M59 28v78" stroke="#f6dc9a" stroke-width="4" opacity=".55"/><ellipse cx="42" cy="18" rx="40" ry="10" fill="#efbd78"/><ellipse cx="42" cy="70" rx="95" ry="110" fill="#ed9c53" opacity=".2" filter="url(#blur)"/></g>
+<!-- title panel -->
+<rect x="0" y="0" width="1000" height="1500" fill="url(#panel)"/>
+<g font-family="Arial, Helvetica, sans-serif" text-anchor="middle">
+ <text x="500" y="85" fill="#f2c985" font-size="22" letter-spacing="8">ANIMEZAX EDITORIAL</text>
+ <path d="M310 111H690" stroke="#bd8c5a" stroke-width="2"/>
+ <text x="500" y="195" fill="#f7ecd5" font-size="23" letter-spacing="5">FALL 2026 WATCHLIST</text>
+ <text x="500" y="270" fill="#f1d28e" font-size="40" font-weight="700" letter-spacing="2">THE APOTHECARY</text>
+ <text x="500" y="326" fill="#f1d28e" font-size="51" font-weight="700" letter-spacing="1">DIARIES S3</text>
+ <text x="500" y="374" fill="#e9e4d8" font-size="22" letter-spacing="2">WHY THIS MYSTERY IS ON OUR LIST</text>
+ <rect x="205" y="1302" width="590" height="2" fill="#bd8c5a"/>
+ <text x="500" y="1355" fill="#f7ecd5" font-size="28" font-weight="700" letter-spacing="7">ANIMEZAX.COM</text>
+ <text x="500" y="1396" fill="#b4c4bb" font-size="17" letter-spacing="4">DISCOVER YOUR NEXT OBSESSION</text>
+</g>
+<rect width="1000" height="1500" fill="url(#grain)" opacity=".28"/>
+<rect x="18" y="18" width="964" height="1464" rx="14" fill="none" stroke="#cfaa72" stroke-opacity=".6" stroke-width="2"/>
+</svg>

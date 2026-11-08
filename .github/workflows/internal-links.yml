@@ -20,3 +20,5 @@ jobs:
           python-version: "3.12"
       - name: Validate local links and fragment targets
         run: python scripts/validate_internal_links.py
+      - name: Validate Jujutsu Kaisen search snippet metadata
+        run: python scripts/validate_priority_seo.py

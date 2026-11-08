@@ -22,3 +22,5 @@ jobs:
         run: python scripts/validate_internal_links.py
       - name: Validate Jujutsu Kaisen search snippet metadata
         run: python scripts/validate_priority_seo.py
+      - name: Validate Black Clover Season 2 status and official references
+        run: python scripts/validate_black_clover_status.py

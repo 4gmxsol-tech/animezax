@@ -67,13 +67,15 @@ def main():
         errors.append("twitter:description must match the meta description")
     if "Jujutsu Kaisen" not in " ".join(parser.h1_parts):
         errors.append("H1 must identify Jujutsu Kaisen")
-    for phrase in ("plot summary", "cursed energy", "watch order"):
+    for phrase in ("plot summary", "cursed energy", "power system", "watch order"):
         if phrase not in description.lower():
             errors.append(f"meta description must include '{phrase}'")
     if parser.canonical != URL:
         errors.append("canonical URL must point to the preferred HTTPS page")
     if URL not in sitemap:
         errors.append("Jujutsu Kaisen page must remain in sitemap.xml")
+    if f"<loc>{URL}</loc><lastmod>2026-11-09</lastmod>" not in sitemap:
+        errors.append("Jujutsu Kaisen sitemap lastmod must match the refreshed page date")
 
     if errors:
         print("\n".join(f"FAIL: {error}" for error in errors))

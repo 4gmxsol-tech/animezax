@@ -69,6 +69,10 @@ def main():
         errors.append("twitter:description must match the meta description")
     if "Jujutsu Kaisen" not in " ".join(parser.h1_parts):
         errors.append("H1 must identify Jujutsu Kaisen")
+    if "power system" not in title.lower():
+        errors.append("title must reflect the verified power-system search intent")
+    if "power system" not in " ".join(parser.h1_parts).lower():
+        errors.append("H1 must identify the power-system section")
     for phrase in ("synopsis", "plot summary", "cursed energy", "power system", "watch order"):
         if phrase not in description.lower():
             errors.append(f"meta description must include '{phrase}'")

@@ -2,6 +2,8 @@
 """Regression checks for the Jujutsu Kaisen organic-search landing page."""
 from html.parser import HTMLParser
 from pathlib import Path
+import json
+import re
 import sys
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -54,6 +56,21 @@ def main():
     description = parser.meta.get("description", "").strip()
     sitemap = SITEMAP.read_text(encoding="utf-8")
     errors = []
+
+    html_lang = re.search(r'<html\b[^>]*\blang=["\']([^"\']+)', html, re.I)
+    tv_series = None
+    for block in re.findall(r'<script\s+type=["\']application/ld\+json["\']>(.*?)</script>', html, re.I | re.S):
+        try:
+            data = json.loads(block)
+        except json.JSONDecodeError:
+            continue
+        if data.get("@type") == "TVSeries":
+            tv_series = data
+            break
+    if not html_lang:
+        errors.append("HTML must declare its content language")
+    elif not tv_series or tv_series.get("inLanguage") != html_lang.group(1):
+        errors.append("TVSeries inLanguage must match the HTML document language")
 
     if not 45 <= len(title) <= 65:
         errors.append(f"title length must be 45-65 characters (got {len(title)})")

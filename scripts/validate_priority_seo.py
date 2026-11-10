@@ -57,9 +57,9 @@ def main():
     sitemap = SITEMAP.read_text(encoding="utf-8")
     errors = []
 
-    html_lang = re.search(r'<html\\b[^>]*\\blang=["\\']([^"\\']+)', html, re.I)
+    html_lang = re.search(r'<html\b[^>]*\blang=["\\']([^"\\']+)', html, re.I)
     tv_series = None
-    for block in re.findall(r'<script\\s+type=["\\']application/ld\\+json["\\']>(.*?)</script>', html, re.I | re.S):
+    for block in re.findall(r'<script\s+type=["\\']application/ld\+json["\\']>(.*?)</script>', html, re.I | re.S):
         try:
             data = json.loads(block)
         except json.JSONDecodeError:

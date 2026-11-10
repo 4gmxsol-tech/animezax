@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Regression checks for the Jujutsu Kaisen organic-search landing page."""
+"""SEO and structured-data regression checks for the Jujutsu Kaisen landing page."""
 from html.parser import HTMLParser
 from pathlib import Path
 import json
@@ -59,6 +59,7 @@ def main():
 
     html_lang = re.search(r'<html\b[^>]*\blang=["\']([^"\']+)', html, re.I)
     tv_series = None
+    web_page = None
     for block in re.findall(r'<script\s+type=["\']application/ld\+json["\']>(.*?)</script>', html, re.I | re.S):
         try:
             data = json.loads(block)
@@ -66,11 +67,19 @@ def main():
             continue
         if data.get("@type") == "TVSeries":
             tv_series = data
-            break
+        elif data.get("@type") == "WebPage":
+            web_page = data
     if not html_lang:
         errors.append("HTML must declare its content language")
-    elif not tv_series or tv_series.get("inLanguage") != html_lang.group(1):
-        errors.append("TVSeries inLanguage must match the HTML document language")
+    if not tv_series or tv_series.get("inLanguage") != "ja":
+        errors.append("TVSeries inLanguage must describe the Japanese series performance (ja)")
+    if html_lang and (not web_page or web_page.get("inLanguage") != html_lang.group(1)):
+        errors.append("WebPage inLanguage must match the HTML document language")
+    if tv_series and web_page:
+        if web_page.get("mainEntity", {}).get("@id") != tv_series.get("@id"):
+            errors.append("WebPage mainEntity must reference the TVSeries entity")
+        if tv_series.get("mainEntityOfPage", {}).get("@id") != web_page.get("@id"):
+            errors.append("TVSeries mainEntityOfPage must reference the WebPage entity")
 
     if not 45 <= len(title) <= 65:
         errors.append(f"title length must be 45-65 characters (got {len(title)})")
@@ -136,7 +145,7 @@ def main():
     if errors:
         print("\n".join(f"FAIL: {error}" for error in errors))
         return 1
-    print(f"PASS: Jujutsu Kaisen snippet metadata is consistent (title={len(title)}, description={len(description)} characters).")
+    print(f"PASS: Jujutsu Kaisen snippet metadata and series/page language semantics are consistent (title={len(title)}, description={len(description)} characters).")
     return 0
 
 if __name__ == "__main__":

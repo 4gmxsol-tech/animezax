@@ -78,7 +78,7 @@ def main():
         errors.append("TVSeries inLanguage must describe the Japanese series performance (ja)")
     if html_lang and (not web_page or web_page.get("inLanguage") != html_lang.group(1)):
         errors.append("WebPage inLanguage must match the HTML document language")
-    if web_page and web_page.get("dateModified") != "2026-11-11":
+    if web_page and web_page.get("dateModified") != "2026-11-12":
         errors.append("WebPage dateModified must match the refreshed snippet date")
     if web_page and web_page.get("description") != description:
         errors.append("WebPage description must match the search snippet")
@@ -94,6 +94,37 @@ def main():
     visible_faq = f'<summary>{power_question}</summary><p>{power_answer}</p></details>'
     if html.count(visible_faq) != 1:
         errors.append("Visible power-system FAQ must appear exactly once and match FAQPage")
+    season3_question = "Is Jujutsu Kaisen Season 3 out?"
+    season3_answer = "Yes. Season 3, The Culling Game Part 1, premiered in Japan on January 8, 2026 and reached its finale on March 26, 2026. Streaming availability varies by region."
+    season4_question = "Will there be a Season 4?"
+    season4_answer = "Yes. Season 4, The Culling Game Part 2, is in production. The official anime site published a teaser PV on June 19, 2026 and a super teaser visual on August 29, 2026; those announcements do not include a release date."
+    for question, answer in ((season3_question, season3_answer), (season4_question, season4_answer)):
+        matches = [item for item in faq_items if item.get("name") == question]
+        if len(matches) != 1 or matches[0].get("acceptedAnswer", {}).get("text") != answer:
+            errors.append(f"FAQPage must contain one current, sourced answer for: {question}")
+        visible = f"<summary>{question}</summary><p>{answer}</p></details>"
+        if html.count(visible) != 1:
+            errors.append(f"Visible FAQ must match FAQPage exactly once: {question}")
+
+    status_paragraph = (
+        "As of November 12, 2026, Season 3 — The Culling Game Part 1 — has completed its Japanese broadcast "
+        "after premiering on January 8 and reaching its finale on March 26. Season 4 — The Culling Game Part 2 — "
+        "is in production. The official site published a Season 4 teaser PV on June 19 and a super teaser visual "
+        "on August 29, 2026; neither announcement gives a release date. Streaming catalogs, dubs and release "
+        "schedules vary by country."
+    )
+    if status_paragraph not in html:
+        errors.append("Current anime status must be dated and distinguish Season 3 completion from Season 4 production")
+    if "<strong>Season 4 — The Culling Game Part 2:</strong> In production; not available yet." not in html:
+        errors.append("Watch order must not imply that the unreleased Season 4 is currently watchable")
+    for official_url in (
+        "https://jujutsukaisen.jp/onair/index_movie.php",
+        "https://jujutsukaisen.jp/news/20260619_01.php",
+        "https://jujutsukaisen.jp/news/20260829_01.php",
+        "https://www.crunchyroll.com/news/latest/2026/3/26/jujutsu-kaisen-season-4-culling-game-part-2-announced",
+    ):
+        if official_url not in html:
+            errors.append(f"Current anime status must link to source: {official_url}")
 
     if tv_series and web_page:
         if web_page.get("mainEntity", {}).get("@id") != tv_series.get("@id"):
@@ -130,7 +161,7 @@ def main():
         errors.append("canonical URL must point to the preferred HTTPS page")
     if URL not in sitemap:
         errors.append("Jujutsu Kaisen page must remain in sitemap.xml")
-    if f"<loc>{URL}</loc><lastmod>2026-11-11</lastmod>" not in sitemap:
+    if f"<loc>{URL}</loc><lastmod>2026-11-12</lastmod>" not in sitemap:
         errors.append("Jujutsu Kaisen sitemap lastmod must match the refreshed page date")
 
 

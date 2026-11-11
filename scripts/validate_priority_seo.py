@@ -60,6 +60,7 @@ def main():
     html_lang = re.search(r'<html\b[^>]*\blang=["\']([^"\']+)', html, re.I)
     tv_series = None
     web_page = None
+    faq_page = None
     for block in re.findall(r'<script\s+type=["\']application/ld\+json["\']>(.*?)</script>', html, re.I | re.S):
         try:
             data = json.loads(block)
@@ -69,6 +70,8 @@ def main():
             tv_series = data
         elif data.get("@type") == "WebPage":
             web_page = data
+        elif data.get("@type") == "FAQPage":
+            faq_page = data
     if not html_lang:
         errors.append("HTML must declare its content language")
     if not tv_series or tv_series.get("inLanguage") != "ja":
@@ -81,6 +84,16 @@ def main():
         errors.append("WebPage description must match the search snippet")
     if "Yuji Itadori becomes Sukuna's host" not in description:
         errors.append("Meta description must answer the main plot query directly")
+
+    power_question = "How does the Jujutsu Kaisen power system work?"
+    power_answer = "Cursed energy comes from negative emotions. Sorcerers learn to control it to reinforce their bodies and use cursed techniques. A Domain Expansion creates a space imbued with the user's technique; its rules and effects vary, and not every sorcerer can use one."
+    faq_items = faq_page.get("mainEntity", []) if faq_page else []
+    matching_faq = [item for item in faq_items if item.get("name") == power_question]
+    if len(matching_faq) != 1 or matching_faq[0].get("acceptedAnswer", {}).get("text") != power_answer:
+        errors.append("FAQPage must include one accurate power-system answer matching the visible FAQ")
+    visible_faq = f'<summary>{power_question}</summary><p>{power_answer}</p></details>'
+    if html.count(visible_faq) != 1:
+        errors.append("Visible power-system FAQ must appear exactly once and match FAQPage")
 
     if tv_series and web_page:
         if web_page.get("mainEntity", {}).get("@id") != tv_series.get("@id"):

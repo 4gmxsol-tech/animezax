@@ -117,6 +117,10 @@ def main():
         errors.append("H1 must identify Jujutsu Kaisen")
     if "power system" not in title.lower():
         errors.append("title must reflect the verified power-system search intent")
+    if "what is jujutsu kaisen about" not in title.lower():
+        errors.append("title must lead with the verified 'what is jujutsu kaisen about' search intent")
+    if web_page and web_page.get("name") != title:
+        errors.append("WebPage name must match the document title")
     if "power system" not in " ".join(parser.h1_parts).lower():
         errors.append("H1 must identify the power-system section")
     for phrase in ("synopsis", "plot summary", "cursed energy", "power system", "watch order"):

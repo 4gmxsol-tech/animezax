@@ -75,6 +75,13 @@ def main():
         errors.append("TVSeries inLanguage must describe the Japanese series performance (ja)")
     if html_lang and (not web_page or web_page.get("inLanguage") != html_lang.group(1)):
         errors.append("WebPage inLanguage must match the HTML document language")
+    if web_page and web_page.get("dateModified") != "2026-11-11":
+        errors.append("WebPage dateModified must match the refreshed snippet date")
+    if web_page and web_page.get("description") != description:
+        errors.append("WebPage description must match the search snippet")
+    if "Yuji Itadori becomes Sukuna's host" not in description:
+        errors.append("Meta description must answer the main plot query directly")
+
     if tv_series and web_page:
         if web_page.get("mainEntity", {}).get("@id") != tv_series.get("@id"):
             errors.append("WebPage mainEntity must reference the TVSeries entity")
@@ -106,7 +113,7 @@ def main():
         errors.append("canonical URL must point to the preferred HTTPS page")
     if URL not in sitemap:
         errors.append("Jujutsu Kaisen page must remain in sitemap.xml")
-    if f"<loc>{URL}</loc><lastmod>2026-11-10</lastmod>" not in sitemap:
+    if f"<loc>{URL}</loc><lastmod>2026-11-11</lastmod>" not in sitemap:
         errors.append("Jujutsu Kaisen sitemap lastmod must match the refreshed page date")
 
 

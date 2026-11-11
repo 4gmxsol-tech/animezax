@@ -167,7 +167,7 @@ def main():
         errors.append("One Piece Article dateModified must match the refreshed page date")
     if "<h2>Where to fit One Piece specials and movies</h2>" not in one_piece_html:
         errors.append("One Piece guide must include a dedicated specials-and-movies placement section")
-    for phrase in ("immediately before", "Film Gold", "after the post-timeskip reunion", "after you know Nami and Robin", "Last reviewed November 12, 2026"):
+    for phrase in ("immediately before", "Film: Gold", "after the post-timeskip reunion", "after you know Nami and Robin", "Last reviewed November 12, 2026"):
         if phrase.lower() not in one_piece_html.lower():
             errors.append(f"One Piece specials guide must include '{phrase}'")
     for official_url in (

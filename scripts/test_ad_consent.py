@@ -38,11 +38,15 @@ for page_name, source in (("homepage", homepage), ("One Piece guide", article)):
     if "adsterra-ads.js" not in source:
         errors.append(f"{page_name} must load the first-party consent manager.")
 
-for phrase in ("Advertising and third-party services", "Accept advertising", "Reject advertising", "local storage"):
+for phrase in ("Advertising and third-party services", "Accept advertising", "Reject advertising", "local storage", "change or withdraw"):
     if phrase.lower() not in privacy.lower():
-        errors.append(f"Privacy notice is missing advertising disclosure: {phrase}")
+        errors.append(f"Privacy notice is missing advertising disclosure or preference control: {phrase}")
+if 'id="change-ad-preferences"' not in privacy or 'src="/assets/js/adsterra-ads.js"' not in privacy:
+    errors.append("Privacy notice must load the consent manager and expose a preference-change control.")
+if "Before enabling advertising" in privacy:
+    errors.append("Privacy notice must not describe already-active advertising as a future service.")
 
-for phrase in ("localStorage.getItem(CONSENT_KEY)", 'choice === "accepted"', 'choice === "rejected"', "adsterra-ads-engine.js"):
+for phrase in ("localStorage.getItem(CONSENT_KEY)", 'choice === "accepted"', 'choice === "rejected"', "adsterra-ads-engine.js", "IS_PRIVACY_PAGE", "showConsent(true)", "if (!IS_PRIVACY_PAGE) activateAds()"):
     if phrase not in consent:
         errors.append(f"Consent loader is missing required gate behavior: {phrase}")
 

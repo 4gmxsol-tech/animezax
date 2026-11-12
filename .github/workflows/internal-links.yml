@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - name: Validate advertising consent and disclosure
+        run: python scripts/test_ad_consent.py
       - name: Validate local links and fragment targets
         run: python scripts/validate_internal_links.py
       - name: Validate Jujutsu Kaisen search snippet metadata

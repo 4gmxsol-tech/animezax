@@ -12,12 +12,17 @@ DIRECT_AD = re.compile(
 INLINE_OPTIONS = re.compile(r"\batOptions\s*=", re.IGNORECASE)
 
 errors = []
+manual_slot_pages = []
 for page in ROOT.rglob("*.html"):
     if ".git" in page.parts or "node_modules" in page.parts:
         continue
     source = page.read_text(encoding="utf-8", errors="replace")
     if DIRECT_AD.search(source) or INLINE_OPTIONS.search(source):
         errors.append(f"Direct ad code must be consent-gated, not embedded in HTML: {page.relative_to(ROOT)}")
+    if "data-adsterra-manual-slot=" in source:
+        manual_slot_pages.append(page)
+        if "adsterra-ads.js" not in source:
+            errors.append(f"Manual ad placeholder must load the consent manager: {page.relative_to(ROOT)}")
 
 homepage = (ROOT / "index.html").read_text(encoding="utf-8")
 article = (ROOT / "articles/one-piece-watch-order.html").read_text(encoding="utf-8")
@@ -48,4 +53,4 @@ if errors:
     print("\n".join(f"FAIL: {item}" for item in errors))
     sys.exit(1)
 
-print("PASS: direct third-party ad code is absent from HTML; ads are loaded only through the explicit consent path.")
+print(f"PASS: direct third-party ad code is absent from HTML; {len(manual_slot_pages)} pages use consent-managed manual slots.")

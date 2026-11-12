@@ -106,15 +106,14 @@ def main():
         if html.count(visible) != 1:
             errors.append(f"Visible FAQ must match FAQPage exactly once: {question}")
 
-    plot_section = re.search(
-        r'<h2>What is Jujutsu Kaisen about\\? \\(Plot summary\\)</h2>(.*?)<h2>Why watch Jujutsu Kaisen\\?</h2>',
-        html,
-        re.I | re.S,
-    )
-    if not plot_section:
+    plot_start_marker = "<h2>What is Jujutsu Kaisen about? (Plot summary)</h2>"
+    plot_end_marker = "<h2>Why watch Jujutsu Kaisen?</h2>"
+    plot_start = html.find(plot_start_marker)
+    plot_end = html.find(plot_end_marker, plot_start + len(plot_start_marker)) if plot_start >= 0 else -1
+    if plot_start < 0 or plot_end < 0:
         errors.append("Plot summary section must remain present")
     else:
-        plot_text = plot_section.group(1)
+        plot_text = html[plot_start + len(plot_start_marker):plot_end]
         for phrase in (
             "sharing his body with Sukuna",
             "At Tokyo Jujutsu High, Yuji trains alongside Megumi Fushiguro and Nobara Kugisaki under Satoru Gojo.",

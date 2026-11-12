@@ -106,6 +106,25 @@ def main():
         if html.count(visible) != 1:
             errors.append(f"Visible FAQ must match FAQPage exactly once: {question}")
 
+    plot_section = re.search(
+        r'<h2>What is Jujutsu Kaisen about\\? \\(Plot summary\\)</h2>(.*?)<h2>Why watch Jujutsu Kaisen\\?</h2>',
+        html,
+        re.I | re.S,
+    )
+    if not plot_section:
+        errors.append("Plot summary section must remain present")
+    else:
+        plot_text = plot_section.group(1)
+        for phrase in (
+            "sharing his body with Sukuna",
+            "At Tokyo Jujutsu High, Yuji trains alongside Megumi Fushiguro and Nobara Kugisaki under Satoru Gojo.",
+            "Early missions introduce the practical rules of cursed energy",
+        ):
+            if phrase not in plot_text:
+                errors.append(f"Plot summary must retain distinct story context: {phrase}")
+        if "In a world where negative human emotions give rise to dangerous cursed spirits" in plot_text:
+            errors.append("Plot summary must not repeat the introductory synopsis paragraph")
+
     status_paragraph = (
         "As of November 12, 2026, Season 3 — The Culling Game Part 1 — has completed its Japanese broadcast "
         "after premiering on January 8 and reaching its finale on March 26. Season 4 — The Culling Game Part 2 — "

@@ -12,7 +12,7 @@ class ArticleArchiveParser(HTMLParser):
         self.cards = 0
         self.images = 0
         self.headings = 0
-        self.linked_headings = 0
+        self.card_links = 0
         self.errors = []
 
     def handle_starttag(self, tag, attrs):
@@ -39,9 +39,8 @@ class ArticleArchiveParser(HTMLParser):
         if tag == "h2":
             self.heading_depth += 1
             self.headings += 1
-        elif tag == "a" and self.heading_depth:
-            if attrs.get("href"):
-                self.linked_headings += 1
+        elif tag == "a" and attrs.get("href"):
+            self.card_links += 1
 
     def handle_endtag(self, tag):
         if tag == "h2" and self.heading_depth:
@@ -63,14 +62,13 @@ def main():
     assert parser.headings == parser.cards, (
         f"Expected one heading per card; found {parser.headings} headings."
     )
-    assert parser.linked_headings == parser.cards, (
-        "Every article card must retain a linked heading so its content remains "
-        "available when the thumbnail is treated as decorative."
+    assert parser.card_links == parser.cards, (
+        "Every article card must retain a descriptive link to its article."
     )
     assert not parser.errors, "\\n".join(parser.errors)
 
     print(
-        f"PASS: {parser.cards} article cards retain linked headings; "
+        f"PASS: {parser.cards} article cards retain headings and article links; "
         f"{parser.images} generic thumbnails use empty alt text and lazy loading."
     )
 

@@ -22,6 +22,8 @@ jobs:
         run: python scripts/test_ad_consent.py
       - name: Validate article archive social metadata
         run: python scripts/test_article_index_metadata.py
+      - name: Validate decorative article thumbnails and linked headings
+        run: python scripts/test_article_archive_accessibility.py
       - name: Validate local links and fragment targets
         run: python scripts/validate_internal_links.py
       - name: Validate Jujutsu Kaisen search snippet metadata

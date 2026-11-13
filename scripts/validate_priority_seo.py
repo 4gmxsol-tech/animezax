@@ -78,7 +78,7 @@ def main():
         errors.append("TVSeries inLanguage must describe the Japanese series performance (ja)")
     if html_lang and (not web_page or web_page.get("inLanguage") != html_lang.group(1)):
         errors.append("WebPage inLanguage must match the HTML document language")
-    if web_page and web_page.get("dateModified") != "2026-11-13":
+    if web_page and web_page.get("dateModified") != "2026-11-14":
         errors.append("WebPage dateModified must match the refreshed snippet date")
     if web_page and web_page.get("description") != description:
         errors.append("WebPage description must match the search snippet")
@@ -181,9 +181,24 @@ def main():
         errors.append("canonical URL must point to the preferred HTTPS page")
     if URL not in sitemap:
         errors.append("Jujutsu Kaisen page must remain in sitemap.xml")
-    if f"<loc>{URL}</loc><lastmod>2026-11-13</lastmod>" not in sitemap:
+    if f"<loc>{URL}</loc><lastmod>2026-11-14</lastmod>" not in sitemap:
         errors.append("Jujutsu Kaisen sitemap lastmod must match the refreshed page date")
 
+
+    watch_order_href = "../watch-order/jujutsu-kaisen-watch-order.html"
+    next_step_start = html.find('<p class="eyebrow">YOUR NEXT STEP</p>')
+    next_step_end = html.find("</section>", next_step_start)
+    if next_step_start < 0 or next_step_end < 0:
+        errors.append("Jujutsu Kaisen next-step section must remain present")
+    else:
+        next_step_section = html[next_step_start:next_step_end]
+        if next_step_section.count(f'href="{watch_order_href}"') != 1:
+            errors.append("Jujutsu Kaisen watch-order guide must be a direct next step after the FAQ")
+    deep_links_start = html.find('<section class="content-section animezax-deep-links">')
+    deep_links_end = html.find("</section>", deep_links_start)
+    if deep_links_start >= 0 and deep_links_end > deep_links_start:
+        if watch_order_href in html[deep_links_start:deep_links_end]:
+            errors.append("Jujutsu Kaisen watch-order link should not be buried only in the deep-links section")
 
     one_piece_html = ONE_PIECE_PAGE.read_text(encoding="utf-8")
     one_piece_parser = MetadataParser()

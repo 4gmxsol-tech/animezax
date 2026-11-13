@@ -78,12 +78,14 @@ def main():
         errors.append("TVSeries inLanguage must describe the Japanese series performance (ja)")
     if html_lang and (not web_page or web_page.get("inLanguage") != html_lang.group(1)):
         errors.append("WebPage inLanguage must match the HTML document language")
-    if web_page and web_page.get("dateModified") != "2026-11-12":
+    if web_page and web_page.get("dateModified") != "2026-11-13":
         errors.append("WebPage dateModified must match the refreshed snippet date")
     if web_page and web_page.get("description") != description:
         errors.append("WebPage description must match the search snippet")
-    if "Yuji Itadori becomes Sukuna's host" not in description:
-        errors.append("Meta description must answer the main plot query directly")
+    if not description.startswith("What is Jujutsu Kaisen about?"):
+        errors.append("Meta description must answer the verified question query first")
+    if "Yuji Itadori" not in description or "Sukuna's host" not in description:
+        errors.append("Meta description must identify Yuji and Sukuna's role accurately")
 
     power_question = "How does the Jujutsu Kaisen power system work?"
     power_answer = "Cursed energy comes from negative emotions. Sorcerers learn to control it to reinforce their bodies and use cursed techniques. A Domain Expansion creates a space imbued with the user's technique; its rules and effects vary, and not every sorcerer can use one."
@@ -179,7 +181,7 @@ def main():
         errors.append("canonical URL must point to the preferred HTTPS page")
     if URL not in sitemap:
         errors.append("Jujutsu Kaisen page must remain in sitemap.xml")
-    if f"<loc>{URL}</loc><lastmod>2026-11-12</lastmod>" not in sitemap:
+    if f"<loc>{URL}</loc><lastmod>2026-11-13</lastmod>" not in sitemap:
         errors.append("Jujutsu Kaisen sitemap lastmod must match the refreshed page date")
 
 

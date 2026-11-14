@@ -182,7 +182,7 @@ def main():
         errors.append("canonical URL must point to the preferred HTTPS page")
     if URL not in sitemap:
         errors.append("Jujutsu Kaisen page must remain in sitemap.xml")
-    if f"<loc>{URL}</loc><lastmod>2026-11-14</lastmod>" not in sitemap:
+    if f"<loc>{URL}</loc><lastmod>2026-11-15</lastmod>" not in sitemap:
         errors.append("Jujutsu Kaisen sitemap lastmod must match the refreshed page date")
 
 

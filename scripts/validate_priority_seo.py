@@ -208,6 +208,8 @@ def main():
 
     if "where to start" not in one_piece_title.lower():
         errors.append("One Piece title must reflect the verified where-to-start search intent")
+    if "one piece watch guide" not in one_piece_title.lower():
+        errors.append("One Piece title must include the verified watch-guide search phrase")
     if f'"headline":"{one_piece_title}"' not in one_piece_html:
         errors.append("One Piece Article headline must match the document title")
     if not 45 <= len(one_piece_title) <= 65:
@@ -231,9 +233,9 @@ def main():
         errors.append("One Piece canonical URL must point to the preferred HTTPS page")
     if ONE_PIECE_URL not in sitemap:
         errors.append("One Piece watch guide must remain in sitemap.xml")
-    if f"<loc>{ONE_PIECE_URL}</loc><lastmod>2026-11-13</lastmod>" not in sitemap:
+    if f"<loc>{ONE_PIECE_URL}</loc><lastmod>2026-11-15</lastmod>" not in sitemap:
         errors.append("One Piece sitemap lastmod must match the refreshed page date")
-    if '"dateModified":"2026-11-13"' not in one_piece_html:
+    if '"dateModified":"2026-11-15"' not in one_piece_html:
         errors.append("One Piece Article dateModified must match the refreshed page date")
     if "<h2>Where to fit One Piece specials and movies</h2>" not in one_piece_html:
         errors.append("One Piece guide must include a dedicated specials-and-movies placement section")
@@ -241,7 +243,7 @@ def main():
         errors.append("Official movie list must be described as a source for titles and release dates")
     if "for release order" in one_piece_html:
         errors.append("Do not describe the official movie list as ascending release order; it is newest-first")
-    for phrase in ("immediately before", "Film: Gold", "after the post-timeskip reunion", "after you know Nami and Robin", "Last reviewed November 13, 2026"):
+    for phrase in ("immediately before", "Film: Gold", "after the post-timeskip reunion", "after you know Nami and Robin", "Updated November 15, 2026", "Last reviewed November 15, 2026"):
         if phrase.lower() not in one_piece_html.lower():
             errors.append(f"One Piece specials guide must include '{phrase}'")
     for official_url in (

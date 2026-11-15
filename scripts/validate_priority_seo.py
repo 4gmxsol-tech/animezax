@@ -78,7 +78,7 @@ def main():
         errors.append("TVSeries inLanguage must describe the Japanese series performance (ja)")
     if html_lang and (not web_page or web_page.get("inLanguage") != html_lang.group(1)):
         errors.append("WebPage inLanguage must match the HTML document language")
-    if web_page and web_page.get("dateModified") != "2026-11-14":
+    if web_page and web_page.get("dateModified") != "2026-11-15":
         errors.append("WebPage dateModified must match the refreshed snippet date")
     if web_page and web_page.get("description") != description:
         errors.append("WebPage description must match the search snippet")
@@ -164,8 +164,9 @@ def main():
         errors.append("og:description must match the meta description")
     if parser.meta.get("twitter:description") != description:
         errors.append("twitter:description must match the meta description")
-    if "Jujutsu Kaisen" not in " ".join(parser.h1_parts):
-        errors.append("H1 must identify Jujutsu Kaisen")
+    h1 = " ".join("".join(parser.h1_parts).split())
+    if h1 != "What Is Jujutsu Kaisen About? Plot, Power System & Watch Order":
+        errors.append("H1 must lead with the verified question while retaining plot, power-system, and watch-order intent")
     if "power system" not in title.lower():
         errors.append("title must reflect the verified power-system search intent")
     if "what is jujutsu kaisen about" not in title.lower():
@@ -181,7 +182,7 @@ def main():
         errors.append("canonical URL must point to the preferred HTTPS page")
     if URL not in sitemap:
         errors.append("Jujutsu Kaisen page must remain in sitemap.xml")
-    if f"<loc>{URL}</loc><lastmod>2026-11-14</lastmod>" not in sitemap:
+    if f"<loc>{URL}</loc><lastmod>2026-11-15</lastmod>" not in sitemap:
         errors.append("Jujutsu Kaisen sitemap lastmod must match the refreshed page date")
 
 

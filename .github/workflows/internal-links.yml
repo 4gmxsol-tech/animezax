@@ -26,6 +26,8 @@ jobs:
         run: python scripts/test_article_archive_accessibility.py
       - name: Validate local links and fragment targets
         run: python scripts/validate_internal_links.py
+      - name: Validate Black Clover watch-order hub discovery
+        run: python scripts/test_black_clover_watch_order_hub.py
       - name: Validate Jujutsu Kaisen search snippet metadata
         run: python scripts/validate_priority_seo.py
       - name: Validate Black Clover Season 2 status and official references

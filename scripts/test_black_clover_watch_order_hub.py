@@ -8,12 +8,18 @@ import xml.etree.ElementTree as ET
 ROOT = pathlib.Path(__file__).resolve().parents[1]
 HUB_URL = "https://animezax.com/watch-order/"
 ARTICLE_URL = "https://animezax.com/articles/black-clover-watch-order.html"
+LEGACY_URL = "https://animezax.com/watch-order.html"
 description = "Find spoiler-light anime watch orders for One Piece, Black Clover, Naruto, Dragon Ball, Attack on Titan, Demon Slayer and Jujutsu Kaisen."
 hub = (ROOT / "watch-order" / "index.html").read_text(encoding="utf-8")
+legacy = (ROOT / "watch-order.html").read_text(encoding="utf-8")
+homepage = (ROOT / "index.html").read_text(encoding="utf-8")
 article = (ROOT / "articles" / "black-clover-watch-order.html").read_text(encoding="utf-8")
 assert hub.count('href="../articles/black-clover-watch-order.html"') == 1, "Watch-order hub must expose one Black Clover guide card"
 assert "TV episodes, the Sword of the Wizard King movie, and Season 2 viewing notes." in hub
 assert f'<link rel="canonical" href="{HUB_URL}">' in hub
+assert f'<link rel="canonical" href="{HUB_URL}">' in legacy, "Legacy overview must canonicalize to the full directory"
+assert "full AnimeZax watch-order hub" in legacy
+assert 'href="watch-order/"' in homepage and 'href="watch-order.html"' not in homepage, "Homepage must link only to the canonical watch-order hub"
 assert f'<meta name="description" content="{description}">' in hub
 for key in ("og:type", "og:site_name", "og:title", "og:description", "og:url"):
     assert hub.count(f'property="{key}"') == 1, f"Expected one {key} tag"
@@ -34,7 +40,8 @@ for url in (HUB_URL, ARTICLE_URL):
     entries = [node for node in sitemap.findall("sm:url", ns)
                if node.findtext("sm:loc", default="", namespaces=ns) == url]
     assert len(entries) == 1, f"Expected one sitemap entry for {url}"
+assert not any(node.findtext("sm:loc", default="", namespaces=ns) == LEGACY_URL for node in sitemap.findall("sm:url", ns)), "Legacy non-canonical hub must not be listed in sitemap"
 hub_entry = next(node for node in sitemap.findall("sm:url", ns)
                  if node.findtext("sm:loc", default="", namespaces=ns) == HUB_URL)
 assert hub_entry.findtext("sm:lastmod", default="", namespaces=ns) == "2026-11-15"
-print("Black Clover watch-order discovery, canonical metadata, Open Graph, CollectionPage schema and sitemap are valid.")
+print("Black Clover watch-order discovery, canonical hub consolidation, Open Graph, CollectionPage schema and sitemap are valid.")

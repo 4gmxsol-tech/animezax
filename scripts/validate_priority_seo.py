@@ -225,8 +225,11 @@ def main():
         errors.append("One Piece og:description must match the meta description")
     if one_piece_parser.meta.get("twitter:description") != one_piece_description:
         errors.append("One Piece twitter:description must match the meta description")
-    if "One Piece" not in " ".join(one_piece_parser.h1_parts):
-        errors.append("One Piece H1 must identify the series")
+    one_piece_h1 = " ".join("".join(one_piece_parser.h1_parts).split())
+    if one_piece_h1 != "Where to Start With the One Piece Anime: A No-Stress Watch Order":
+        errors.append("One Piece H1 must directly answer the verified where-to-start query")
+    if "with the anime" not in one_piece_title.lower():
+        errors.append("One Piece title must include the anime-specific starter intent")
     for phrase in ("one piece watch guide", "episode 1", "filler", "movies", "specials", "without spoilers"):
         if phrase not in one_piece_description.lower():
             errors.append(f"One Piece description must include '{phrase}'")

@@ -43,5 +43,8 @@ for url in (HUB_URL, ARTICLE_URL):
 assert not any(node.findtext("sm:loc", default="", namespaces=ns) == LEGACY_URL for node in sitemap.findall("sm:url", ns)), "Legacy non-canonical hub must not be listed in sitemap"
 hub_entry = next(node for node in sitemap.findall("sm:url", ns)
                  if node.findtext("sm:loc", default="", namespaces=ns) == HUB_URL)
+homepage_entry = next(node for node in sitemap.findall("sm:url", ns)
+                     if node.findtext("sm:loc", default="", namespaces=ns) == "https://animezax.com/")
+assert homepage_entry.findtext("sm:lastmod", default="", namespaces=ns) == "2026-11-15", "Homepage sitemap lastmod must reflect the November 15 homepage navigation update"
 assert hub_entry.findtext("sm:lastmod", default="", namespaces=ns) == "2026-11-15"
 print("Black Clover watch-order discovery, canonical hub consolidation, Open Graph, CollectionPage schema and sitemap are valid.")

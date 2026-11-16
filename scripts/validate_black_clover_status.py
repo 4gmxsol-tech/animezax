@@ -98,6 +98,102 @@ def main():
     if not match or match.group(1) != "2026-11-09":
         errors.append("Black Clover sitemap lastmod must match the 2026-11-09 content update")
 
+    # Release-calendar entries must reflect elapsed and upcoming weekly episodes.
+    calendar = (ROOT / "release-calendar.html").read_text(encoding="utf-8")
+    calendar_events = re.findall(
+        r'<article class="calendar-event"[^>]*>[\s\S]*?</article>', calendar
+    )
+    event_by_date = {}
+    for event in calendar_events:
+        date_match = re.search(r'data-date="([^"]+)"', event)
+        if date_match:
+            event_by_date[date_match.group(1)] = event
+
+    expected_events = {
+        "2026-10-24": ("Black Clover Season 2 — Episode 4", "SCHEDULED DATE PASSED"),
+        "2026-10-31": ("Black Clover Season 2 — Episode 5", "AIRED · OCTOBER 31"),
+        "2026-11-07": ("Black Clover Season 2 — Episode 6", "AIRED · NOVEMBER 7"),
+        "2026-11-14": ("Black Clover Season 2 — Episode 7", "AIRED · NOVEMBER 14"),
+        "2026-11-21": ("Black Clover Season 2 — Episode 8", "UPCOMING · NOVEMBER 21"),
+    }
+    for event_date, (event_title, event_status) in expected_events.items():
+        event = event_by_date.get(event_date, "")
+        if event_title not in event or event_status not in event:
+            errors.append(f"release calendar must show {event_title} as {event_status}")
+
+    episode8 = event_by_date.get("2026-11-21", "")
+    if "23:00 JST" not in episode8 or OFFICIAL_ON_AIR not in episode8:
+        errors.append("Episode 8 calendar entry must show the weekly Japan broadcast slot and official source")
+
+    for stale_date in ("2026-10-20", "2026-10-23"):
+        if "UPCOMING" in event_by_date.get(stale_date, ""):
+            errors.append(f"past calendar date {stale_date} must not remain marked upcoming")
+
+    calendar_descriptions = [
+        re.search(pattern, calendar)
+        for pattern in (
+            r'<meta name="description" content="([^"]+)"',
+            r'<meta property="og:description" content="([^"]+)"',
+            r'<meta name="twitter:description" content="([^"]+)"',
+        )
+    ]
+    if any(match is None for match in calendar_descriptions):
+        errors.append("release calendar must retain search and social descriptions")
+    else:
+        descriptions = [match.group(1) for match in calendar_descriptions]
+        if not (descriptions[0] == descriptions[1] == descriptions[2]
+                and "November 21" in descriptions[0]):
+            errors.append("release calendar descriptions must match and mention the current episode schedule")
+
+    episode4_html = (ROOT / "articles" / "black-clover-season-2-episode-4-release-date.html").read_text(encoding="utf-8")
+    episode4_title = re.search(r"<title>(.*?)</title>", episode4_html, re.I | re.S)
+    episode4_descriptions = [
+        re.search(pattern, episode4_html)
+        for pattern in (
+            r'<meta name="description" content="([^"]+)"',
+            r'<meta property="og:description" content="([^"]+)"',
+            r'<meta name="twitter:description" content="([^"]+)"',
+        )
+    ]
+    if not episode4_title or "Expected" in episode4_title.group(1):
+        errors.append("Episode 4 title must no longer describe its past date as expected")
+    if any(match is None for match in episode4_descriptions):
+        errors.append("Episode 4 page must retain search and social descriptions")
+    else:
+        descriptions = [match.group(1) for match in episode4_descriptions]
+        if not (descriptions[0] == descriptions[1] == descriptions[2]
+                and "date has passed" in descriptions[0]):
+            errors.append("Episode 4 search and social descriptions must reflect the passed date")
+
+    episode4_schema = re.search(
+        r'<script type="application/ld\+json">(.*?)</script>', episode4_html, re.S
+    )
+    if not episode4_schema:
+        errors.append("Episode 4 page must retain Article structured data")
+    else:
+        try:
+            schema = json.loads(episode4_schema.group(1))
+            if schema.get("dateModified") != "2026-11-16":
+                errors.append("Episode 4 Article dateModified must be November 16, 2026")
+        except json.JSONDecodeError:
+            errors.append("Episode 4 Article structured data must remain valid JSON")
+
+    archive = (ROOT / "articles" / "index.html").read_text(encoding="utf-8")
+    if "Black Clover Season 2 Episode 4: release date and broadcast schedule" not in archive:
+        errors.append("article archive card must reflect the updated Episode 4 status")
+
+    for page_url in (
+        "https://animezax.com/articles/",
+        "https://animezax.com/release-calendar.html",
+        "https://animezax.com/articles/black-clover-season-2-episode-4-release-date.html",
+    ):
+        lastmod_match = re.search(
+            r"<url>\s*<loc>" + re.escape(page_url) + r"</loc>\s*<lastmod>([^<]+)</lastmod>",
+            sitemap,
+        )
+        if not lastmod_match or lastmod_match.group(1) != "2026-11-16":
+            errors.append(f"Sitemap lastmod must reflect the November 16 update for {page_url}")
+
     if errors:
         print("\n".join(f"FAIL: {error}" for error in errors))
         return 1

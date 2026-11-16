@@ -34,8 +34,34 @@ assert f'<link rel="canonical" href="{ARTICLE_URL}">' in article
 assert "Black Clover watch order" in article
 assert "Sword of the Wizard King" in article
 assert 'name="robots" content="noindex' not in article.lower()
+article_schema_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', article, re.S)
+article_schemas = [json.loads(block) for block in article_schema_blocks]
+article_schema = next((item for item in article_schemas if item.get("@type") == "Article"), None)
+breadcrumb_schema = next((item for item in article_schemas if item.get("@type") == "BreadcrumbList"), None)
+assert article_schema is not None, "Black Clover watch-order article must expose Article JSON-LD"
+assert article_schema.get("headline") == "Black Clover Watch Order: Series & Movie"
+assert article_schema.get("description") == "Black Clover watch order: how to watch the anime episodes and Sword of the Wizard King movie, plus Season 2 release and streaming information."
+assert article_schema.get("datePublished") == "2026-11-01"
+assert article_schema.get("dateModified") == "2026-11-01"
+assert article_schema.get("author", {}).get("name") == "AnimeZax Editorial"
+assert article_schema.get("publisher", {}).get("name") == "AnimeZax"
+assert article_schema.get("mainEntityOfPage", {}).get("@id") == ARTICLE_URL
+assert breadcrumb_schema is not None, "Black Clover watch-order article must expose BreadcrumbList JSON-LD"
+breadcrumb_items = breadcrumb_schema.get("itemListElement", [])
+assert [item.get("name") for item in breadcrumb_items] == ["Home", "Articles", "Black Clover watch order"]
+assert [item.get("position") for item in breadcrumb_items] == [1, 2, 3]
+assert [item.get("item") for item in breadcrumb_items] == [
+    "https://animezax.com/",
+    "https://animezax.com/articles/",
+    ARTICLE_URL,
+]
 ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 sitemap = ET.parse(ROOT / "sitemap.xml").getroot()
+article_entry = next(
+    node for node in sitemap.findall("sm:url", ns)
+    if node.findtext("sm:loc", default="", namespaces=ns) == ARTICLE_URL
+)
+assert article_entry.findtext("sm:lastmod", default="", namespaces=ns) == "2026-11-16", "Black Clover article sitemap lastmod must reflect the structured-data update"
 for url in (HUB_URL, ARTICLE_URL):
     entries = [node for node in sitemap.findall("sm:url", ns)
                if node.findtext("sm:loc", default="", namespaces=ns) == url]

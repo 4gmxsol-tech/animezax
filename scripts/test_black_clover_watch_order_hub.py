@@ -31,11 +31,6 @@ assert schema.get("@type") == "CollectionPage"
 assert schema.get("description") == description
 assert schema.get("url") == HUB_URL
 assert f'<link rel="canonical" href="{ARTICLE_URL}">' in article
-article_entry = next(
-    node for node in sitemap.findall("sm:url", ns)
-    if node.findtext("sm:loc", default="", namespaces=ns) == ARTICLE_URL
-)
-assert article_entry.findtext("sm:lastmod", default="", namespaces=ns) == "2026-11-16", "Black Clover article sitemap lastmod must reflect the structured-data update"
 assert "Black Clover watch order" in article
 assert "Sword of the Wizard King" in article
 assert 'name="robots" content="noindex' not in article.lower()
@@ -62,6 +57,11 @@ assert [item.get("item") for item in breadcrumb_items] == [
 ]
 ns = {"sm": "http://www.sitemaps.org/schemas/sitemap/0.9"}
 sitemap = ET.parse(ROOT / "sitemap.xml").getroot()
+article_entry = next(
+    node for node in sitemap.findall("sm:url", ns)
+    if node.findtext("sm:loc", default="", namespaces=ns) == ARTICLE_URL
+)
+assert article_entry.findtext("sm:lastmod", default="", namespaces=ns) == "2026-11-16", "Black Clover article sitemap lastmod must reflect the structured-data update"
 for url in (HUB_URL, ARTICLE_URL):
     entries = [node for node in sitemap.findall("sm:url", ns)
                if node.findtext("sm:loc", default="", namespaces=ns) == url]

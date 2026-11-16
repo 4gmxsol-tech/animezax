@@ -176,6 +176,10 @@ def main():
             schema = json.loads(episode4_schema.group(1))
             if schema.get("dateModified") != "2026-11-16":
                 errors.append("Episode 4 Article dateModified must be November 16, 2026")
+            if episode4_descriptions[0] and schema.get("description") != episode4_descriptions[0].group(1):
+                errors.append("Episode 4 Article description must match its search description")
+            if "https://animecorner.me/db/anime/black-clover-season-2/schedule" not in episode4_html:
+                errors.append("Episode 4 page must link to the release tracker used for its aired status")
         except json.JSONDecodeError:
             errors.append("Episode 4 Article structured data must remain valid JSON")
 

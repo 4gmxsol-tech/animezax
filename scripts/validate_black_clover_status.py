@@ -123,7 +123,7 @@ def main():
             errors.append(f"release calendar must show {event_title} as {event_status}")
 
     episode8 = event_by_date.get("2026-11-21", "")
-    if any(phrase not in episode8 for phrase in ("23:00 JST", "15:00 UTC", "10:00 a.m. EST", "7:00 a.m. PST", (OFFICIAL_ON_AIR, OFFICIAL_ON_AIR_SHORT), "https://animecorner.me/db/anime/black-clover-season-2/schedule")):
+    if any(phrase not in episode8 for phrase in ("23:00 JST", "15:00 UTC", "10:00 a.m. EST", "7:00 a.m. PST", "https://animecorner.me/db/anime/black-clover-season-2/schedule")) or not (OFFICIAL_ON_AIR in episode8 or OFFICIAL_ON_AIR_SHORT in episode8):
         errors.append("Episode 8 calendar entry must show verified Japan and English-sub times, US conversions, and both schedule sources")
 
     for stale_date in ("2026-10-20", "2026-10-23"):

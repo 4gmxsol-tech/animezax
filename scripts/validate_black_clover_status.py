@@ -122,8 +122,8 @@ def main():
             errors.append(f"release calendar must show {event_title} as {event_status}")
 
     episode8 = event_by_date.get("2026-11-21", "")
-    if "23:00 JST" not in episode8 or OFFICIAL_ON_AIR not in episode8:
-        errors.append("Episode 8 calendar entry must show the weekly Japan broadcast slot and official source")
+    if any(phrase not in episode8 for phrase in ("23:00 JST", "15:00 UTC", "10:00 a.m. EST", "7:00 a.m. PST", OFFICIAL_ON_AIR, "https://animecorner.me/db/anime/black-clover-season-2/schedule")):
+        errors.append("Episode 8 calendar entry must show verified Japan and English-sub times, US conversions, and both schedule sources")
 
     for stale_date in ("2026-10-20", "2026-10-23"):
         if "UPCOMING" in event_by_date.get(stale_date, ""):
@@ -178,14 +178,51 @@ def main():
         except json.JSONDecodeError:
             errors.append("Episode 4 Article structured data must remain valid JSON")
 
+    season_guide = (ROOT / "articles" / "black-clover-season-2-release-date.html").read_text(encoding="utf-8")
+    guide_title = re.search(r"<title>(.*?)</title>", season_guide, re.I | re.S)
+    guide_description = re.search(r'<meta name="description" content="([^"]+)"', season_guide)
+    guide_og = re.search(r'<meta property="og:description" content="([^"]+)"', season_guide)
+    guide_twitter = re.search(r'<meta name="twitter:description" content="([^"]+)"', season_guide)
+    if not guide_title or "Episode 8 Time" not in guide_title.group(1):
+        errors.append("Season guide title must target the current Episode 8 release schedule")
+    if any(match is None for match in (guide_description, guide_og, guide_twitter)):
+        errors.append("Season guide must retain search and social descriptions")
+    else:
+        guide_descriptions = [guide_description.group(1), guide_og.group(1), guide_twitter.group(1)]
+        if not (guide_descriptions[0] == guide_descriptions[1] == guide_descriptions[2]
+                and "15:00 UTC" in guide_descriptions[0]):
+            errors.append("Season guide search and social descriptions must agree on the Episode 8 release time")
+    if not all(phrase in season_guide for phrase in (
+        "Episode 7", "Episode 8", "Nov. 21 · 15:00 UTC",
+        "10:00 a.m. EST", "7:00 a.m. PST",
+        "https://animecorner.me/db/anime/black-clover-season-2/schedule",
+        OFFICIAL_ON_AIR,
+    )):
+        errors.append("Season guide must include the current episode schedule, time-zone conversion and source links")
+    guide_schema = re.search(
+        r'<script type="application/ld\+json">(.*?)</script>', season_guide, re.S
+    )
+    if not guide_schema:
+        errors.append("Season guide must retain Article structured data")
+    else:
+        try:
+            schema = json.loads(guide_schema.group(1))
+            if schema.get("dateModified") != "2026-11-16":
+                errors.append("Season guide Article dateModified must be November 16, 2026")
+        except json.JSONDecodeError:
+            errors.append("Season guide Article structured data must remain valid JSON")
+
     archive = (ROOT / "articles" / "index.html").read_text(encoding="utf-8")
     if "Black Clover Season 2 Episode 4: release date and broadcast schedule" not in archive:
         errors.append("article archive card must reflect the updated Episode 4 status")
+    if "Black Clover Season 2 release schedule and Episode 8 time" not in archive:
+        errors.append("article archive card must reflect the updated Season 2 Episode 8 schedule")
 
     for page_url in (
         "https://animezax.com/articles/",
         "https://animezax.com/release-calendar.html",
         "https://animezax.com/articles/black-clover-season-2-episode-4-release-date.html",
+        "https://animezax.com/articles/black-clover-season-2-release-date.html",
     ):
         lastmod_match = re.search(
             r"<url>\s*<loc>" + re.escape(page_url) + r"</loc>\s*<lastmod>([^<]+)</lastmod>",

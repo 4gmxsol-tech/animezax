@@ -11,6 +11,7 @@ PAGE = ROOT / "anime" / "black-clover.html"
 SITEMAP = ROOT / "sitemap.xml"
 URL = "https://animezax.com/anime/black-clover.html"
 OFFICIAL_ON_AIR = "https://www.bclover.jp/onair/"
+OFFICIAL_ON_AIR_SHORT = "https://bclover.jp/onair/"
 STALE_ANSWER = "Check official announcements for any newer continuation news"
 
 class PageParser(HTMLParser):
@@ -122,7 +123,7 @@ def main():
             errors.append(f"release calendar must show {event_title} as {event_status}")
 
     episode8 = event_by_date.get("2026-11-21", "")
-    if any(phrase not in episode8 for phrase in ("23:00 JST", "15:00 UTC", "10:00 a.m. EST", "7:00 a.m. PST", OFFICIAL_ON_AIR, "https://animecorner.me/db/anime/black-clover-season-2/schedule")):
+    if any(phrase not in episode8 for phrase in ("23:00 JST", "15:00 UTC", "10:00 a.m. EST", "7:00 a.m. PST", (OFFICIAL_ON_AIR, OFFICIAL_ON_AIR_SHORT), "https://animecorner.me/db/anime/black-clover-season-2/schedule")):
         errors.append("Episode 8 calendar entry must show verified Japan and English-sub times, US conversions, and both schedule sources")
 
     for stale_date in ("2026-10-20", "2026-10-23"):
@@ -196,7 +197,7 @@ def main():
         "Episode 7", "Episode 8", "Nov. 21 · 15:00 UTC",
         "10:00 a.m. EST", "7:00 a.m. PST",
         "https://animecorner.me/db/anime/black-clover-season-2/schedule",
-        OFFICIAL_ON_AIR,
+        OFFICIAL_ON_AIR_SHORT,
     )):
         errors.append("Season guide must include the current episode schedule, time-zone conversion and source links")
     guide_schema = re.search(

@@ -39,7 +39,7 @@ assert article_entry.findtext("sm:lastmod", default="", namespaces=ns) == "2026-
 assert "Black Clover watch order" in article
 assert "Sword of the Wizard King" in article
 assert 'name="robots" content="noindex' not in article.lower()
-article_schema_blocks = re.findall(r'<script type="application/ld\\+json">(.*?)</script>', article, re.S)
+article_schema_blocks = re.findall(r'<script type="application/ld\+json">(.*?)</script>', article, re.S)
 article_schemas = [json.loads(block) for block in article_schema_blocks]
 article_schema = next((item for item in article_schemas if item.get("@type") == "Article"), None)
 breadcrumb_schema = next((item for item in article_schemas if item.get("@type") == "BreadcrumbList"), None)

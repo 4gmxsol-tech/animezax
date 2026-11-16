@@ -114,7 +114,7 @@ def main():
         "2026-10-31": ("Black Clover Season 2 — Episode 5", "AIRED · OCTOBER 31"),
         "2026-11-07": ("Black Clover Season 2 — Episode 6", "AIRED · NOVEMBER 7"),
         "2026-11-14": ("Black Clover Season 2 — Episode 7", "AIRED · NOVEMBER 14"),
-        "2026-11-21": ("Black Clover Season 2 — Episode 8", "UPCOMING · NOVEMBER 21"),
+        "2026-11-21": ("Black Clover Season 2 — Episode 8", "EXPECTED · NOVEMBER 21"),
     }
     for event_date, (event_title, event_status) in expected_events.items():
         event = event_by_date.get(event_date, "")

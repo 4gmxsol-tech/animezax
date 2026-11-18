@@ -247,7 +247,7 @@ def main():
         errors.append("Official movie list must be described as a source for titles and release dates")
     if "for release order" in one_piece_html:
         errors.append("Do not describe the official movie list as ascending release order; it is newest-first")
-    for phrase in ("immediately before", "Film: Gold", "after the post-timeskip reunion", "after you know Nami and Robin", "Updated November 15, 2026", "Last reviewed November 15, 2026"):
+    for phrase in ("immediately before", "Film: Gold", "after the post-timeskip reunion", "after you know Nami and Robin", "Updated November 18, 2026", "Last reviewed November 18, 2026"):
         if phrase.lower() not in one_piece_html.lower():
             errors.append(f"One Piece specials guide must include '{phrase}'")
     for official_url in (

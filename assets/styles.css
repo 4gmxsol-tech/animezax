@@ -207,3 +207,102 @@ main .reveal.is-visible {
 
 /* Homepage action hub */
 .home-action-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}.home-action-card{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:218px;padding:22px;border:1px solid var(--line);border-radius:16px;background:linear-gradient(145deg,rgba(178,154,255,.07),rgba(255,255,255,.018));color:var(--text);transition:transform .2s ease,border-color .2s ease,background .2s ease}.home-action-card:hover{transform:translateY(-3px);border-color:rgba(178,154,255,.5);background:rgba(178,154,255,.06)}.home-action-icon{display:grid;place-items:center;width:38px;height:38px;border-radius:12px;background:rgba(178,154,255,.12);color:var(--purple);font-size:22px}.home-action-label{color:var(--pink);font-size:9px;font-weight:800;letter-spacing:1.1px}.home-action-card strong{font:600 19px/1.2 var(--font-display)}.home-action-card>span:not(.home-action-icon):not(.home-action-label){color:var(--muted);font-size:12px;line-height:1.55}.home-action-card b{margin-top:auto;color:var(--purple);font-size:11px}@media(max-width:900px){.home-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:560px){.home-action-grid{grid-template-columns:1fr}.home-action-card{min-height:180px;padding:19px}}
+
+/* ============================================================
+   Responsive & visual polish layer
+   One consistent system for phone, tablet/iPad, laptop and
+   large screens. Appended last so it wins over earlier layers.
+   ============================================================ */
+
+/* --- Global safety: nothing may push the page sideways --- */
+html,body{overflow-x:clip}
+img,svg,video,iframe,embed,object{max-width:100%}
+img,video{height:auto}
+::selection{background:#b29aff;color:#171320}
+
+/* --- Video embeds: always fit their column, keep 16:9 --- */
+.official-embed{max-width:100%}
+.official-embed iframe{display:block;width:100%;height:100%}
+.player-shell .player-screen{width:100%}
+.player-shell .player-screen iframe,.player-shell .player-screen video{width:100%;height:100%;min-height:0;aspect-ratio:auto;max-width:100%}
+.ad-placement{max-width:100%;overflow:hidden}
+.ad-placement iframe{max-width:100%}
+
+/* --- Tables: themed, and scroll inside themselves on small screens --- */
+table{border-collapse:collapse;width:100%;margin:22px 0;font-size:14px;line-height:1.55}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);white-space:nowrap}
+th{font-family:var(--font-display);font-weight:600;color:#fff;background:#20202d}
+td{color:#c1bdcf}
+
+/* --- Comfortable touch targets + no iOS zoom on focus --- */
+input,select,textarea{font-size:16px}
+.search-box input{font-size:16px}
+.menu-toggle{min-width:44px;min-height:44px;align-items:center;justify-content:center}
+.filter-chip{min-height:40px;display:inline-flex;align-items:center}
+.primary-nav>a{display:inline-flex;align-items:center;min-height:44px}
+.footer-links a{display:inline-flex;align-items:center;min-height:36px}
+.text-link{min-height:32px}
+.watch-action{min-height:44px}
+.latest-item>a{width:32px;height:32px}
+
+/* --- Visual richness: depth on cards, gentle hover lift --- */
+.poster,.guide-card,.release-card,.article-card,.dashboard-card,.tool-card{box-shadow:0 2px 10px rgba(0,0,0,.18)}
+.release-card,.article-card{transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.release-card:hover,.article-card:hover{transform:translateY(-3px);border-color:rgba(178,154,255,.45);box-shadow:0 14px 30px rgba(0,0,0,.3)}
+.poster:hover{box-shadow:0 16px 34px rgba(0,0,0,.35)}
+
+/* --- Small tablets (681–900px): the full nav no longer fits,
+       so reuse the site's own hamburger pattern here --- */
+@media(min-width:681px) and (max-width:900px){
+  .menu-toggle{display:flex;flex-direction:column;gap:5px;padding:10px}
+  .menu-toggle span{width:22px;height:2px;background:#fff}
+  .primary-nav{position:absolute;top:78px;left:0;right:0;display:none;flex-direction:column;align-items:stretch;gap:0;padding:8px 24px 17px;background:#15141f;border-bottom:1px solid var(--line);z-index:30}
+  .primary-nav.is-open{display:flex}
+  .primary-nav>a{padding:13px 5px}
+  .primary-nav .nav-cta{margin-top:6px;text-align:center;justify-content:center}
+}
+
+/* --- iPad / tablet (681–1100px): two-column grids, no cramped rows --- */
+@media(min-width:681px) and (max-width:1100px){
+  .guide-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .related-anime-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .anime-facts-detail{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .release-grid,.article-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .dashboard-grid{grid-template-columns:1fr 1fr}
+  .home-action-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .quick-add-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+
+/* --- Tables scroll internally below 760px --- */
+@media(max-width:760px){
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .content-narrow,.article-body{min-width:0}
+}
+
+/* --- Phones (<=560px): single column restated explicitly so the
+       tablet layer above can never leak into phone widths.
+       Poster-style grids (anime-grid, related, quick-add) keep the
+       site's intentional 2-up phone layout. --- */
+@media(max-width:560px){
+  .hero-grid,.feature-panel,.latest-layout,.recommendation-layout{grid-template-columns:1fr}
+  .guide-grid,.release-grid,.article-grid,.watchlist-grid,.dashboard-grid,.home-action-grid,.tool-card-grid{grid-template-columns:1fr}
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .button{width:100%}
+  .newsletter-panel .button{width:100%}
+  table{font-size:13px}
+}
+
+/* --- Large screens (>=1440px): use the extra room gracefully --- */
+@media(min-width:1440px){
+  .container{width:min(1280px,calc(100% - 64px))}
+}
+
+/* --- Landscape phones: keep the hero compact --- */
+@media(max-height:480px) and (orientation:landscape){
+  .hero{padding-top:30px}
+  .hero-art{min-height:230px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  .release-card:hover,.article-card:hover,.poster:hover{transform:none!important}
+}

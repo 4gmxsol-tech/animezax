@@ -509,10 +509,10 @@
     libraryLink.textContent = "Anime library";
     primaryNav.insertBefore(libraryLink, primaryNav.querySelector('a[href*="articles"]') || null);
   }
-  const currentPath = window.location.pathname.replace(/index\\.html$/, "").replace(/\\/$/, "") || "/";
+  const currentPath = window.location.pathname.replace(/index\.html$/, "").replace(/\/$/, "") || "/";
   document.querySelectorAll("#primary-nav a").forEach(link => {
     try {
-      const target = new URL(link.href, window.location.origin).pathname.replace(/index\\.html$/, "").replace(/\\/$/, "") || "/";
+      const target = new URL(link.href, window.location.origin).pathname.replace(/index\.html$/, "").replace(/\/$/, "") || "/";
       const isCurrent = target === currentPath || (target !== "/" && currentPath.startsWith(target + "/"));
       if (isCurrent && !link.hash) {
         link.classList.add("active");

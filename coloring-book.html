@@ -28,6 +28,7 @@ h1{font-size:clamp(30px,5.4vw,46px);line-height:1.15;margin:0 0 10px}
 .btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#0f552d}
 .btn-ghost{background:#fff;color:var(--pink-d);border:2px solid var(--pink)}
 section{margin:38px 0}
+section,.card{scroll-margin-top:84px}
 h2{font-size:clamp(23px,4vw,30px);margin:0 0 14px}
 .feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
 .feat{background:var(--card);border:1px solid #f3d7e4;border-radius:14px;padding:16px;font-size:16px}
@@ -195,5 +196,16 @@ footer{text-align:center;color:var(--mut);font-size:14px;padding:26px 0 6px}
       setTimeout(() => form.submit(), 900);
     }
     </script>
+
+<script>
+(function(){
+  var bar = document.querySelector('.stickybar');
+  var target = document.getElementById('direct-buy');
+  if(!bar || !target || !('IntersectionObserver' in window)) return;
+  new IntersectionObserver(function(es){
+    es.forEach(function(e){ bar.style.display = e.isIntersecting ? 'none' : ''; });
+  }, {rootMargin: '-10% 0px -10% 0px'}).observe(target);
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Verify USDT Payment — AnimeZax (private)</title>
+<style>
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background:#fff7fb; color:#333; line-height:1.6; padding:24px 16px; }
+  .wrap { max-width:640px; margin:0 auto; }
+  h1 { color:#c2185b; font-size:26px; }
+  input { width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; font-size:15px; box-sizing:border-box; }
+  button { margin-top:12px; background:#c2185b; color:#fff; border:none; font-size:17px; font-weight:700; padding:12px 28px; border-radius:999px; cursor:pointer; }
+  .box { margin-top:20px; padding:16px; border-radius:12px; display:none; }
+  .ok { background:#e6f7e9; border:2px solid #2e9e4f; }
+  .bad { background:#fdeaea; border:2px solid #d33; }
+  .warn { background:#fff6e0; border:2px solid #e0a800; }
+  .mono { font-family:monospace; font-size:13px; word-break:break-all; }
+  .note { color:#777; font-size:14px; margin-top:24px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>🔍 Verify a USDT (BEP20) payment</h1>
+  <p>Private tool for AnimeZax orders. Paste the Transaction ID (TxID) the buyer sent you. This checks the **BNB Smart Chain blockchain directly** — not the buyer's word.</p>
+  <input id="txid" placeholder="0x... transaction hash">
+  <button onclick="check()">Check payment</button>
+  <div id="out" class="box"></div>
+  <p class="note">Our USDT address: <span class="mono">0x47258cfc9056d74f1bc31618eaba4b97347596d5</span><br>
+  Book price: <strong>$5</strong>. Rule: deliver ONLY on a green result with amount ≥ $5.<br>
+  Binance Pay payments have no blockchain TxID — verify those inside your Binance app (the money must actually appear in your balance).</p>
+</div>
+<script>
+const OUR = "0x47258cfc9056d74f1bc31618eaba4b97347596d5";
+const USDT = "0x55d398326f99059ff775485246999027b3197955";
+const TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+const RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.defibit.io", "https://bsc-dataseed1.ninicoin.io"];
+async function rpc(method, params) {
+  for (const url of RPCS) {
+    try {
+      const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ jsonrpc: "2.0", method, params, id: 1 }) });
+      const j = await r.json();
+      if (j && (j.result !== undefined)) return j.result;
+    } catch (e) { /* try next */ }
+  }
+  throw new Error("network");
+}
+function show(cls, html) {
+  const o = document.getElementById("out");
+  o.className = "box " + cls; o.style.display = "block"; o.innerHTML = html;
+}
+async function check() {
+  const txid = document.getElementById("txid").value.trim().toLowerCase();
+  if (!/^0x[0-9a-f]{64}$/.test(txid)) { show("warn", "⚠️ That doesn't look like a TxID. It should start with 0x and be 66 characters. For Binance Pay payments, check inside the Binance app instead."); return; }
+  show("warn", "⏳ Checking the blockchain…");
+  let rc;
+  try { rc = await rpc("eth_getTransactionReceipt", [txid]); }
+  catch (e) { show("bad", "❌ Couldn't reach the blockchain. Check your internet and try again. Do NOT deliver until you get a green result."); return; }
+  if (!rc) { show("bad", "❌ <strong>NOT FOUND.</strong> No transaction with this ID exists on BNB Smart Chain. The buyer has not paid (or sent a fake/wrong ID). <strong>Do NOT deliver.</strong>"); return; }
+  if (rc.status !== "0x1") { show("bad", "❌ This transaction <strong>failed</strong> on-chain. No money moved. <strong>Do NOT deliver.</strong>"); return; }
+  const transfers = (rc.logs || []).filter(l => l.address.toLowerCase() === USDT && l.topics[0].toLowerCase() === TRANSFER);
+  if (!transfers.length) { show("bad", "❌ This is a real transaction, but it contains <strong>no USDT transfer</strong>. <strong>Do NOT deliver.</strong>"); return; }
+  let ours = null, others = [];
+  for (const l of transfers) {
+    const to = "0x" + l.topics[2].slice(-40);
+    const amt = Number(BigInt(l.data)) / 1e18;
+    if (to.toLowerCase() === OUR) ours = { to, amt }; else others.push({ to, amt });
+  }
+  if (!ours) {
+    const o = others[0];
+    show("bad", "❌ This transaction sent <strong>" + o.amt + " USDT</strong> to a <strong>different address</strong>:<br><span class='mono'>" + o.to + "</span><br>That is NOT our address. <strong>Do NOT deliver.</strong>");
+    return;
+  }
+  if (ours.amt >= 5) {
+    show("ok", "✅ <strong>REAL PAYMENT — SAFE TO DELIVER</strong><br>Amount: <strong>" + ours.amt + " USDT</strong><br>To our address: <span class='mono'>" + ours.to + "</span><br><br>Send the buyer the book (PDF + PNG ZIP) at the email in their order.");
+  } else {
+    show("warn", "⚠️ A payment arrived but it's only <strong>" + ours.amt + " USDT</strong> — less than the $5 price. Ask the buyer to complete the amount before delivering.");
+  }
+}
+</script>
+</body>
+</html>

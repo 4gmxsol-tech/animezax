@@ -78,20 +78,86 @@
       <span style="word-break:break-all; font-family:monospace; font-size:14px;">0x47258cfc9056d74f1bc31618eaba4b97347596d5</span>
       <button type="button" onclick="navigator.clipboard.writeText('0x47258cfc9056d74f1bc31618eaba4b97347596d5'); this.textContent='Copied ✓';" style="margin-left:8px; padding:4px 12px; border-radius:999px; border:1px solid #d63384; background:#fff; color:#c2185b; cursor:pointer;">Copy</button></li>
     </ul>
-    <p><strong>Step 2 — Send us your payment proof</strong> (we verify every payment on the blockchain before delivering — this protects everyone):</p>
-    <form action="https://formsubmit.co/4gmxsol@gmail.com" method="POST" style="margin-top:12px;">
+    <p><strong>Step 2 — Your details (payment verified automatically)</strong></p>
+    <p style="font-size:15px;">Enter your TxID below and press the button — your payment is checked <strong>on the blockchain instantly</strong>. A fake, failed, or underpaid TxID is <strong>rejected on the spot</strong> and the order is not accepted.</p>
+    <form id="orderForm" action="https://formsubmit.co/4gmxsol@gmail.com" method="POST" style="margin-top:12px;">
       <input type="hidden" name="_subject" value="AnimeZax Coloring Book — New Order">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://animezax.com/coloring-book.html">
+      <input type="hidden" name="payment_check" id="paymentCheck" value="not-checked">
+      <label>How did you pay?<br>
+      <select id="payMethod" style="width:100%; padding:10px; margin:4px 0 12px; border:1px solid #ddd; border-radius:8px;">
+        <option value="usdt">USDT on-chain (BEP20) — instant automatic check</option>
+        <option value="binance">Binance Pay — checked manually in our Binance account</option>
+      </select></label>
       <label>Your email (for delivery)<br>
       <input type="email" name="email" required style="width:100%; padding:10px; margin:4px 0 12px; border:1px solid #ddd; border-radius:8px;"></label>
       <label>Transaction ID (TxID) or Binance order number<br>
-      <input type="text" name="txid" required style="width:100%; padding:10px; margin:4px 0 12px; border:1px solid #ddd; border-radius:8px;"></label>
+      <input type="text" name="txid" id="txidField" required style="width:100%; padding:10px; margin:4px 0 12px; border:1px solid #ddd; border-radius:8px;"></label>
       <label>Note (optional)<br>
       <input type="text" name="note" style="width:100%; padding:10px; margin:4px 0 16px; border:1px solid #ddd; border-radius:8px;"></label>
-      <button type="submit" class="buy" style="border:none; cursor:pointer; margin-top:0;">✅ I Paid — Send My Book</button>
+      <div id="checkResult" style="display:none; padding:12px; border-radius:10px; margin-bottom:14px;"></div>
+      <button type="button" id="submitBtn" onclick="verifyAndSubmit()" class="buy" style="border:none; cursor:pointer; margin-top:0;">✅ Verify Payment &amp; Order</button>
     </form>
-    <p class="note"><strong>Step 3 —</strong> We check the transaction and email you the full book (PDF + PNG files) within 12 hours. Crypto payments can't be forged or charged back, so please double-check the address before sending.</p>
+    <script>
+    const OUR = "0x47258cfc9056d74f1bc31618eaba4b97347596d5";
+    const USDT_C = "0x55d398326f99059ff775485246999027b3197955";
+    const TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+    const RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.defibit.io", "https://bsc-dataseed1.ninicoin.io"];
+    async function rpc(method, params) {
+      for (const url of RPCS) {
+        try {
+          const r = await fetch(url, { method: "POST", headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ jsonrpc: "2.0", method, params, id: 1 }) });
+          const j = await r.json();
+          if (j && j.result !== undefined) return j.result;
+        } catch (e) {}
+      }
+      throw new Error("network");
+    }
+    function showRes(ok, msg) {
+      const el = document.getElementById("checkResult");
+      el.style.display = "block";
+      el.style.background = ok ? "#e6f7e9" : "#fdeaea";
+      el.style.border = ok ? "2px solid #2e9e4f" : "2px solid #d33";
+      el.innerHTML = msg;
+    }
+    async function verifyAndSubmit() {
+      const form = document.getElementById("orderForm");
+      const btn = document.getElementById("submitBtn");
+      const method = document.getElementById("payMethod").value;
+      const txid = document.getElementById("txidField").value.trim().toLowerCase();
+      if (!form.querySelector("input[name=email]").value) { showRes(false, "❌ Please enter your email first."); return; }
+      if (method === "binance") {
+        if (!txid) { showRes(false, "❌ Please enter your Binance order number."); return; }
+        document.getElementById("paymentCheck").value = "binance-pay-manual-check";
+        btn.disabled = true; btn.textContent = "Sending order…";
+        form.submit();
+        return;
+      }
+      if (!/^0x[0-9a-f]{64}$/.test(txid)) { showRes(false, "❌ <strong>Rejected:</strong> that is not a valid TxID (it must start with 0x and be 66 characters)."); return; }
+      btn.disabled = true; btn.textContent = "⏳ Verifying on the blockchain…";
+      let rc;
+      try { rc = await rpc("eth_getTransactionReceipt", [txid]); }
+      catch (e) { btn.disabled = false; btn.textContent = "✅ Verify Payment & Order"; showRes(false, "❌ Couldn't reach the blockchain. Please try again in a minute."); return; }
+      if (!rc) { btn.disabled = false; btn.textContent = "✅ Verify Payment & Order"; showRes(false, "❌ <strong>Rejected:</strong> no transaction with this ID exists. If you really paid, wait 1–2 minutes for confirmation and try again."); return; }
+      if (rc.status !== "0x1") { btn.disabled = false; btn.textContent = "✅ Verify Payment & Order"; showRes(false, "❌ <strong>Rejected:</strong> this transaction failed on-chain. No payment was received."); return; }
+      const transfers = (rc.logs || []).filter(l => l.address.toLowerCase() === USDT_C && l.topics[0].toLowerCase() === TRANSFER);
+      let ours = null;
+      for (const l of transfers) {
+        const to = "0x" + l.topics[2].slice(-40);
+        const amt = Number(BigInt(l.data)) / 1e18;
+        if (to.toLowerCase() === OUR) ours = amt;
+      }
+      if (ours === null) { btn.disabled = false; btn.textContent = "✅ Verify Payment & Order"; showRes(false, "❌ <strong>Rejected:</strong> this transaction did not pay OUR USDT address. Please check you sent it to the address in Step 1."); return; }
+      if (ours < 5) { btn.disabled = false; btn.textContent = "✅ Verify Payment & Order"; showRes(false, "❌ <strong>Rejected:</strong> only " + ours + " USDT arrived — the price is $5. Please complete the payment and use the new TxID."); return; }
+      document.getElementById("paymentCheck").value = "onchain-verified-" + ours + "-usdt";
+      showRes(true, "✅ <strong>Payment verified: " + ours + " USDT received.</strong> Sending your order…");
+      btn.textContent = "Sending order…";
+      setTimeout(() => form.submit(), 900);
+    }
+    </script>
+    <p class="note"><strong>Step 3 —</strong> On-chain USDT orders are verified automatically above; we then email you the full book (PDF + PNG files) within 12 hours. Binance Pay orders are confirmed in our Binance account first. Crypto payments can't be forged or charged back, so please double-check the address before sending.</p>
   </div>
 
   <footer>© AnimeZax.com — More anime guides at <a href="/">animezax.com</a></footer>

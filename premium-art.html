@@ -77,28 +77,43 @@ footer{color:#9c8f6d}
 .stickybar .sp{color:#ffd700}
 .stickybar a{background:#c9a227;color:#17120c}
 
-/* ---- designed checkout ---- */
-.pay-head{background:linear-gradient(135deg,#8a6d1b,#c9a227);color:#fff;border-radius:16px;padding:18px 20px;margin:0 0 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
-.pay-head h2{color:#fff!important;margin:0;font-size:23px}
-.pay-price{background:rgba(255,255,255,.25);padding:7px 16px;border-radius:999px;font-weight:800;font-size:19px;white-space:nowrap}
-.steps{display:flex;gap:8px;margin:0 0 16px}
-.step{flex:1;text-align:center;font-size:13px;font-weight:700;color:var(--mut);padding-top:36px;position:relative;line-height:1.3}
-.step::before{content:attr(data-n);position:absolute;top:0;left:50%;transform:translateX(-50%);width:28px;height:28px;border-radius:50%;background:#c9a227;color:#fff;font-size:15px;font-weight:800;line-height:28px;text-align:center}
-.step::after{content:"";position:absolute;top:14px;left:calc(-50% + 20px);right:calc(50% + 20px);height:2px;background:#e8d5dd}
-.step:first-child::after{display:none}
-.pay-sub{font-size:15px;margin:0 0 12px}
-.pay-methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}
-@media(max-width:560px){.pay-methods{grid-template-columns:1fr}}
-.pm{border:2px solid #4a3a1e;border-radius:14px;padding:14px;background:#2e2618}
-.pm b{display:block;font-size:15px;margin-bottom:2px}
-.pm span{font-size:13px;color:var(--mut);display:block}
-.pm .badge{display:inline-block;background:#e6f7e9;color:#166e3c;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;margin-top:7px}
-.addrbox{display:flex;gap:8px;align-items:center;background:#2e2618;border:2px dashed #6b5a2e;border-radius:12px;padding:10px 12px;margin:0 0 14px}
-.addrbox code{flex:1;word-break:break-all;font-size:13px;background:none;padding:0}
-.copyBtn2{flex:none;background:#c9a227;color:#fff;border:none;padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;font-size:14px}
-.step3{background:#22301f;border-radius:12px;padding:14px 16px;font-size:15px;margin-top:14px}
-.trust{display:flex;gap:6px 16px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--mut)}
-.pay-form-label{font-weight:700;font-size:15px}
+/* ---- Stripe-style checkout (pink anime) ---- */
+#direct-buy,#bundle{background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 1px 3px rgba(16,24,40,.06),0 1px 2px rgba(16,24,40,.04);padding:28px 24px;color:#111827}
+.pay-summary{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid #e5e7eb}
+.pay-prod{font-size:16px;font-weight:600;color:#111827;line-height:1.4}
+.pay-sub2{font-size:13px;color:#6b7280;margin-top:2px}
+.pay-total{font-size:20px;font-weight:700;color:#111827;white-space:nowrap}
+.pay-methods{display:flex;flex-direction:column;gap:10px;margin:0 0 14px}
+.pm{display:flex;align-items:center;gap:12px;border:1px solid #d1d5db;border-radius:8px;padding:12px 14px;cursor:pointer;background:#fff;transition:border-color .15s,box-shadow .15s}
+.pm:hover{border-color:#f472b6}
+.pm.selected{border-color:#ec4899;box-shadow:0 0 0 3px rgba(236,72,153,.15)}
+.pm .radio{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid #d1d5db;position:relative}
+.pm.selected .radio{border-color:#ec4899}
+.pm.selected .radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:#ec4899}
+.pm b{display:block;font-size:15px;font-weight:600;color:#111827}
+.pm span{display:block;font-size:13px;color:#6b7280}
+.pm .pm-tag{margin-left:auto;flex:none;background:#fdf2f8;color:#db2777;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px}
+.addrbox{display:flex;gap:8px;align-items:center;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;margin:0 0 14px}
+.addrbox .addr-label{flex:none;font-size:12px;font-weight:600;color:#6b7280}
+.addrbox code{flex:1;word-break:break-all;font-size:12px;background:none;padding:0;color:#374151}
+.copyBtn2{flex:none;background:#fff;border:1px solid #d1d5db;color:#374151;border-radius:6px;padding:7px 12px;font-weight:600;font-size:13px;cursor:pointer}
+.copyBtn2:hover{border-color:#f472b6;color:#db2777}
+.pay-note{font-size:13px;color:#6b7280;margin:0 0 18px;line-height:1.5}
+#direct-buy label,#bundle label{display:block;font-size:13px;font-weight:500;color:#374151;margin-bottom:4px}
+#direct-buy input,#direct-buy select,#bundle input,#bundle select{width:100%;height:44px;padding:0 12px;margin:0 0 16px;border:1px solid #d1d5db;border-radius:8px;font-size:15px;background:#fff;color:#111827;box-sizing:border-box}
+#direct-buy input:focus,#direct-buy select:focus,#bundle input:focus,#bundle select:focus{outline:none;border-color:#ec4899;box-shadow:0 0 0 3px rgba(236,72,153,.15)}
+#direct-buy input::placeholder,#bundle input::placeholder{color:#9ca3af}
+.pay-trust{text-align:center;font-size:12px;color:#9ca3af;margin:16px 0 0;line-height:1.6}
+/* ---- Stripe-style buttons site-wide ---- */
+.btn{border-radius:8px!important;font-size:16px!important;font-weight:600!important;padding:13px 18px!important;box-shadow:0 1px 2px rgba(16,24,40,.08)}
+.btn-pink{background:#ec4899!important}.btn-pink:hover{background:#db2777!important}
+.btn-green{background:#059669!important}.btn-green:hover{background:#047857!important}
+.btn-red{background:#e11d48!important}.btn-red:hover{background:#be123c!important}
+.btn-ghost{background:#fff!important;color:#db2777!important;border:1px solid #f9a8d4!important}
+.buy{background:#ec4899!important;color:#fff!important;width:100%!important;height:48px;border-radius:8px!important;font-size:16px!important;font-weight:600!important;box-shadow:0 1px 2px rgba(16,24,40,.08)}
+.buy:hover{background:#db2777!important}
+.stickybar a{background:#ec4899!important;border-radius:8px!important}
+.stickybar .sp{color:#db2777!important}
 </style>
 </head>
 <body>
@@ -146,40 +161,33 @@ footer{color:#9c8f6d}
   </section>
 
   <div class="card" id="direct-buy">
-    <div class="pay-head"><h2>🔒 Secure Checkout</h2><span class="pay-price">Total: $12</span></div>
-    <div class="steps">
-      <div class="step" data-n="1">Pay in crypto</div>
-      <div class="step" data-n="2">Verify your TxID</div>
-      <div class="step" data-n="3">Get your files</div>
-    </div>
-    <p class="pay-sub">Two ways to pay — both go to the same place:</p>
+    <div class="pay-summary"><div><div class="pay-prod">Premium Art Collection</div><div class="pay-sub2">24 full-color artworks · Book + Posters + Wallpapers</div></div><div class="pay-total">$12</div></div>
     <div class="pay-methods">
-      <div class="pm"><b>💛 Binance Pay</b><span>ID 1225407358 · name: Xanvora Store</span><span class="badge">Easiest ✓</span></div>
-      <div class="pm"><b>₮ USDT · BEP20</b><span>Send 12 USDT on BNB Smart Chain</span><span class="badge">Auto-verified ✓</span></div>
+      <div class="pm selected" onclick="setMethod(this,'usdt')"><span class="radio"></span><div><b>₮ USDT · BEP20</b><span>Instant automatic verification</span></div><span class="pm-tag">Recommended</span></div>
+      <div class="pm" onclick="setMethod(this,'binance')"><span class="radio"></span><div><b>💛 Binance Pay</b><span>ID 1225407358 · Xanvora Store</span></div></div>
     </div>
-    <div class="addrbox"><code class="addr">0x47258cfc9056d74f1bc31618eaba4b97347596d5</code><button class="copyBtn copyBtn2" onclick="copyAddr()">📋 Copy address</button></div>
-    <p class="pay-sub">Then enter your TxID below — it's checked <strong>on the blockchain instantly</strong>. A fake, failed or underpaid payment is <strong>rejected on the spot</strong>.</p>
+    <div class="addrbox"><span class="addr-label">Send to</span><code class="addr">0x47258cfc9056d74f1bc31618eaba4b97347596d5</code><button class="copyBtn copyBtn2" onclick="copyAddr()">Copy</button></div>
+    <p class="pay-note">Pay with either method above, then enter your TxID below — it's checked <strong>on the blockchain instantly</strong>. Fake, failed or underpaid payments are rejected on the spot.</p>
 <form id="orderForm" action="https://formsubmit.co/4gmxsol@gmail.com" method="POST" style="margin-top:12px;">
       <input type="hidden" name="_subject" value="AnimeZax Premium Art — New Order">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://animezax.com/premium-art.html">
       <input type="hidden" name="payment_check" class="paymentCheck" value="not-checked">
       <label>How did you pay?<br>
-      <select class="payMethod" style="width:100%; padding:13px 14px; margin:6px 0 14px; border:2px solid #6b5a2e; border-radius:12px; font-size:16px; box-sizing:border-box; background:#2e2618; color:#f5efe4;">
+      <select class="payMethod">
         <option value="usdt">USDT on-chain (BEP20) — instant automatic check</option>
         <option value="binance">Binance Pay — checked manually in our Binance account</option>
       </select></label>
       <label>Your email (for delivery)<br>
-      <input type="email" name="email" required style="width:100%; padding:13px 14px; margin:6px 0 14px; border:2px solid #6b5a2e; border-radius:12px; font-size:16px; box-sizing:border-box; background:#2e2618; color:#f5efe4;"></label>
+      <input type="email" name="email" required></label>
       <label>Transaction ID (TxID) or Binance order number<br>
-      <input type="text" name="txid" class="txidField" required style="width:100%; padding:13px 14px; margin:6px 0 14px; border:2px solid #6b5a2e; border-radius:12px; font-size:16px; box-sizing:border-box; background:#2e2618; color:#f5efe4;"></label>
+      <input type="text" name="txid" class="txidField" required></label>
       <label>Note (optional)<br>
-      <input type="text" name="note" style="width:100%; padding:13px 14px; margin:6px 0 16px; border:2px solid #6b5a2e; border-radius:12px; font-size:16px; box-sizing:border-box; background:#2e2618; color:#f5efe4;"></label>
+      <input type="text" name="note"></label>
       <div id="checkResult" style="display:none; padding:12px; border-radius:10px; margin-bottom:14px;"></div>
       <button type="button" onclick="verifyAndSubmit('orderForm', 12, 'checkResult')" class="buy" style="border:none; cursor:pointer; margin-top:0;">✅ Verify Payment &amp; Order</button>
     </form>
-    <div class="step3"><strong>✅ Step 3 — Delivery:</strong> On-chain USDT orders are verified automatically above; we then email you the art book PDF, the posters ZIP and the wallpapers ZIP within 12 hours. Binance Pay orders are confirmed in our Binance account first.</div>
-    <div class="trust"><span>🛡️ Verified on-chain</span><span>⚡ Instant check</span><span>📧 Delivered within 12h</span><span>🔒 No card needed</span></div>
+    <p class="pay-trust">🔒 Secured by on-chain verification &nbsp;·&nbsp; No card required &nbsp;·&nbsp; 📧 Files emailed within 12 hours of verification</p>
   </div>
 
   <footer>© AnimeZax — animezax.com · Support: 4gmxsol@gmail.com</footer>
@@ -248,6 +256,12 @@ function copyAddr() {
     document.querySelectorAll(".copyBtn").forEach(b => b.textContent = "Copied ✓");
     setTimeout(() => document.querySelectorAll(".copyBtn").forEach(b => b.textContent = "Copy"), 2000);
   });
+}
+function setMethod(el, v) {
+  var s = el.closest(".card").querySelector(".payMethod, #payMethod");
+  if (s) s.value = v;
+  el.closest(".card").querySelectorAll(".pm").forEach(function(p){ p.classList.remove("selected"); });
+  el.classList.add("selected");
 }
 </script>
 </body>

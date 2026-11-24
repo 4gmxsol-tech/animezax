@@ -7,28 +7,33 @@
 <title>Verify USDT Payment — AnimeZax (private)</title>
 <style>
   * { box-sizing: border-box; }
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(160deg, #1a1218, #2b1620 60%, #1a1218); color: #f5efe4; line-height: 1.6; padding: 32px 16px; margin: 0; min-height: 100vh; }
-  .wrap { max-width: 640px; margin: 0 auto; background: #241a20; border: 1px solid #4a2f3a; border-radius: 20px; padding: 28px 26px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
-  .brand { text-align: center; color: #ffd700; font-weight: 800; letter-spacing: 2px; font-size: 15px; margin-bottom: 4px; }
-  h1 { color: #ffd700; font-size: 25px; text-align: center; margin: 6px 0 4px; }
-  .sub { text-align: center; color: #cbbfa5; font-size: 14px; margin: 0 0 20px; }
-  .badge { display: inline-block; background: #3a2a12; color: #ffd700; border: 1px solid #6b5a2e; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
-  input { width: 100%; padding: 14px; border: 2px solid #6b5a2e; border-radius: 12px; font-size: 15px; background: #17120c; color: #f5efe4; }
-  input:focus { outline: none; border-color: #ffd700; }
-  button { margin-top: 14px; width: 100%; background: linear-gradient(135deg, #c9a227, #a8842a); color: #17120c; border: none; font-size: 17px; font-weight: 800; padding: 14px 28px; border-radius: 999px; cursor: pointer; }
-  .box { margin-top: 20px; padding: 16px; border-radius: 12px; display: none; color: #222; }
-  .ok { background: #e6f7e9; border: 2px solid #2e9e4f; }
-  .bad { background: #fdeaea; border: 2px solid #d33; }
-  .warn { background: #fff6e0; border: 2px solid #e0a800; }
+  body { font-family: -apple-system, 'Segoe UI', system-ui, sans-serif; background: #f6f9fc; color: #111827; line-height: 1.6; padding: 40px 16px; margin: 0; min-height: 100vh; }
+  .wrap { max-width: 480px; margin: 0 auto; background: #fff; border: 1px solid #e5e7eb; border-radius: 16px; padding: 32px 28px; box-shadow: 0 1px 3px rgba(16,24,40,.06), 0 1px 2px rgba(16,24,40,.04); }
+  .brand { text-align: center; color: #9ca3af; font-weight: 600; letter-spacing: 2px; font-size: 12px; margin-bottom: 16px; }
+  h1 { color: #111827; font-size: 20px; text-align: center; margin: 0 0 6px; font-weight: 700; }
+  .sub { text-align: center; color: #6b7280; font-size: 14px; margin: 0 0 24px; }
+  .badge { display: inline-block; background: #fdf2f8; color: #db2777; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+  label { display: block; font-size: 13px; font-weight: 500; color: #374151; margin-bottom: 4px; }
+  input { width: 100%; height: 44px; padding: 0 12px; border: 1px solid #d1d5db; border-radius: 8px; font-size: 15px; background: #fff; color: #111827; }
+  input:focus { outline: none; border-color: #ec4899; box-shadow: 0 0 0 3px rgba(236,72,153,.15); }
+  input::placeholder { color: #9ca3af; }
+  button { margin-top: 18px; width: 100%; height: 48px; background: #ec4899; color: #fff; border: none; font-size: 16px; font-weight: 600; border-radius: 8px; cursor: pointer; box-shadow: 0 1px 2px rgba(16,24,40,.08); }
+  button:hover { background: #db2777; }
+  .box { margin-top: 20px; padding: 16px; border-radius: 8px; display: none; font-size: 14px; }
+  .ok { background: #f0fdf4; border: 1px solid #86efac; color: #166534; }
+  .bad { background: #fef2f2; border: 1px solid #fca5a5; color: #991b1b; }
+  .warn { background: #fffbeb; border: 1px solid #fcd34d; color: #92400e; }
   .mono { font-family: monospace; font-size: 13px; word-break: break-all; }
-  .note { color: #9c8f6d; font-size: 14px; margin-top: 24px; }
+  .note { color: #9ca3af; font-size: 13px; margin-top: 24px; text-align: center; }
 </style>
 </head>
 <body>
 <div class="wrap">
   <div class="brand">✨ ANIMEZAX</div>
-  <h1>🔍 Verify a USDT (BEP20) payment</h1>
-  <p class="sub"><span class="badge">🔒 PRIVATE TOOL</span><br><br>Paste the Transaction ID (TxID) the buyer sent you. This checks the <strong>BNB Smart Chain blockchain directly</strong> — not the buyer's word.</p>
+  <h1>Verify a USDT (BEP20) payment</h1>
+  <p class="sub"><span class="badge">🔒 PRIVATE TOOL</span></p>
+  <p class="sub">Paste the Transaction ID (TxID) the buyer sent you. This checks the <strong>BNB Smart Chain blockchain directly</strong> — not the buyer's word.</p>
+  <label>Transaction ID (TxID)</label>
   <input id="txid" placeholder="0x... transaction hash">
   <button onclick="check()">Check payment</button>
   <div id="out" class="box"></div>

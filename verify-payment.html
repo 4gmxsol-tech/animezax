@@ -6,23 +6,29 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Verify USDT Payment — AnimeZax (private)</title>
 <style>
-  body { font-family: 'Segoe UI', system-ui, sans-serif; background:#fff7fb; color:#333; line-height:1.6; padding:24px 16px; }
-  .wrap { max-width:640px; margin:0 auto; }
-  h1 { color:#c2185b; font-size:26px; }
-  input { width:100%; padding:12px; border:1px solid #ddd; border-radius:8px; font-size:15px; box-sizing:border-box; }
-  button { margin-top:12px; background:#c2185b; color:#fff; border:none; font-size:17px; font-weight:700; padding:12px 28px; border-radius:999px; cursor:pointer; }
-  .box { margin-top:20px; padding:16px; border-radius:12px; display:none; }
-  .ok { background:#e6f7e9; border:2px solid #2e9e4f; }
-  .bad { background:#fdeaea; border:2px solid #d33; }
-  .warn { background:#fff6e0; border:2px solid #e0a800; }
-  .mono { font-family:monospace; font-size:13px; word-break:break-all; }
-  .note { color:#777; font-size:14px; margin-top:24px; }
+  * { box-sizing: border-box; }
+  body { font-family: 'Segoe UI', system-ui, sans-serif; background: linear-gradient(160deg, #1a1218, #2b1620 60%, #1a1218); color: #f5efe4; line-height: 1.6; padding: 32px 16px; margin: 0; min-height: 100vh; }
+  .wrap { max-width: 640px; margin: 0 auto; background: #241a20; border: 1px solid #4a2f3a; border-radius: 20px; padding: 28px 26px; box-shadow: 0 20px 60px rgba(0,0,0,.5); }
+  .brand { text-align: center; color: #ffd700; font-weight: 800; letter-spacing: 2px; font-size: 15px; margin-bottom: 4px; }
+  h1 { color: #ffd700; font-size: 25px; text-align: center; margin: 6px 0 4px; }
+  .sub { text-align: center; color: #cbbfa5; font-size: 14px; margin: 0 0 20px; }
+  .badge { display: inline-block; background: #3a2a12; color: #ffd700; border: 1px solid #6b5a2e; font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 999px; }
+  input { width: 100%; padding: 14px; border: 2px solid #6b5a2e; border-radius: 12px; font-size: 15px; background: #17120c; color: #f5efe4; }
+  input:focus { outline: none; border-color: #ffd700; }
+  button { margin-top: 14px; width: 100%; background: linear-gradient(135deg, #c9a227, #a8842a); color: #17120c; border: none; font-size: 17px; font-weight: 800; padding: 14px 28px; border-radius: 999px; cursor: pointer; }
+  .box { margin-top: 20px; padding: 16px; border-radius: 12px; display: none; color: #222; }
+  .ok { background: #e6f7e9; border: 2px solid #2e9e4f; }
+  .bad { background: #fdeaea; border: 2px solid #d33; }
+  .warn { background: #fff6e0; border: 2px solid #e0a800; }
+  .mono { font-family: monospace; font-size: 13px; word-break: break-all; }
+  .note { color: #9c8f6d; font-size: 14px; margin-top: 24px; }
 </style>
 </head>
 <body>
 <div class="wrap">
+  <div class="brand">✨ ANIMEZAX</div>
   <h1>🔍 Verify a USDT (BEP20) payment</h1>
-  <p>Private tool for AnimeZax orders. Paste the Transaction ID (TxID) the buyer sent you. This checks the **BNB Smart Chain blockchain directly** — not the buyer's word.</p>
+  <p class="sub"><span class="badge">🔒 PRIVATE TOOL</span><br><br>Paste the Transaction ID (TxID) the buyer sent you. This checks the <strong>BNB Smart Chain blockchain directly</strong> — not the buyer's word.</p>
   <input id="txid" placeholder="0x... transaction hash">
   <button onclick="check()">Check payment</button>
   <div id="out" class="box"></div>

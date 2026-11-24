@@ -57,6 +57,29 @@ footer{text-align:center;color:var(--mut);font-size:14px;padding:26px 0 6px}
  .stickybar a{flex:1;text-align:center;background:var(--pink);color:#fff;text-decoration:none;font-weight:700;padding:12px;border-radius:10px}
  body{padding-bottom:64px}
 }
+
+/* ---- designed checkout ---- */
+.pay-head{background:linear-gradient(135deg,#d63384,#b02568);color:#fff;border-radius:16px;padding:18px 20px;margin:0 0 16px;display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+.pay-head h2{color:#fff!important;margin:0;font-size:23px}
+.pay-price{background:rgba(255,255,255,.25);padding:7px 16px;border-radius:999px;font-weight:800;font-size:19px;white-space:nowrap}
+.steps{display:flex;gap:8px;margin:0 0 16px}
+.step{flex:1;text-align:center;font-size:13px;font-weight:700;color:var(--mut);padding-top:36px;position:relative;line-height:1.3}
+.step::before{content:attr(data-n);position:absolute;top:0;left:50%;transform:translateX(-50%);width:28px;height:28px;border-radius:50%;background:#d63384;color:#fff;font-size:15px;font-weight:800;line-height:28px;text-align:center}
+.step::after{content:"";position:absolute;top:14px;left:calc(-50% + 20px);right:calc(50% + 20px);height:2px;background:#e8d5dd}
+.step:first-child::after{display:none}
+.pay-sub{font-size:15px;margin:0 0 12px}
+.pay-methods{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 14px}
+@media(max-width:560px){.pay-methods{grid-template-columns:1fr}}
+.pm{border:2px solid #f0d9e4;border-radius:14px;padding:14px;background:#fff7fa}
+.pm b{display:block;font-size:15px;margin-bottom:2px}
+.pm span{font-size:13px;color:var(--mut);display:block}
+.pm .badge{display:inline-block;background:#e6f7e9;color:#166e3c;font-size:12px;font-weight:700;padding:3px 9px;border-radius:999px;margin-top:7px}
+.addrbox{display:flex;gap:8px;align-items:center;background:#faf5f7;border:2px dashed #e0b9cc;border-radius:12px;padding:10px 12px;margin:0 0 14px}
+.addrbox code{flex:1;word-break:break-all;font-size:13px;background:none;padding:0}
+.copyBtn2{flex:none;background:#d63384;color:#fff;border:none;padding:10px 16px;border-radius:999px;font-weight:700;cursor:pointer;font-size:14px}
+.step3{background:#eef7f0;border-radius:12px;padding:14px 16px;font-size:15px;margin-top:14px}
+.trust{display:flex;gap:6px 16px;flex-wrap:wrap;margin-top:12px;font-size:13px;color:var(--mut)}
+.pay-form-label{font-weight:700;font-size:15px}
 </style>
 </head>
 <body>
@@ -106,56 +129,61 @@ footer{text-align:center;color:var(--mut);font-size:14px;padding:26px 0 6px}
   </section>
 
   <div class="card" id="direct-buy">
-    <h2>Buy directly on this page</h2>
-    <p><strong>Step 1 — Pay $4 in crypto</strong></p>
-    <p>Binance Pay ID: <strong>1225407358</strong> (name: Xanvora Store)<br>
-    or send <strong>4 USDT</strong> (network: <strong>BEP20 / BNB Smart Chain</strong>) to:</p>
-    <code class="addr">0x47258cfc9056d74f1bc31618eaba4b97347596d5</code>
-    <button class="copyBtn" onclick="copyAddr()" style="margin-top:8px; padding:8px 16px; border-radius:8px; border:1px solid #ccc; cursor:pointer;">Copy</button>
-    <p><strong>Step 2 — Your details (payment verified automatically)</strong></p>
-    <p style="font-size:15px;">Enter your TxID below and press the button — your payment is checked <strong>on the blockchain instantly</strong>. A fake, failed, or underpaid TxID is <strong>rejected on the spot</strong> and the order is not accepted.</p>
-    <form id="orderForm" action="https://formsubmit.co/4gmxsol@gmail.com" method="POST" style="margin-top:12px;">
+    <div class="pay-head"><h2>🔒 Secure Checkout</h2><span class="pay-price">Total: $4</span></div>
+    <div class="steps">
+      <div class="step" data-n="1">Pay in crypto</div>
+      <div class="step" data-n="2">Verify your TxID</div>
+      <div class="step" data-n="3">Get your files</div>
+    </div>
+    <p class="pay-sub">Two ways to pay — both go to the same place:</p>
+    <div class="pay-methods">
+      <div class="pm"><b>💛 Binance Pay</b><span>ID 1225407358 · name: Xanvora Store</span><span class="badge">Easiest ✓</span></div>
+      <div class="pm"><b>₮ USDT · BEP20</b><span>Send 4 USDT on BNB Smart Chain</span><span class="badge">Auto-verified ✓</span></div>
+    </div>
+    <div class="addrbox"><code class="addr">0x47258cfc9056d74f1bc31618eaba4b97347596d5</code><button class="copyBtn copyBtn2" onclick="copyAddr()">📋 Copy address</button></div>
+    <p class="pay-sub">Then enter your TxID below — it's checked <strong>on the blockchain instantly</strong>. A fake, failed or underpaid payment is <strong>rejected on the spot</strong>.</p>
+<form id="orderForm" action="https://formsubmit.co/4gmxsol@gmail.com" method="POST" style="margin-top:12px;">
       <input type="hidden" name="_subject" value="AnimeZax Christmas Pack — New Order">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://animezax.com/christmas-coloring.html">
       <input type="hidden" name="payment_check" class="paymentCheck" value="not-checked">
       <label>How did you pay?<br>
-      <select class="payMethod" style="width:100%; padding:10px; margin:4px 0 12px; border:1px solid #ddd; border-radius:8px;">
+      <select class="payMethod" style="width:100%; padding:13px 14px; margin:6px 0 14px; border:2px solid #ecd9e2; border-radius:12px; font-size:16px; box-sizing:border-box; background:#fff;">
         <option value="usdt">USDT on-chain (BEP20) — instant automatic check</option>
         <option value="binance">Binance Pay — checked manually in our Binance account</option>
       </select></label>
       <label>Your email (for delivery)<br>
-      <input type="email" name="email" required style="width:100%; padding:10px; margin:4px 0 12px; border:1px solid #ddd; border-radius:8px;"></label>
+      <input type="email" name="email" required style="width:100%; padding:13px 14px; margin:6px 0 14px; border:2px solid #ecd9e2; border-radius:12px; font-size:16px; box-sizing:border-box; background:#fff;"></label>
       <label>Transaction ID (TxID) or Binance order number<br>
-      <input type="text" name="txid" class="txidField" required style="width:100%; padding:10px; margin:4px 0 12px; border:1px solid #ddd; border-radius:8px;"></label>
+      <input type="text" name="txid" class="txidField" required style="width:100%; padding:13px 14px; margin:6px 0 14px; border:2px solid #ecd9e2; border-radius:12px; font-size:16px; box-sizing:border-box; background:#fff;"></label>
       <label>Note (optional)<br>
-      <input type="text" name="note" style="width:100%; padding:10px; margin:4px 0 16px; border:1px solid #ddd; border-radius:8px;"></label>
+      <input type="text" name="note" style="width:100%; padding:13px 14px; margin:6px 0 16px; border:2px solid #ecd9e2; border-radius:12px; font-size:16px; box-sizing:border-box; background:#fff;"></label>
       <div id="checkResult" style="display:none; padding:12px; border-radius:10px; margin-bottom:14px;"></div>
       <button type="button" onclick="verifyAndSubmit('orderForm', 4, 'checkResult')" class="buy" style="border:none; cursor:pointer; margin-top:0;">✅ Verify Payment &amp; Order</button>
     </form>
-    <p class="note"><strong>Step 3 —</strong> On-chain USDT orders are verified automatically above; we then email you the full pack (PDF + PNG files) within 12 hours. Binance Pay orders are confirmed in our Binance account first.</p>
+    <div class="step3"><strong>✅ Step 3 — Delivery:</strong> On-chain USDT orders are verified automatically above; we then email you the full pack (PDF + PNG files) within 12 hours. Binance Pay orders are confirmed in our Binance account first.</div>
+    <div class="trust"><span>🛡️ Verified on-chain</span><span>⚡ Instant check</span><span>📧 Delivered within 12h</span><span>🔒 No card needed</span></div>
   </div>
 
   <div class="card" id="bundle" style="border:2px solid var(--green);">
-    <h2>💚 BEST VALUE — Get BOTH books for $7 (save $2)</h2>
-    <p>The <strong>50-page Kawaii Anime Coloring Book</strong> ($5) + this <strong>30-page Christmas Pack</strong> ($4) = <strong>80 pages for just $7</strong>.</p>
-    <p><strong>Pay $7</strong> the same way (Binance Pay ID 1225407358, or 7 USDT BEP20 to the address above), then order here:</p>
+    <div class="pay-head" style="background:linear-gradient(135deg,#166e3c,#0d4d27)"><h2>💚 BEST VALUE — Both Books</h2><span class="pay-price">$7 · Save $2</span></div>
+    <p class="pay-sub">The <strong>50-page Kawaii Anime Coloring Book</strong> ($5) + this <strong>30-page Christmas Pack</strong> ($4) = <strong>80 pages for just $7</strong>. Pay $7 the same way above (Binance Pay or 7 USDT BEP20), then order here:</p>
     <form id="bundleForm" action="https://formsubmit.co/4gmxsol@gmail.com" method="POST" style="margin-top:12px;">
       <input type="hidden" name="_subject" value="AnimeZax BUNDLE — New Order">
       <input type="hidden" name="_template" value="table">
       <input type="hidden" name="_next" value="https://animezax.com/christmas-coloring.html">
       <input type="hidden" name="payment_check" class="paymentCheck" value="not-checked">
       <label>How did you pay?<br>
-      <select class="payMethod" style="width:100%; padding:10px; margin:4px 0 12px; border:1px solid #ddd; border-radius:8px;">
+      <select class="payMethod" style="width:100%; padding:13px 14px; margin:6px 0 14px; border:2px solid #ecd9e2; border-radius:12px; font-size:16px; box-sizing:border-box; background:#fff;">
         <option value="usdt">USDT on-chain (BEP20) — instant automatic check</option>
         <option value="binance">Binance Pay — checked manually in our Binance account</option>
       </select></label>
       <label>Your email (for delivery)<br>
-      <input type="email" name="email" required style="width:100%; padding:10px; margin:4px 0 12px; border:1px solid #ddd; border-radius:8px;"></label>
+      <input type="email" name="email" required style="width:100%; padding:13px 14px; margin:6px 0 14px; border:2px solid #ecd9e2; border-radius:12px; font-size:16px; box-sizing:border-box; background:#fff;"></label>
       <label>Transaction ID (TxID) or Binance order number<br>
-      <input type="text" name="txid" class="txidField" required style="width:100%; padding:10px; margin:4px 0 12px; border:1px solid #ddd; border-radius:8px;"></label>
+      <input type="text" name="txid" class="txidField" required style="width:100%; padding:13px 14px; margin:6px 0 14px; border:2px solid #ecd9e2; border-radius:12px; font-size:16px; box-sizing:border-box; background:#fff;"></label>
       <label>Note (optional)<br>
-      <input type="text" name="note" style="width:100%; padding:10px; margin:4px 0 16px; border:1px solid #ddd; border-radius:8px;"></label>
+      <input type="text" name="note" style="width:100%; padding:13px 14px; margin:6px 0 16px; border:2px solid #ecd9e2; border-radius:12px; font-size:16px; box-sizing:border-box; background:#fff;"></label>
       <div id="bundleResult" style="display:none; padding:12px; border-radius:10px; margin-bottom:14px;"></div>
       <button type="button" onclick="verifyAndSubmit('bundleForm', 7, 'bundleResult')" class="buy" style="border:none; cursor:pointer; margin-top:0;">✅ Verify Payment &amp; Order</button>
     </form>

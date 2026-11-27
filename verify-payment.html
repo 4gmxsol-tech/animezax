@@ -30,14 +30,20 @@
 <body>
 <div class="wrap">
   <div class="brand">✨ ANIMEZAX</div>
-  <h1>Verify a USDT (BEP20) payment</h1>
+  <h1>Verify a USDT payment</h1>
   <p class="sub"><span class="badge">🔒 PRIVATE TOOL</span></p>
-  <p class="sub">Paste the Transaction ID (TxID) the buyer sent you. This checks the <strong>BNB Smart Chain blockchain directly</strong> — not the buyer's word.</p>
+  <p class="sub">Paste the Transaction ID (TxID) the buyer sent you. This checks the <strong>blockchain directly</strong> — BNB Smart Chain (BEP20) or TRON (TRC20), whichever you pick below — not the buyer's word.</p>
+  <label>Network</label>
+  <select id="net" style="width:100%;height:44px;padding:0 12px;border:1px solid #d1d5db;border-radius:8px;font-size:15px;background:#fff;color:#111827;margin-bottom:12px;">
+    <option value="bsc">BNB Smart Chain (BEP20) — TxID starts with 0x</option>
+    <option value="tron">TRON (TRC20) — TxID is 64 hex characters</option>
+  </select>
   <label>Transaction ID (TxID)</label>
   <input id="txid" placeholder="0x... transaction hash">
   <button onclick="check()">Check payment</button>
   <div id="out" class="box"></div>
-  <p class="note">Our USDT address: <span class="mono">0x47258cfc9056d74f1bc31618eaba4b97347596d5</span><br>
+  <p class="note">Our USDT (BEP20) address: <span class="mono">0x47258cfc9056d74f1bc31618eaba4b97347596d5</span><br>
+  Our USDT (TRC20) address: <span class="mono">TA99DBzZtYijXAZW2K2HAgcVPNr7dQefuY</span><br>
   Book price: <strong>$5</strong>. Rule: deliver ONLY on a green result with amount ≥ $5.<br>
   Binance Pay payments have no blockchain TxID — verify those inside your Binance app (the money must actually appear in your balance).</p>
 </div>
@@ -45,6 +51,8 @@
 const OUR = "0x47258cfc9056d74f1bc31618eaba4b97347596d5";
 const USDT = "0x55d398326f99059ff775485246999027b3197955";
 const TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+const OUR_TRON = "01e0fec470a8fe848c3d430fc22c24dec2e7b87f";
+const TRON_USDT = "a614f803b6fd780986a42c78ec9c7f77e6ded13c";
 const RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.defibit.io", "https://bsc-dataseed1.ninicoin.io"];
 async function rpc(method, params) {
   for (const url of RPCS) {
@@ -63,6 +71,7 @@ function show(cls, html) {
 }
 async function check() {
   const txid = document.getElementById("txid").value.trim().toLowerCase();
+  if (document.getElementById("net").value === "tron") { checkTron(txid); return; }
   if (!/^0x[0-9a-f]{64}$/.test(txid)) { show("warn", "⚠️ That doesn't look like a TxID. It should start with 0x and be 66 characters. For Binance Pay payments, check inside the Binance app instead."); return; }
   show("warn", "⏳ Checking the blockchain…");
   let rc;
@@ -85,6 +94,35 @@ async function check() {
   }
   if (ours.amt >= 5) {
     show("ok", "✅ <strong>REAL PAYMENT — SAFE TO DELIVER</strong><br>Amount: <strong>" + ours.amt + " USDT</strong><br>To our address: <span class='mono'>" + ours.to + "</span><br><br>Send the buyer the book (PDF + PNG ZIP) at the email in their order.");
+  } else {
+    show("warn", "⚠️ A payment arrived but it's only <strong>" + ours.amt + " USDT</strong> — less than the $5 price. Ask the buyer to complete the amount before delivering.");
+  }
+}
+async function checkTron(txid) {
+  const t = txid.replace(/^0x/, "");
+  if (!/^[0-9a-f]{64}$/.test(t)) { show("warn", "⚠️ That doesn't look like a TRON TxID. It should be 64 hex characters (with or without 0x). For Binance Pay payments, check inside the Binance app instead."); return; }
+  show("warn", "⏳ Checking the TRON blockchain…");
+  let info;
+  try {
+    const r = await fetch("https://api.trongrid.io/wallet/gettransactioninfobyid", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ value: t }) });
+    info = await r.json();
+  } catch (e) { show("bad", "❌ Couldn't reach the TRON network. Check your internet and try again. Do NOT deliver until you get a green result."); return; }
+  if (!info || !info.blockNumber) { show("bad", "❌ <strong>NOT FOUND.</strong> No transaction with this ID exists on TRON yet. The buyer has not paid (or sent a fake/wrong ID). <strong>Do NOT deliver.</strong>"); return; }
+  if (!info.receipt || info.receipt.result !== "SUCCESS") { show("bad", "❌ This transaction <strong>failed</strong> on-chain. No money moved. <strong>Do NOT deliver.</strong>"); return; }
+  const tlogs = (info.log || []).filter(l => l.address && l.address.toLowerCase() === TRON_USDT && l.topics && l.topics[0] && l.topics.length > 2 && ("0x" + l.topics[0].toLowerCase()) === TRANSFER);
+  let ours = null, others = [];
+  for (const l of tlogs) {
+    const to = "0x" + l.topics[2].slice(-40);
+    const amt = Number(BigInt("0x" + l.data)) / 1e6;
+    if (to.toLowerCase() === "0x" + OUR_TRON) ours = { to, amt }; else others.push({ to, amt });
+  }
+  if (!ours) {
+    if (others.length) { const o = others[0]; show("bad", "❌ This transaction sent <strong>" + o.amt + " USDT</strong> to a <strong>different address</strong>:<br><span class='mono'>" + o.to + "</span><br>That is NOT our TRC20 address. <strong>Do NOT deliver.</strong>"); }
+    else { show("bad", "❌ This is a real transaction, but it contains <strong>no USDT (TRC20) transfer</strong>. <strong>Do NOT deliver.</strong>"); }
+    return;
+  }
+  if (ours.amt >= 5) {
+    show("ok", "✅ <strong>REAL PAYMENT — SAFE TO DELIVER</strong><br>Amount: <strong>" + ours.amt + " USDT (TRC20)</strong><br>To our address: <span class='mono'>TA99DBzZtYijXAZW2K2HAgcVPNr7dQefuY</span><br><br>Send the buyer the book (PDF + PNG ZIP) at the email in their order.");
   } else {
     show("warn", "⚠️ A payment arrived but it's only <strong>" + ours.amt + " USDT</strong> — less than the $5 price. Ask the buyer to complete the amount before delivering.");
   }

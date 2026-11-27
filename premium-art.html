@@ -188,10 +188,12 @@ footer{color:#9c8f6d}
     <div class="pay-summary"><div><div class="pay-prod">Premium Art Collection</div><div class="pay-sub2">24 full-color artworks · Book + Posters + Wallpapers</div></div><div class="pay-total"><s>$12.00</s> $7.99</div></div><div class="co-disc"><span>🎉 Black Friday discount applied (−33%)</span><span>you save $4.01</span></div>
     <div class="pay-methods">
       <div class="pm selected" onclick="setMethod(this,'usdt')"><span class="radio"></span><div><b>₮ USDT · BEP20</b><span>Instant automatic verification</span></div><span class="pm-tag">Recommended</span></div>
-      <div class="pm" onclick="setMethod(this,'binance')"><span class="radio"></span><div><b>💛 Binance Pay</b><span>ID 1225407358 · Xanvora Store</span></div></div>
+      <div class="pm" onclick="setMethod(this,'trc20')"><span class="radio"></span><div><b>₮ USDT · TRC20 (Tron)</b><span>Instant automatic verification · lower fees</span></div></div>
+      <div class="pm" onclick="setMethod(this,'binance')"><span class="radio"></span><div><b>💛 Binance Pay</b><span>ID 1225407358 · Xanvora Store — accepts USDT, USDC, BNB, BTC &amp; more</span></div></div>
     </div>
-    <div class="addrbox"><span class="addr-label">Send to</span><code class="addr">0x47258cfc9056d74f1bc31618eaba4b97347596d5</code><button class="copyBtn copyBtn2" onclick="copyAddr()">Copy</button></div>
-    <p class="pay-note">Pay with either method above, then enter your TxID below — it's checked <strong>on the blockchain instantly</strong>. Fake, failed or underpaid payments are rejected on the spot.</p>
+    <div class="addrbox"><span class="addr-label">Send to (BEP20)</span><code class="addr">0x47258cfc9056d74f1bc31618eaba4b97347596d5</code><button class="copyBtn copyBtn2" onclick="copyAddr('0x47258cfc9056d74f1bc31618eaba4b97347596d5', this)">Copy</button></div>
+    <div class="addrbox"><span class="addr-label">Send to (TRC20)</span><code class="addr">TA99DBzZtYijXAZW2K2HAgcVPNr7dQefuY</code><button class="copyBtn copyBtn2" onclick="copyAddr('TA99DBzZtYijXAZW2K2HAgcVPNr7dQefuY', this)">Copy</button></div>
+    <p class="pay-note">Pay with any method above, then enter your TxID below — it's checked <strong>on the blockchain instantly</strong>. Fake, failed or underpaid payments are rejected on the spot.</p>
 <form id="orderForm" action="https://formsubmit.co/4gmxsol@gmail.com" method="POST" style="margin-top:12px;">
       <input type="hidden" name="_subject" value="AnimeZax Premium Art — New Order">
       <input type="hidden" name="_template" value="table">
@@ -200,6 +202,7 @@ footer{color:#9c8f6d}
       <label>How did you pay?<br>
       <select class="payMethod">
         <option value="usdt">USDT on-chain (BEP20) — instant automatic check</option>
+        <option value="trc20">USDT on-chain (TRC20) — instant automatic check</option>
         <option value="binance">Binance Pay — checked manually in our Binance account</option>
       </select></label>
       <label>Your email (for delivery)<br>
@@ -223,6 +226,8 @@ footer{color:#9c8f6d}
 const OUR = "0x47258cfc9056d74f1bc31618eaba4b97347596d5";
 const USDT_C = "0x55d398326f99059ff775485246999027b3197955";
 const TRANSFER = "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef";
+const OUR_TRON = "01e0fec470a8fe848c3d430fc22c24dec2e7b87f";
+const TRON_USDT = "a614f803b6fd780986a42c78ec9c7f77e6ded13c";
 const RPCS = ["https://bsc-dataseed.binance.org", "https://bsc-dataseed1.defibit.io", "https://bsc-dataseed1.ninicoin.io"];
 async function rpc(method, params) {
   for (const url of RPCS) {
@@ -256,6 +261,33 @@ async function verifyAndSubmit(formId, minAmt, resId) {
     btn.disabled = true; btn.textContent = "Sending order…";
     form.submit(); return;
   }
+  if (method === "trc20") {
+    const t = txid.replace(/^0x/, "");
+    if (!/^[0-9a-f]{64}$/.test(t)) { showRes(resId, false, "❌ <strong>Rejected:</strong> that is not a valid TRON TxID (it must be 64 hex characters, with or without 0x)."); return; }
+    const origBtn = btn.textContent;
+    btn.disabled = true; btn.textContent = "⏳ Verifying on the TRON blockchain…";
+    let info;
+    try {
+      const rr = await fetch("https://api.trongrid.io/wallet/gettransactioninfobyid", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ value: t }) });
+      info = await rr.json();
+    } catch (e) { btn.disabled = false; btn.textContent = origBtn; showRes(resId, false, "❌ Couldn't reach the TRON network. Please try again in a minute."); return; }
+    if (!info || !info.blockNumber) { btn.disabled = false; btn.textContent = origBtn; showRes(resId, false, "❌ <strong>Rejected:</strong> no transaction with this ID exists on TRON yet. If you really paid, wait 1–2 minutes for confirmation and try again."); return; }
+    if (!info.receipt || info.receipt.result !== "SUCCESS") { btn.disabled = false; btn.textContent = origBtn; showRes(resId, false, "❌ <strong>Rejected:</strong> this transaction failed on-chain. No payment was received."); return; }
+    const tlogs = (info.log || []).filter(l => l.address && l.address.toLowerCase() === TRON_USDT && l.topics && l.topics[0] && l.topics.length > 2 && ("0x" + l.topics[0].toLowerCase()) === TRANSFER);
+    let oursT = null;
+    for (const l of tlogs) {
+      const to = l.topics[2].slice(-40);
+      const amt = Number(BigInt("0x" + l.data)) / 1e6;
+      if (to.toLowerCase() === OUR_TRON) oursT = amt;
+    }
+    if (oursT === null) { btn.disabled = false; btn.textContent = origBtn; showRes(resId, false, "❌ <strong>Rejected:</strong> this transaction did not pay OUR USDT (TRC20) address. Please check you sent it to the TRC20 address in Step 1."); return; }
+    if (oursT < minAmt) { btn.disabled = false; btn.textContent = origBtn; showRes(resId, false, "❌ <strong>Rejected:</strong> only " + oursT + " USDT (TRC20) arrived — the price here is $" + minAmt + ". Please complete the payment and use the new TxID."); return; }
+    checkField.value = "onchain-verified-" + oursT + "-usdt-trc20";
+    showRes(resId, true, "✅ <strong>Payment verified: " + oursT + " USDT (TRC20) received.</strong> Sending your order…");
+    btn.textContent = "Sending order…";
+    setTimeout(() => form.submit(), 900);
+    return;
+  }
   if (!/^0x[0-9a-f]{64}$/.test(txid)) { showRes(resId, false, "❌ <strong>Rejected:</strong> that is not a valid TxID (it must start with 0x and be 66 characters)."); return; }
   btn.disabled = true; btn.textContent = "⏳ Verifying on the blockchain…";
   let rc;
@@ -277,10 +309,11 @@ async function verifyAndSubmit(formId, minAmt, resId) {
   btn.textContent = "Sending order…";
   setTimeout(() => form.submit(), 900);
 }
-function copyAddr() {
-  navigator.clipboard.writeText("0x47258cfc9056d74f1bc31618eaba4b97347596d5").then(() => {
-    document.querySelectorAll(".copyBtn").forEach(b => b.textContent = "Copied ✓");
-    setTimeout(() => document.querySelectorAll(".copyBtn").forEach(b => b.textContent = "Copy"), 2000);
+function copyAddr(addr, btn) {
+  const a = addr || "0x47258cfc9056d74f1bc31618eaba4b97347596d5";
+  const b = btn || document.querySelector(".copyBtn");
+  navigator.clipboard.writeText(a).then(() => {
+    if (b) { b.textContent = "Copied ✓"; setTimeout(() => { b.textContent = "Copy"; }, 2000); }
   });
 }
 function setMethod(el, v) {

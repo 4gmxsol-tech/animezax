@@ -68,3 +68,4 @@ h1 em,h2 em,.hero h1 span{font-style:italic;font-weight:500}
 :focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 ::selection{background:var(--vermilion);color:#fff}
 @media(max-width:760px){.primary-nav{text-transform:none;letter-spacing:0;font-size:15px}.article-body{font-size:17px}.hero h1{letter-spacing:-.03em}}
+@media(min-width:981px){.site-header .container{width:min(1360px,calc(100% - 40px))}.primary-nav{gap:16px;font-size:11.5px;letter-spacing:.05em}.primary-nav>a{white-space:nowrap}.primary-nav .nav-cta,.primary-nav [class*=bf],.primary-nav [class*=black]{white-space:nowrap}}

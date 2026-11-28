@@ -1,0 +1,59 @@
+/* AnimeZax shop: dark, alive theme matching the main site. Loaded after each page's inline CSS. */
+:root{--bg:#0d0d14;--card:#171722;--ink:#f7f5ff;--mut:#b3b0c6;--pink:#ff8eb8;--pink-d:#ff6fa5;--zx-violet:#b29aff;--zx-line:rgba(255,255,255,.12)}
+html{color-scheme:dark}
+body{font-family:"DM Sans","Segoe UI",system-ui,sans-serif;background:#0d0d14;color:var(--ink);position:relative;overflow-x:hidden}
+body::before,body::after{content:"";position:fixed;z-index:-1;border-radius:50%;filter:blur(90px);opacity:.55;pointer-events:none}
+body::before{width:520px;height:520px;left:-140px;top:-120px;background:radial-gradient(circle,#7a52d6,transparent 68%);animation:zxAurora1 22s ease-in-out infinite alternate}
+body::after{width:560px;height:560px;right:-160px;top:30vh;background:radial-gradient(circle,#e0408f,transparent 68%);animation:zxAurora2 26s ease-in-out infinite alternate}
+@keyframes zxAurora1{to{transform:translate(120px,160px) scale(1.2)}}
+@keyframes zxAurora2{to{transform:translate(-140px,-120px) scale(1.15)}}
+header{background:rgba(13,13,20,.82);border-bottom:1px solid var(--zx-line)}
+.logo{background:linear-gradient(100deg,#c6b4ff,#ff9bc8);-webkit-background-clip:text;background-clip:text;color:transparent;font-family:"Space Grotesk","DM Sans",sans-serif;letter-spacing:-.5px}
+.nav a.link{color:#e7e3f5}.nav a.link:hover{color:#ff9bc8}
+.nav a.link.shop-link{color:#fff!important;box-shadow:0 0 22px rgba(236,72,153,.45)}
+.bf-banner{background:linear-gradient(90deg,#2a0a1e,#171236,#2a0a1e);background-size:200% 100%;animation:zxSlide 12s linear infinite;border-bottom:1px solid rgba(251,191,36,.25)}
+@keyframes zxSlide{to{background-position:200% 0}}
+h1,h2,h3{font-family:"Space Grotesk","DM Sans",sans-serif;letter-spacing:-.02em}
+h1{background:linear-gradient(100deg,#fff 20%,#d9ccff 60%,#ffb3d6);-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub,.note,.pcard p,.pcard .was,footer,.pricebadge small{color:var(--mut)}
+.hero img{box-shadow:0 30px 80px rgba(0,0,0,.55),0 0 0 1px rgba(255,255,255,.14);animation:zxFloat 7s ease-in-out infinite}
+@keyframes zxFloat{50%{transform:translateY(-10px) rotate(-.4deg)}}
+.pricebadge{background:rgba(255,255,255,.06);border:1px solid rgba(255,142,184,.6);color:#ffc2db;backdrop-filter:blur(8px)}
+.feat,.pcard,.card{background:rgba(23,23,34,.78);border:1px solid var(--zx-line);color:var(--ink);backdrop-filter:blur(10px);transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease}
+.feat:hover,.pcard:hover{transform:translateY(-5px);border-color:rgba(190,166,255,.55);box-shadow:0 18px 44px rgba(122,82,214,.25)}
+.pcard .amt{color:#ffc2db}.pcard.hot{border-color:#34d399;box-shadow:0 12px 36px rgba(52,211,153,.22)}.pcard.hot .amt{color:#6ee7b7}
+.gallery img{border:1px solid var(--zx-line);background:#171722;transition:transform .35s ease,box-shadow .35s ease}
+.gallery img:hover{transform:scale(1.03);box-shadow:0 18px 40px rgba(0,0,0,.5)}
+.btn{position:relative;overflow:hidden;transition:transform .15s ease,box-shadow .2s ease,filter .2s}
+.btn:hover,.buy:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(236,72,153,.4)!important}
+.btn-pink,.buy{background:linear-gradient(100deg,#ec4899,#a855f7)!important}
+.btn-pink:hover,.buy:hover{background:linear-gradient(100deg,#f472b6,#b87bf8)!important}
+.btn-ghost{background:rgba(255,255,255,.06)!important;color:#ffc2db!important;border:1px solid rgba(255,142,184,.5)!important}
+.btn::after,.buy::after{content:"";position:absolute;top:0;left:-70%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);animation:zxShine 4.5s ease-in-out infinite}
+@keyframes zxShine{0%,60%{left:-70%}100%{left:130%}}
+/* checkout card stays light for legibility */
+#direct-buy,#bundle{box-shadow:0 24px 60px rgba(0,0,0,.45),0 0 0 1px rgba(255,255,255,.06)}
+#direct-buy h2,#bundle h2{color:#111827;background:none;-webkit-text-fill-color:initial}
+.stickybar{background:rgba(13,13,20,.94);border-top:1px solid var(--zx-line)}
+.stickybar .sp{color:#ffc2db!important}
+code.addr{background:#0f0f18;color:#e7e3f5;border:1px solid var(--zx-line)}
+.zx-reveal{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s cubic-bezier(.2,.7,.2,1)}
+.zx-reveal.zx-in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.zx-reveal{opacity:1;transform:none}}
+/* shop grid */
+.shop-grid .shop-card{background:rgba(23,23,34,.82);border:1px solid var(--zx-line);color:var(--ink);backdrop-filter:blur(10px);transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s,box-shadow .3s}
+.shop-grid .shop-card:hover{transform:translateY(-8px);border-color:rgba(255,142,184,.6);box-shadow:0 24px 54px rgba(122,82,214,.32)}
+.shop-grid .shop-card.hot{border-color:#ec4899;box-shadow:0 14px 40px rgba(236,72,153,.28)}
+.shop-grid .shop-card img{background:#14141f;transition:transform .6s cubic-bezier(.2,.7,.2,1)}
+.shop-grid .shop-card:hover img{transform:scale(1.05)}
+.shop-grid .shop-card{overflow:hidden}
+.shop-grid .shop-card p{color:var(--mut)}
+.shop-grid .shop-price b{color:#ffc2db}
+.shop-grid .shop-price s{color:#8b88a0}
+.shop-grid .shop-price .off{background:rgba(251,191,36,.14);color:#fbbf24;border:1px solid rgba(251,191,36,.4)}
+.shop-tag{backdrop-filter:blur(6px);background:rgba(13,13,20,.8)!important;border:1px solid rgba(251,191,36,.4)}
+.shop-tag.pink{background:#ec4899!important;border-color:transparent}
+.steps .step{background:rgba(23,23,34,.78);border:1px solid var(--zx-line);color:var(--ink);transition:transform .25s,border-color .25s}
+.steps .step:hover{transform:translateY(-4px);border-color:rgba(190,166,255,.5)}
+.bf-pill{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.45);animation:zxPulse 2.4s ease-in-out infinite}
+@keyframes zxPulse{50%{box-shadow:0 0 0 8px rgba(251,191,36,0)}0%{box-shadow:0 0 0 0 rgba(251,191,36,.35)}}

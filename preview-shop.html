@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shop — Black Friday Sale | AnimeZax</title><link rel="canonical" href="https://animezax.com/shop.html"><meta property="og:type" content="website"><meta property="og:title" content="Shop — Black Friday Sale | AnimeZax"><meta property="og:url" content="https://animezax.com/shop.html"><meta property="og:description" content="AnimeZax shop — Black Friday: Kawaii Coloring Book $3, Christmas Pack $2.50, Premium Art $7.99, Ultimate Bundle $9.99 (110 pages). Ends Nov 30."><meta property="og:image" content="https://animezax.com/assets/img/shop-1.jpg"><meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="AnimeZax shop — Black Friday: Kawaii Coloring Book $3, Christmas Pack $2.50, Premium Art $7.99, Ultimate Bundle $9.99 (110 pages). Ends Nov 30.">
+<style>
+:root{--pink:#d63384;--pink-d:#b02568;--red:#b22234;--green:#166e3c;--ink:#23222b;--mut:#666;--card:#fff;--bg:#fff7fa;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:'Segoe UI',system-ui,-apple-system,Arial,sans-serif;margin:0;color:var(--ink);background:var(--bg);line-height:1.6}
+.wrap{max-width:1080px;margin:0 auto;padding:0 18px 90px}
+header{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.92);backdrop-filter:blur(8px);border-bottom:1px solid #f3d7e4}
+.nav{max-width:1080px;margin:0 auto;padding:12px 18px;display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
+.logo{font-weight:800;font-size:22px;color:var(--pink);text-decoration:none}
+.nav a.link{color:var(--ink);text-decoration:none;font-weight:600;margin-left:16px}
+.nav a.link:hover{color:var(--pink)}
+.hero{display:grid;grid-template-columns:1fr 1fr;gap:34px;align-items:center;padding:38px 0 10px}
+.hero img{width:100%;max-width:430px;justify-self:center;border-radius:18px;box-shadow:0 14px 40px rgba(0,0,0,.18)}
+h1{font-size:clamp(30px,5.4vw,46px);line-height:1.15;margin:0 0 10px}
+.sub{font-size:clamp(16px,2.6vw,20px);color:var(--mut);margin:0 0 16px}
+.pricebadge{display:inline-flex;align-items:baseline;gap:10px;background:#fff;border:2px solid var(--pink);color:var(--pink-d);border-radius:999px;padding:8px 20px;font-weight:800;font-size:26px;margin:6px 0 16px}
+.pricebadge small{font-size:14px;color:var(--mut);font-weight:600}
+.btn{display:block;text-align:center;padding:15px 18px;border-radius:12px;font-size:19px;font-weight:700;text-decoration:none;margin:10px 0;cursor:pointer;border:none;width:100%}
+.btn-pink{background:var(--pink);color:#fff}.btn-pink:hover{background:var(--pink-d)}
+.btn-red{background:var(--red);color:#fff}.btn-red:hover{background:#8f1b2a}
+.btn-green{background:var(--green);color:#fff}.btn-green:hover{background:#0f552d}
+.btn-ghost{background:#fff;color:var(--pink-d);border:2px solid var(--pink)}
+section{margin:38px 0}
+section,.card{scroll-margin-top:84px}
+h2{font-size:clamp(23px,4vw,30px);margin:0 0 14px}
+.feats{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px}
+.feat{background:var(--card);border:1px solid #f3d7e4;border-radius:14px;padding:16px;font-size:16px}
+.gallery{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px}
+.gallery img{width:100%;border:1px solid #e8e2e6;border-radius:12px;background:#fff}
+.prices{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px;align-items:stretch}
+.pcard{background:var(--card);border:2px solid #eee;border-radius:16px;padding:22px;text-align:center;display:flex;flex-direction:column}
+.pcard.hot{border-color:var(--green);box-shadow:0 10px 30px rgba(22,110,60,.15);position:relative}
+.pcard .tag{position:absolute;top:-13px;left:50%;transform:translateX(-50%);background:var(--green);color:#fff;font-size:13px;font-weight:700;padding:4px 14px;border-radius:999px;white-space:nowrap}
+.pcard h3{margin:4px 0 8px;font-size:20px}
+.pcard .amt{font-size:38px;font-weight:800;color:var(--pink-d)}
+.pcard.hot .amt{color:var(--green)}
+.pcard .was{color:var(--mut);text-decoration:line-through;font-size:17px}
+.pcard p{color:var(--mut);font-size:15px;flex:1}
+.card{background:var(--card);border:1px solid #f0d9e4;border-radius:16px;padding:24px;margin:22px 0}
+.card input,.card select{font-size:16px}
+code.addr{word-break:break-all;background:#fdf0f4;padding:10px 12px;border-radius:8px;display:block;font-size:14px}
+.note{font-size:14px;color:var(--mut)}
+footer{text-align:center;color:var(--mut);font-size:14px;padding:26px 0 6px}
+.stickybar{display:none}
+@media(max-width:760px){
+ .hero{grid-template-columns:1fr;text-align:center;padding-top:24px}
+ .pricebadge{margin-left:auto;margin-right:auto}
+ .stickybar{display:flex;position:fixed;bottom:0;left:0;right:0;z-index:60;background:#fff;border-top:1px solid #f3d7e4;padding:10px 14px;gap:12px;align-items:center;box-shadow:0 -6px 20px rgba(0,0,0,.08)}
+ .stickybar .sp{font-size:22px;font-weight:800;color:var(--pink-d);white-space:nowrap}
+ .stickybar a{flex:1;text-align:center;background:var(--pink);color:#fff;text-decoration:none;font-weight:700;padding:12px;border-radius:10px}
+ body{padding-bottom:64px}
+}
+
+/* ---- Stripe-style checkout (pink anime) ---- */
+#direct-buy,#bundle{background:#fff;border:1px solid #e5e7eb;border-radius:16px;box-shadow:0 1px 3px rgba(16,24,40,.06),0 1px 2px rgba(16,24,40,.04);padding:28px 24px;color:#111827}
+.pay-summary{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;padding-bottom:16px;margin-bottom:18px;border-bottom:1px solid #e5e7eb}
+.pay-prod{font-size:16px;font-weight:600;color:#111827;line-height:1.4}
+.pay-sub2{font-size:13px;color:#6b7280;margin-top:2px}
+.pay-total{font-size:20px;font-weight:700;color:#111827;white-space:nowrap}
+.pay-methods{display:flex;flex-direction:column;gap:10px;margin:0 0 14px}
+.pm{display:flex;align-items:center;gap:12px;border:1px solid #d1d5db;border-radius:8px;padding:12px 14px;cursor:pointer;background:#fff;transition:border-color .15s,box-shadow .15s}
+.pm:hover{border-color:#f472b6}
+.pm.selected{border-color:#ec4899;box-shadow:0 0 0 3px rgba(236,72,153,.15)}
+.pm .radio{flex:none;width:18px;height:18px;border-radius:50%;border:2px solid #d1d5db;position:relative}
+.pm.selected .radio{border-color:#ec4899}
+.pm.selected .radio::after{content:"";position:absolute;inset:3px;border-radius:50%;background:#ec4899}
+.pm b{display:block;font-size:15px;font-weight:600;color:#111827}
+.pm span{display:block;font-size:13px;color:#6b7280}
+.pm .pm-tag{margin-left:auto;flex:none;background:#fdf2f8;color:#db2777;font-size:12px;font-weight:600;padding:3px 9px;border-radius:999px}
+.addrbox{display:flex;gap:8px;align-items:center;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px 10px;margin:0 0 14px}
+.addrbox .addr-label{flex:none;font-size:12px;font-weight:600;color:#6b7280}
+.addrbox code{flex:1;word-break:break-all;font-size:12px;background:none;padding:0;color:#374151}
+.copyBtn2{flex:none;background:#fff;border:1px solid #d1d5db;color:#374151;border-radius:6px;padding:7px 12px;font-weight:600;font-size:13px;cursor:pointer}
+.copyBtn2:hover{border-color:#f472b6;color:#db2777}
+.pay-note{font-size:13px;color:#6b7280;margin:0 0 18px;line-height:1.5}
+#direct-buy label,#bundle label{display:block;font-size:13px;font-weight:500;color:#374151;margin-bottom:4px}
+#direct-buy input,#direct-buy select,#bundle input,#bundle select{width:100%;height:44px;padding:0 12px;margin:0 0 16px;border:1px solid #d1d5db;border-radius:8px;font-size:15px;background:#fff;color:#111827;box-sizing:border-box}
+#direct-buy input:focus,#direct-buy select:focus,#bundle input:focus,#bundle select:focus{outline:none;border-color:#ec4899;box-shadow:0 0 0 3px rgba(236,72,153,.15)}
+#direct-buy input::placeholder,#bundle input::placeholder{color:#9ca3af}
+.pay-trust{text-align:center;font-size:12px;color:#9ca3af;margin:16px 0 0;line-height:1.6}
+/* ---- Stripe-style buttons site-wide ---- */
+.btn{border-radius:8px!important;font-size:16px!important;font-weight:600!important;padding:13px 18px!important;box-shadow:0 1px 2px rgba(16,24,40,.08)}
+.btn-pink{background:#ec4899!important}.btn-pink:hover{background:#db2777!important}
+.btn-green{background:#059669!important}.btn-green:hover{background:#047857!important}
+.btn-red{background:#e11d48!important}.btn-red:hover{background:#be123c!important}
+.btn-ghost{background:#fff!important;color:#db2777!important;border:1px solid #f9a8d4!important}
+.buy{background:#ec4899!important;color:#fff!important;width:100%!important;height:48px;border-radius:8px!important;font-size:16px!important;font-weight:600!important;box-shadow:0 1px 2px rgba(16,24,40,.08)}
+.buy:hover{background:#db2777!important}
+.stickybar a{background:#ec4899!important;border-radius:8px!important}
+.stickybar .sp{color:#db2777!important}
+
+/* ---- Black Friday ---- */
+.bf-banner{background:#111827;color:#fff;text-align:center;padding:11px 14px;font-size:15px;font-weight:600;line-height:1.5}
+.bf-banner b{color:#f9a8d4}
+.bf-banner a{color:#fbbf24;font-weight:700;text-decoration:none;margin-left:8px;white-space:nowrap}
+.bf-banner .bf-time{color:#fbbf24;font-variant-numeric:tabular-nums;white-space:nowrap}
+.bf-pill{display:inline-block;background:#111827;color:#fbbf24;font-weight:800;font-size:13px;letter-spacing:1px;padding:6px 14px;border-radius:999px;margin-bottom:10px}
+.nav a.shop-link{background:#ec4899;color:#fff!important;border-radius:999px;padding:6px 13px}
+.nav a.shop-link:hover{background:#db2777!important;color:#fff!important}
+.nav a.bf-link{background:#111827;color:#fbbf24!important;border-radius:999px;padding:6px 13px}
+.pricebadge s{font-size:16px;color:#9ca3af;font-weight:600}
+.pcard .was{font-size:16px}
+.pcard .tag.bf{background:#111827}
+/* ---- Stripe-style checkout, upgraded ---- */
+.co-head{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.co-head .co-title{font-size:18px;font-weight:700;color:#111827}
+.co-steps{font-size:13px;color:#6b7280}
+.co-steps b{color:#db2777}
+.co-disc{display:flex;justify-content:space-between;align-items:center;gap:10px;background:#fdf2f8;border:1px dashed #f9a8d4;color:#be185d;font-weight:600;font-size:14px;border-radius:8px;padding:10px 14px;margin:0 0 14px}
+.co-disc span:last-child{font-weight:800;white-space:nowrap}
+.pay-total s{font-size:14px;color:#9ca3af;font-weight:600;margin-right:6px}
+.buy{font-size:17px!important}
+@media(max-width:760px){.nav nav{display:flex;overflow-x:auto;white-space:nowrap;gap:2px;width:100%;scrollbar-width:none;-webkit-overflow-scrolling:touch}.nav nav::-webkit-scrollbar{display:none}.nav a.link{margin-left:0;padding:6px 10px;flex:0 0 auto}}img{height:auto}</style>
+<style>
+.shop-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;margin:26px 0}
+.shop-card{background:#fff;border:2px solid #f3d7e4;border-radius:18px;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.shop-card.hot{border-color:#ec4899;box-shadow:0 12px 32px rgba(236,72,153,.18)}
+.shop-card img{width:100%;height:230px;object-fit:cover;object-position:top;background:#fff7fa}
+.shop-card .body{padding:18px;display:flex;flex-direction:column;flex:1}
+.shop-card h3{margin:0 0 6px;font-size:20px}
+.shop-card p{color:#666;font-size:15px;flex:1;margin:0 0 12px}
+.shop-price{display:flex;align-items:baseline;gap:8px;margin-bottom:12px}
+.shop-price b{font-size:28px;color:#b02568}
+.shop-price s{color:#9ca3af;font-size:16px}
+.shop-price .off{background:#111827;color:#fbbf24;font-size:12px;font-weight:800;padding:3px 9px;border-radius:999px}
+.shop-tag{position:absolute;top:12px;left:12px;background:#111827;color:#fbbf24;font-size:12px;font-weight:800;padding:5px 12px;border-radius:999px}
+.shop-tag.pink{background:#ec4899;color:#fff}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin:10px 0 30px}
+.step{background:#fff;border:1px solid #f3d7e4;border-radius:14px;padding:16px;text-align:center}
+.step b{display:block;font-size:26px;margin-bottom:6px}
+</style>
+<link rel="stylesheet" href="/assets/shop-alive.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet"><script defer src="/assets/shop-alive.js"></script><meta name="robots" content="noindex"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,500</head>display=swap"><link rel="stylesheet" href="/assets/theme.css"></head>
+<body>
+<header><div class="nav">
+  <a class="logo" href="https://animezax.com/">AnimeZax 🎨</a>
+  <nav><a class="link shop-link" href="https://animezax.com/shop.html">🛍️ Shop</a><a class="link" href="https://animezax.com/coloring-book.html">Coloring Book</a><a class="link" href="https://animezax.com/christmas-coloring.html">🎄 Christmas Pack</a><a class="link" href="https://animezax.com/premium-art.html">✨ Premium Art</a><a class="link" href="https://animezax.com/ultimate-bundle.html">🎁 Ultimate Bundle</a><a class="link bf-link" href="https://animezax.com/shop.html">🔥 Black Friday −40%</a></nav>
+</div></header>
+<div class="bf-banner">🔥 <b>BLACK FRIDAY</b> — up to <b>40% off</b> everything · ends Nov 30 · <span class="bf-time" id="bf-countdown">…</span><a href="https://animezax.com/shop.html">Shop the sale →</a></div>
+<div class="wrap">
+  <div class="hero" style="grid-template-columns:1fr;text-align:center;padding-bottom:0">
+    <div>
+      <div class="bf-pill">🔥 BLACK FRIDAY — ENDS NOV 30</div>
+      <h1>🛍️ AnimeZax Shop</h1>
+      <p class="sub">Every product on sale — up to 40% off, plus six new digital downloads (wallpapers, stickers, a 2027 calendar, planners, bookmarks and social templates), a brand-new Ultimate Bundle and a brand-new original manga, SALT &amp; STARLIGHT Chapter 1. Pay with USDT or Binance Pay, verified on-chain, delivered as soon as payment is confirmed.</p>
+    </div>
+  </div>
+  <div class="shop-grid">
+    <div class="shop-card"><span class="shop-tag">🆕 NEW</span><img src="/assets/img/shop-1.jpg" alt="📖 SALT &amp; STARLIGHT — Chapter 1" loading="lazy"><div class="body"><h3>📖 SALT &amp; STARLIGHT — Ch. 1</h3><p>Original fantasy pirate manga · 12 pages · B&amp;W</p><div class="shop-price"><b>$3</b></div><a class="btn btn-pink" href="https://animezax.com/salt-and-starlight.html">Read Chapter 1</a></div></div>
+    <div class="shop-card"><img src="/assets/img/shop-2.jpg" loading="lazy" decoding="async" alt="Kawaii Anime Coloring Book"><div class="body"><h3>Kawaii Anime Coloring Book</h3><p>50 printable pages · PDF + PNG</p><div class="shop-price"><b>$3</b><s>$5</s><span class="off">−40%</span></div><a class="btn btn-pink" href="https://animezax.com/coloring-book.html">Buy the Book</a></div></div><div class="shop-card"><img src="/assets/img/shop-3.jpg" loading="lazy" decoding="async" alt="🎄 Anime Christmas Coloring Pack" loading="lazy"><div class="body"><h3>🎄 Anime Christmas Coloring Pack</h3><p>30 festive pages · 20 detailed + 10 chibi</p><div class="shop-price"><b>$2.50</b><s>$4</s><span class="off">−37%</span></div><a class="btn btn-red" href="https://animezax.com/christmas-coloring.html">Buy the Pack</a></div></div><div class="shop-card"><img src="/assets/img/shop-4.jpg" loading="lazy" decoding="async" alt="✨ Premium Art Collection" loading="lazy"><div class="body"><h3>✨ Premium Art Collection</h3><p>24 full-color artworks · book + posters + wallpapers</p><div class="shop-price"><b>$7.99</b><s>$12</s><span class="off">−33%</span></div><a class="btn btn-green" href="https://animezax.com/premium-art.html">Buy the Collection</a></div></div><div class="shop-card"><img src="/assets/img/shop-5.jpg" loading="lazy" decoding="async" alt="Bundle: Both Books" loading="lazy"><div class="body"><h3>Bundle: Both Books</h3><p>80 pages total · Coloring Book + Christmas Pack</p><div class="shop-price"><b>$4.99</b><s>$7</s><span class="off">−29%</span></div><a class="btn btn-green" href="https://animezax.com/christmas-coloring.html#bundle">Get the Bundle</a></div></div><div class="shop-card"><span class="shop-tag">🆕 NEW</span><img src="/assets/img/shop-6.jpg" loading="lazy" decoding="async" alt="Dreamy Sky Phone Wallpaper Pack" loading="lazy"><div class="body"><h3>📱 Dreamy Sky Phone Wallpaper Pack</h3><p>12 original phone wallpapers · 1080×1920 PNG</p><div class="shop-price"><b>$2.99</b></div><a class="btn btn-pink" href="https://animezax.com/dreamy-sky-wallpaper-pack.html">See it &amp; buy</a></div></div>
+    <div class="shop-card"><span class="shop-tag">🆕 NEW</span><img src="/assets/img/shop-7.jpg" loading="lazy" decoding="async" alt="Kawaii Printable Sticker Sheets"><div class="body"><h3>🌸 Kawaii Printable Sticker Sheets</h3><p>4 A4 sheets · 96 cute stickers · PDF + PNG</p><div class="shop-price"><b>$3.50</b></div><a class="btn btn-pink" href="https://animezax.com/kawaii-sticker-sheets.html">See it &amp; buy</a></div></div>
+    <div class="shop-card"><span class="shop-tag">🆕 NEW</span><img src="/assets/img/shop-8.jpg" loading="lazy" decoding="async" alt="2027 Printable Desk Calendar"><div class="body"><h3>📅 2027 Printable Desk Calendar</h3><p>12 monthly pages · A4 landscape · PDF + PNG</p><div class="shop-price"><b>$4.50</b></div><a class="btn btn-pink" href="https://animezax.com/desk-calendar-2027.html">See it &amp; buy</a></div></div>
+    <div class="shop-card"><span class="shop-tag">🆕 NEW</span><img src="/assets/img/shop-9.jpg" loading="lazy" decoding="async" alt="Study Planner &amp; Habit Tracker Printables"><div class="body"><h3>📚 Study Planner &amp; Habit Tracker Printables</h3><p>9 A4 pages · planner, habit tracker, timetable &amp; more</p><div class="shop-price"><b>$3.99</b></div><a class="btn btn-pink" href="https://animezax.com/study-planner-printables.html">See it &amp; buy</a></div></div>
+    <div class="shop-card"><span class="shop-tag">🆕 NEW</span><img src="/assets/img/shop-10.jpg" loading="lazy" decoding="async" alt="Printable Bookmarks Set"><div class="body"><h3>🔖 Printable Bookmarks Set</h3><p>12 bookmarks · 2 A4 sheets · PDF + PNG</p><div class="shop-price"><b>$2.00</b></div><a class="btn btn-pink" href="https://animezax.com/printable-bookmarks.html">See it &amp; buy</a></div></div>
+    <div class="shop-card"><span class="shop-tag">🆕 NEW</span><img src="/assets/img/shop-11.jpg" loading="lazy" decoding="async" alt="Anime Blog &amp; Social Media Template Pack"><div class="body"><h3>📲 Anime Blog &amp; Social Media Template Pack</h3><p>10 backgrounds · 7 posts + 3 stories · PNG</p><div class="shop-price"><b>$4.99</b></div><a class="btn btn-pink" href="https://animezax.com/social-media-template-pack.html">See it &amp; buy</a></div></div>
+    <div class="shop-card hot"><span class="shop-tag">🔥 BEST DEAL</span><img src="/assets/img/shop-12.jpg" loading="lazy" decoding="async" alt="🎁 Ultimate Bundle — NEW"><div class="body"><h3>🎁 Ultimate Bundle — NEW</h3><p>110 pages · all 3 bestsellers + 4 exclusive bonus pages</p><div class="shop-price"><b>$9.99</b><s>$21</s><span class="off">−52%</span></div><a class="btn btn-pink" href="https://animezax.com/ultimate-bundle.html">Get the Ultimate Bundle</a></div></div>
+  </div>
+  <section>
+    <div style="background:#fdf2f8;border:1px solid #f9a8d4;border-radius:16px;padding:20px 22px;text-align:center;font-size:16px">📖 <strong>New on the blog:</strong> <a href="https://animezax.com/best-fantasy-pirate-manga.html" style="color:#be185d;font-weight:700">Best Fantasy Pirate Manga to Read After One Piece (2026)</a> — five classics + our new indie manga <a href="https://animezax.com/salt-and-starlight.html" style="color:#be185d;font-weight:700">SALT &amp; STARLIGHT Chapter 1</a>, just $3.</div>
+  </section>
+  <footer>© AnimeZax — animezax.com</footer>
+</div>
+<script>(function(){var el=document.getElementById('bf-countdown');if(!el)return;var end=new Date('2026-11-30T23:59:59Z').getTime();function t(){var d=end-Date.now();if(d<=0){el.textContent='Sale ends tonight!';return;}var h=Math.floor(d/36e5),m=Math.floor(d%36e5/6e4),s=Math.floor(d%6e4/1e3);el.textContent='Ends in '+h+'h '+m+'m '+s+'s';}t();setInterval(t,1000);})();</script>
+
+</body>
+</html>

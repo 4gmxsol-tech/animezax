@@ -60,3 +60,4 @@ code.addr{background:#0f0f18;color:#e7e3f5;border:1px solid var(--zx-line)}
 /* light promo boxes with inline light backgrounds: keep dark readable text */
 [style*="background:#fdf2f8"],[style*="background:#fff7fa"],[style*="background:#fff;"],[style*="background:#ffffff"]{color:#23222b}
 [style*="background:#fdf2f8"] strong,[style*="background:#fff7fa"] strong{color:#23222b}
+img{max-width:100%}.card img,.product-img img,main img{height:auto}

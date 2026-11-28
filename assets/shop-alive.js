@@ -2,7 +2,7 @@
 if(!('IntersectionObserver' in window)||matchMedia('(prefers-reduced-motion:reduce)').matches)return;
 var io=new IntersectionObserver(function(e){e.forEach(function(x){if(x.isIntersecting){x.target.classList.add('zx-in');io.unobserve(x.target)}})},{threshold:.08});
 els.forEach(function(el){var r=el.getBoundingClientRect();if(r.top>innerHeight){el.classList.add('zx-reveal');io.observe(el)}})})();
-/* Shop listing only: one consent-managed 320x50 banner below the product grid (not between buy buttons). */
+/* Shop listing only: one 320x50 banner below the product grid (not between buy buttons). */
 (function(){
   if (location.pathname !== "/shop.html") return;
   var grid = document.querySelector(".shop-grid");

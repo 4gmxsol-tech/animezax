@@ -565,3 +565,19 @@
   const year = document.querySelector("#year");
   if (year) year.textContent = String(new Date().getFullYear());
 })();
+/* Consent-managed Adsterra loader for editorial hub/guide pages.
+   Uses the existing adsterra-ads.js (consent gate + existing units/IDs). Never runs on
+   noindex, shop, payment, verify, delivery or 404 pages. */
+(() => {
+  const p = location.pathname.replace(/\/index\.html$/, "/");
+  const allowed = /^\/(anime|anime-like|anime-genres|characters|movies|watch-order)\/[^/]+\.html$/.test(p) ||
+    /^\/(articles\/)?$/.test(p) ||
+    /^\/(anime-genres|anime-movies|anime-online|anime-rankings|anime-series|anime-websites|best-anime|new-anime|release-calendar|seasonal|upcoming|watch-anime|watch-order|what-to-watch)\.html$/.test(p);
+  if (!allowed) return;
+  if (document.querySelector('meta[name="robots"][content*="noindex"]')) return;
+  if (document.querySelector('script[src*="adsterra-ads.js"]')) return;
+  const s = document.createElement("script");
+  s.src = "/assets/js/adsterra-ads.js";
+  s.defer = true;
+  document.body.appendChild(s);
+})();

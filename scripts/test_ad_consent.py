@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Guard against third-party ad scripts loading before an explicit advertising choice."""
+"""Check ad loading: no consent gate, no raw ad code in HTML, accurate privacy disclosure."""
 from pathlib import Path
 import re
 import sys
@@ -10,6 +10,7 @@ DIRECT_AD = re.compile(
     re.IGNORECASE,
 )
 INLINE_OPTIONS = re.compile(r"\batOptions\s*=", re.IGNORECASE)
+NO_AD_PAGES = ("privacy.html", "404.html", "verify-payment.html")
 
 errors = []
 manual_slot_pages = []
@@ -17,44 +18,46 @@ for page in ROOT.rglob("*.html"):
     if ".git" in page.parts or "node_modules" in page.parts:
         continue
     source = page.read_text(encoding="utf-8", errors="replace")
+    rel = page.relative_to(ROOT).as_posix()
     if DIRECT_AD.search(source) or INLINE_OPTIONS.search(source):
-        errors.append(f"Direct ad code must be consent-gated, not embedded in HTML: {page.relative_to(ROOT)}")
+        errors.append(f"Ad code must be injected by the loader, not embedded in HTML: {rel}")
     if "data-adsterra-manual-slot=" in source:
         manual_slot_pages.append(page)
         if "adsterra-ads.js" not in source:
-            errors.append(f"Manual ad placeholder must load the consent manager: {page.relative_to(ROOT)}")
+            errors.append(f"Manual ad placeholder must load the ad loader: {rel}")
+    if rel in NO_AD_PAGES and ("data-adsterra-manual-slot=" in source or "adsterra-ads" in source):
+        errors.append(f"Ads must not be loaded on: {rel}")
 
 homepage = (ROOT / "index.html").read_text(encoding="utf-8")
 article = (ROOT / "articles/one-piece-watch-order.html").read_text(encoding="utf-8")
 privacy = (ROOT / "privacy.html").read_text(encoding="utf-8")
-consent = (ROOT / "assets/js/adsterra-ads.js").read_text(encoding="utf-8")
+loader = (ROOT / "assets/js/adsterra-ads.js").read_text(encoding="utf-8")
 engine = ROOT / "assets/js/adsterra-ads-engine.js"
 
 if homepage.count("data-adsterra-manual-slot=") != 2:
-    errors.append("Homepage must retain both consent-managed ad placements.")
+    errors.append("Homepage must retain both ad placements.")
 if article.count("data-adsterra-manual-slot=") != 1:
-    errors.append("One Piece guide must retain its consent-managed ad placement.")
+    errors.append("One Piece guide must retain its ad placement.")
 for page_name, source in (("homepage", homepage), ("One Piece guide", article)):
     if "adsterra-ads.js" not in source:
-        errors.append(f"{page_name} must load the first-party consent manager.")
+        errors.append(f"{page_name} must load the ad loader.")
 
-for phrase in ("Advertising and third-party services", "Accept advertising", "Reject advertising", "local storage", "change or withdraw"):
+for phrase in ("Advertising and third-party services", "Adsterra", "cookies"):
     if phrase.lower() not in privacy.lower():
-        errors.append(f"Privacy notice is missing advertising disclosure or preference control: {phrase}")
-if 'id="change-ad-preferences"' not in privacy or 'src="/assets/js/adsterra-ads.js"' not in privacy:
-    errors.append("Privacy notice must load the consent manager and expose a preference-change control.")
-if "Before enabling advertising" in privacy:
-    errors.append("Privacy notice must not describe already-active advertising as a future service.")
-
-for phrase in ("localStorage.getItem(CONSENT_KEY)", 'choice === "accepted"', 'choice === "rejected"', "adsterra-ads-engine.js", "IS_PRIVACY_PAGE", "showConsent(true)", "if (!IS_PRIVACY_PAGE) activateAds()"):
-    if phrase not in consent:
-        errors.append(f"Consent loader is missing required gate behavior: {phrase}")
-
+        errors.append(f"Privacy notice is missing advertising disclosure: {phrase}")
+for stale in ("Accept advertising", "Reject advertising", "change-ad-preferences"):
+    if stale.lower() in (privacy + loader).lower():
+        errors.append(f"Leftover consent UI text found: {stale}")
+for stale in ("showConsent", "readChoice", "writeChoice", "CONSENT_KEY ="):
+    if stale in loader:
+        errors.append(f"Leftover consent code in loader: {stale}")
+for phrase in ("adsterra-ads-engine.js", "IS_PRIVACY_PAGE", 'loading = "lazy"', "min-height"):
+    if phrase not in loader:
+        errors.append(f"Loader is missing expected behavior: {phrase}")
 if not engine.is_file():
-    errors.append("The deferred advertising engine file is missing.")
+    errors.append("The ad engine file is missing.")
 
 if errors:
     print("\n".join(f"FAIL: {item}" for item in errors))
     sys.exit(1)
-
-print(f"PASS: direct third-party ad code is absent from HTML; {len(manual_slot_pages)} pages use consent-managed manual slots.")
+print(f"PASS: no consent gate; {len(manual_slot_pages)} pages use manual ad slots; privacy notice matches.")

@@ -1,20 +1,11 @@
 (() => {
   "use strict";
-  if (window.__animezaxAdConsentInitialized) return;
-  window.__animezaxAdConsentInitialized = true;
+  if (window.__animezaxAdsInitialized) return;
+  window.__animezaxAdsInitialized = true;
 
-  const CONSENT_KEY = "animezax-ad-consent-v1";
   const ENGINE_URL = "/assets/js/adsterra-ads-engine.js";
   const ALLOWED_HOSTS = ["bicea.org", "bauval.org", "highrevenueformat.com", "www.highrevenueformat.com"];
   const IS_PRIVACY_PAGE = /\/privacy\.html$/i.test(window.location.pathname);
-
-  function readChoice() {
-    try { return window.localStorage.getItem(CONSENT_KEY); } catch { return null; }
-  }
-
-  function writeChoice(value) {
-    try { window.localStorage.setItem(CONSENT_KEY, value); } catch {}
-  }
 
   function renderManualSlots() {
     document.querySelectorAll("[data-adsterra-manual-slot]").forEach((placeholder) => {
@@ -60,69 +51,12 @@
     document.body.appendChild(script);
   }
 
-  function activateAds() {
+  function start() {
+    // The privacy notice page never runs ads.
+    if (IS_PRIVACY_PAGE) return;
+    try { window.localStorage.removeItem("animezax-ad-consent-v1"); } catch {}
     renderManualSlots();
     loadAdEngine();
-  }
-
-  function addStyles() {
-    if (document.getElementById("animezax-ad-consent-style")) return;
-    const style = document.createElement("style");
-    style.id = "animezax-ad-consent-style";
-    style.textContent = "#animezax-ad-consent{box-sizing:border-box;position:fixed;z-index:99999;left:12px;right:12px;bottom:12px;width:min(620px,calc(100% - 24px));margin:0 auto;padding:16px;border:1px solid #596174;border-radius:14px;background:#171b28;color:#f4f6ff;box-shadow:0 8px 36px #0008;font:14px/1.5 system-ui,sans-serif}#animezax-ad-consent p{margin:0 0 12px}#animezax-ad-consent a{display:inline-block;margin:0 0 12px;color:#a5f36b;text-decoration:underline;text-underline-offset:3px}#animezax-ad-consent .actions{display:flex;gap:10px;flex-wrap:wrap}#animezax-ad-consent button{border:1px solid #7c879d;border-radius:8px;padding:9px 13px;background:transparent;color:inherit;font:inherit;cursor:pointer}#animezax-ad-consent button:first-child{background:#a5f36b;color:#10150d;border-color:#a5f36b;font-weight:700}#animezax-ad-consent button:focus-visible,#animezax-ad-consent a:focus-visible{outline:2px solid #a5f36b;outline-offset:3px}";
-    document.head.appendChild(style);
-  }
-
-  function showConsent(focusFirst = false) {
-    if (document.getElementById("animezax-ad-consent")) return;
-    const panel = document.createElement("aside");
-    panel.id = "animezax-ad-consent";
-    panel.setAttribute("role", "region");
-    panel.setAttribute("aria-label", "Advertising preferences");
-    const copy = document.createElement("p");
-    copy.textContent = "AnimeZax uses third-party advertising. Ad scripts load only if you accept; you can reject and continue browsing.";
-    const privacy = document.createElement("a");
-    privacy.href = "/privacy.html";
-    privacy.textContent = "Read the privacy notice";
-    const actions = document.createElement("div");
-    actions.className = "actions";
-    const accept = document.createElement("button");
-    accept.type = "button";
-    accept.textContent = "Accept advertising";
-    const reject = document.createElement("button");
-    reject.type = "button";
-    reject.textContent = "Reject advertising";
-    accept.addEventListener("click", () => {
-      writeChoice("accepted");
-      panel.remove();
-      if (!IS_PRIVACY_PAGE) activateAds();
-    });
-    reject.addEventListener("click", () => {
-      writeChoice("rejected");
-      panel.remove();
-    });
-    actions.append(accept, reject);
-    panel.append(copy, privacy, actions);
-    document.body.appendChild(panel);
-    if (focusFirst) accept.focus();
-  }
-
-  function start() {
-    if (IS_PRIVACY_PAGE) {
-      const control = document.getElementById("change-ad-preferences");
-      if (control) {
-        control.addEventListener("click", () => {
-          addStyles();
-          showConsent(true);
-        });
-      }
-      return;
-    }
-    addStyles();
-    const choice = readChoice();
-    if (choice === "accepted") { activateAds(); return; }
-    if (choice === "rejected") return;
-    showConsent();
   }
 
   if (document.readyState === "loading") {

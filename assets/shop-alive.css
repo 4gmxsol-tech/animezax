@@ -57,3 +57,6 @@ code.addr{background:#0f0f18;color:#e7e3f5;border:1px solid var(--zx-line)}
 .steps .step:hover{transform:translateY(-4px);border-color:rgba(190,166,255,.5)}
 .bf-pill{background:rgba(251,191,36,.12);border:1px solid rgba(251,191,36,.45);animation:zxPulse 2.4s ease-in-out infinite}
 @keyframes zxPulse{50%{box-shadow:0 0 0 8px rgba(251,191,36,0)}0%{box-shadow:0 0 0 0 rgba(251,191,36,.35)}}
+/* light promo boxes with inline light backgrounds: keep dark readable text */
+[style*="background:#fdf2f8"],[style*="background:#fff7fa"],[style*="background:#fff;"],[style*="background:#ffffff"]{color:#23222b}
+[style*="background:#fdf2f8"] strong,[style*="background:#fff7fa"] strong{color:#23222b}

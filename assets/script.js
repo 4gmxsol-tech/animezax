@@ -565,8 +565,8 @@
   const year = document.querySelector("#year");
   if (year) year.textContent = String(new Date().getFullYear());
 })();
-/* Consent-managed Adsterra loader for editorial hub/guide pages.
-   Uses the existing adsterra-ads.js (consent gate + existing units/IDs). Never runs on
+/* Adsterra loader for editorial hub/guide pages.
+   Uses the existing adsterra-ads.js (existing units/IDs, lazy-loaded). Never runs on
    noindex, shop, payment, verify, delivery or 404 pages. */
 (() => {
   const p = location.pathname.replace(/\/index\.html$/, "/");
